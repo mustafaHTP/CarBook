@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{FDE7D814-4CF4-4FC4-B7C2-EB1F434E56E5}"
 EndProject
@@ -12,6 +12,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarBook.Persistence", "CarBook.Persistence\CarBook.Persistence.csproj", "{3ACFB725-BC8A-49C4-9DA7-A151281A862D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarBook.Application", "CarBook.Application\CarBook.Application.csproj", "{078E318F-C291-4441-8D2F-9DB513E9A128}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{03DB1DA8-A92F-497F-B0E1-CD51AC612E0C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarBook.WebApi", "CarBook.WebApi\CarBook.WebApi.csproj", "{C00B9D8C-A2A8-468B-A14B-F2BA45942C83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +35,10 @@ Global
 		{078E318F-C291-4441-8D2F-9DB513E9A128}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{078E318F-C291-4441-8D2F-9DB513E9A128}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{078E318F-C291-4441-8D2F-9DB513E9A128}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C00B9D8C-A2A8-468B-A14B-F2BA45942C83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C00B9D8C-A2A8-468B-A14B-F2BA45942C83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C00B9D8C-A2A8-468B-A14B-F2BA45942C83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C00B9D8C-A2A8-468B-A14B-F2BA45942C83}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,5 +47,6 @@ Global
 		{3AB1D678-BD61-4F24-BE9A-FD57F89B3388} = {FDE7D814-4CF4-4FC4-B7C2-EB1F434E56E5}
 		{3ACFB725-BC8A-49C4-9DA7-A151281A862D} = {2831A82C-3312-4F97-B569-D2F9BFC1CC75}
 		{078E318F-C291-4441-8D2F-9DB513E9A128} = {FDE7D814-4CF4-4FC4-B7C2-EB1F434E56E5}
+		{C00B9D8C-A2A8-468B-A14B-F2BA45942C83} = {03DB1DA8-A92F-497F-B0E1-CD51AC612E0C}
 	EndGlobalSection
 EndGlobal
