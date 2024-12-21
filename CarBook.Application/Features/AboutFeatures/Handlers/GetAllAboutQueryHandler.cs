@@ -18,7 +18,7 @@ namespace CarBook.Application.Features.AboutFeatures.Handlers
             _repository = repository;
         }
 
-        public async Task<List<GetAllAboutQueryResult>> HandleAsync()
+        public async Task<List<GetAllAboutQueryResult>> Handle()
         {
             var values = await _repository.GetAllAsync();
             var queryResult = values.Select(x => new GetAllAboutQueryResult()

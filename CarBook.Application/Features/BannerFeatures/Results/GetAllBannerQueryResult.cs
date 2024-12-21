@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CarBook.Application.Features.BannerFeatures.Results
 {
-    public class GetBannerQueryResult
+    public class GetAllBannerQueryResult
     {
         public int Id { get; set; }
         public string Title { get; set; }

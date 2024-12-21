@@ -18,11 +18,11 @@ namespace CarBook.Application.Features.BannerFeatures.Handlers
             _repository = repository;
         }
 
-        public async Task<List<GetBannerQueryResult>> Handle()
+        public async Task<List<GetAllBannerQueryResult>> Handle()
         {
             var banners = await _repository.GetAllAsync();
 
-            return banners.Select(b => new GetBannerQueryResult()
+            return banners.Select(b => new GetAllBannerQueryResult()
             {
                 Id = b.Id,
                 Description = b.Description,

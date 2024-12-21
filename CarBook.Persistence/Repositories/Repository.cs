@@ -7,7 +7,7 @@ namespace CarBook.Persistence.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private ApplicationDbContext _context;
+        protected ApplicationDbContext _context;
 
         public Repository(ApplicationDbContext context)
         {

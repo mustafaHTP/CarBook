@@ -32,7 +32,7 @@ namespace CarBook.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> AboutList()
         {
-            var abouts = await _getAllAboutQueryHandler.HandleAsync();
+            var abouts = await _getAllAboutQueryHandler.Handle();
 
             return Ok(abouts);
         }
