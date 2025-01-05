@@ -16,13 +16,13 @@ namespace CarBook.WebApi.Controllers
         private readonly CreateContactCommandHandler _createContactCommandHandler;
         private readonly UpdateContactCommandHandler _updateContactCommandHandler;
         private readonly DeleteContactCommandHandler _deleteContactCommandHandler;
-        private readonly GetAllContactsQueryHandler _getAllContactsQueryHandler;
+        private readonly GetContactsQueryHandler _getAllContactsQueryHandler;
         private readonly GetContactByIdQueryHandler _getContactByIdQueryHandler;
 
         public ContactsController(CreateContactCommandHandler createContactCommandHandler, 
             UpdateContactCommandHandler updateContactCommandHandler, 
             DeleteContactCommandHandler deleteContactCommandHandler, 
-            GetAllContactsQueryHandler getAllContactsQueryHandler, 
+            GetContactsQueryHandler getAllContactsQueryHandler, 
             GetContactByIdQueryHandler getContactByIdQueryHandler)
         {
             _createContactCommandHandler = createContactCommandHandler;

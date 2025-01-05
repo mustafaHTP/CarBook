@@ -13,14 +13,14 @@ namespace CarBook.WebApi.Controllers
         private readonly CreateCarCommandHandler _createCarCommandHandler;
         private readonly UpdateCarCommandHandler _updateCarCommandHandler;
         private readonly DeleteCarCommandHandler _deleteCarCommandHandler;
-        private readonly GetAllCarQueryHandler _getAllCarQueryHandler;
+        private readonly GetCarsQueryHandler _getAllCarQueryHandler;
         private readonly GetCarByIdQueryHandler _getCarByIdQueryHandler;
         private readonly GetAllCarsWithBrandQueryHandler _getAllCarsWithBrandQueryHandler;
 
         public CarsController(CreateCarCommandHandler createCarCommandHandler,
             UpdateCarCommandHandler updateCarCommandHandler,
             DeleteCarCommandHandler deleteCarCommandHandler,
-            GetAllCarQueryHandler getAllCarQueryHandler,
+            GetCarsQueryHandler getAllCarQueryHandler,
             GetCarByIdQueryHandler getCarByIdQueryHandler,
             GetAllCarsWithBrandQueryHandler getAllCarsWithBrandQueryHandler)
         {

@@ -13,13 +13,13 @@ namespace CarBook.WebApi.Controllers
         private readonly CreateBlogCategoryCommandHandler _createBlogCategoryCommandHandler;
         private readonly UpdateBlogCategoryCommandHandler _updateBlogCategoryCommandHandler;
         private readonly DeleteBlogCategoryCommandHandler _deleteBlogCategoryCommandHandler;
-        private readonly GetAllBlogCategoriesQueryHandler _getAllBlogCategoriesQueryHandler;
+        private readonly GetBlogCategoriesQueryHandler _getAllBlogCategoriesQueryHandler;
         private readonly GetBlogCategoryByIdQueryHandler _getBlogCategoryByIdQueryHandler;
 
         public BlogCategoriesController(CreateBlogCategoryCommandHandler createBlogCategoryCommandHandler, 
             UpdateBlogCategoryCommandHandler updateBlogCategoryCommandHandler, 
             DeleteBlogCategoryCommandHandler deleteBlogCategoryCommandHandler, 
-            GetAllBlogCategoriesQueryHandler getAllBlogCategoriesQueryHandler, 
+            GetBlogCategoriesQueryHandler getAllBlogCategoriesQueryHandler, 
             GetBlogCategoryByIdQueryHandler getBlogCategoryByIdQueryHandler)
         {
             _createBlogCategoryCommandHandler = createBlogCategoryCommandHandler;

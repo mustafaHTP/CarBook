@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="6.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\" />
+    <Folder Include="Models\" />
+    <Folder Include="wwwroot\css\" />
+    <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\js\" />
+    <Folder Include="wwwroot\lib\bootstrap\" />
+    <Folder Include="wwwroot\lib\bootstrap\dist\js\" />
+    <Folder Include="wwwroot\lib\jquery-validation-unobtrusive\" />
+    <Folder Include="wwwroot\lib\jquery-validation\" />
+    <Folder Include="wwwroot\lib\jquery-validation\dist\" />
+    <Folder Include="wwwroot\lib\jquery\" />
+    <Folder Include="wwwroot\lib\jquery\dist\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\website-template\.DS_Store" />
+    <None Include="wwwroot\website-template\css\.DS_Store" />
+    <None Include="wwwroot\website-template\css\bootstrap\.DS_Store" />
+    <None Include="wwwroot\website-template\css\css\.DS_Store" />
+    <None Include="wwwroot\website-template\fonts\.DS_Store" />
+    <None Include="wwwroot\website-template\fonts\flaticon\.DS_Store" />
+    <None Include="wwwroot\website-template\fonts\flaticon\font\.DS_Store" />
+    <None Include="wwwroot\website-template\fonts\ionicons\fonts\.DS_Store" />
+    <None Include="wwwroot\website-template\images\.DS_Store" />
+    <None Include="wwwroot\website-template\js\.DS_Store" />
+    <None Include="wwwroot\website-template\scss\.DS_Store" />
+    <None Include="wwwroot\website-template\scss\bootstrap\.DS_Store" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CarBook.Application\CarBook.Application.csproj" />
+  </ItemGroup>
+
+</Project>

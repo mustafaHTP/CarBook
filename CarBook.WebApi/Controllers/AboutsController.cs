@@ -13,13 +13,13 @@ namespace CarBook.WebApi.Controllers
         private readonly CreateAboutCommandHandler _createAboutCommandHandler;
         private readonly UpdateAboutCommandHandler _updateAboutCommandHandler;
         private readonly DeleteAboutCommandHandler _deleteAboutCommandHandler;
-        private readonly GetAllAboutQueryHandler _getAllAboutQueryHandler;
+        private readonly GetAboutsQueryHandler _getAllAboutQueryHandler;
         private readonly GetAboutByIdQueryHandler _getAboutByIdQueryHandler;
 
         public AboutsController(CreateAboutCommandHandler createAboutCommandHandler, 
             UpdateAboutCommandHandler updateAboutCommandHandler, 
             DeleteAboutCommandHandler deleteAboutCommandHandler, 
-            GetAllAboutQueryHandler getAboutQueryHandler, 
+            GetAboutsQueryHandler getAboutQueryHandler, 
             GetAboutByIdQueryHandler getAboutByIdQueryHandler)
         {
             _createAboutCommandHandler = createAboutCommandHandler;
@@ -29,7 +29,7 @@ namespace CarBook.WebApi.Controllers
             _getAboutByIdQueryHandler = getAboutByIdQueryHandler;
         }
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<IActionResult> AboutList()
         {
             var abouts = await _getAllAboutQueryHandler.Handle();
