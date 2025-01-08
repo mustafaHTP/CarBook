@@ -2,6 +2,7 @@
 using CarBook.Application.Features.CarFeatures.Results;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CarBook.Application.Features.CarFeatures.Handlers
 {
-    public class GetCarByIdQueryHandler
+    public class GetCarByIdQueryHandler : IRequestHandler<GetCarByIdQuery, GetCarByIdQueryResult>
     {
         private readonly IRepository<Car> _repository;
 
@@ -19,9 +20,26 @@ namespace CarBook.Application.Features.CarFeatures.Handlers
             _repository = repository;
         }
 
-        public async Task<GetCarByIdQueryResult> Handle(GetCarByIdQuery getCarByIdQuery)
+        //public async Task<GetCarByIdQueryResult> Handle(GetCarByIdQuery getCarByIdQuery)
+        //{
+        //    var car = await _repository.GetByIdAsync(getCarByIdQuery.Id);
+        //    return new()
+        //    {
+        //        Id = car.Id,
+        //        ModelId = car.ModelId,
+        //        BigImageUrl = car.BigImageUrl,
+        //        CoverImageUrl = car.CoverImageUrl,
+        //        FuelType = car.FuelType,
+        //        Km = car.Km,
+        //        Luggage = car.Luggage,
+        //        SeatCount = car.SeatCount,
+        //        TransmissionType = car.TransmissionType
+        //    };
+        //}
+
+        public async Task<GetCarByIdQueryResult> Handle(GetCarByIdQuery request, CancellationToken cancellationToken)
         {
-            var car = await _repository.GetByIdAsync(getCarByIdQuery.Id);
+            var car = await _repository.GetByIdAsync(request.Id);
             return new()
             {
                 Id = car.Id,

@@ -17,7 +17,7 @@ namespace CarBook.WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
             var Services = await _mediator.Send(new GetServicesQuery());

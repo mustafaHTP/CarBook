@@ -1,4 +1,5 @@
 ﻿using CarBook.Domain.Enums;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +8,10 @@ using System.Threading.Tasks;
 
 namespace CarBook.Application.Features.CarFeatures.Commands
 {
-    public class UpdateCarCommand
+    public class UpdateCarCommand : IRequest
     {
         public int Id { get; set; }
         public int ModelId { get; set; }
-        //public Model Model { get; set; } // for now
         public int Km { get; set; }
         public byte SeatCount { get; set; }
         public byte Luggage { get; set; }

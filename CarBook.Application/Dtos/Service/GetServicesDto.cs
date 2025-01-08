@@ -4,14 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarBook.Application.Dtos.Testimonial
+namespace CarBook.Application.Dtos.Service
 {
-    public class GetTestimonialDto
+    public class GetServicesDto
     {
         public int Id { get; set; }
-        public string Name { get; set; }
         public string Title { get; set; }
-        public string Comment { get; set; }
-        public string ImageUrl { get; set; }
+        public string Description { get; set; }
+        public string IconUrl { get; set; }
     }
 }

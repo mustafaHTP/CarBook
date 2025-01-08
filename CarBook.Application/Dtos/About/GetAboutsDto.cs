@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CarBook.Application.Dtos.About
 {
-    public class GetAboutDto
+    public class GetAboutsDto
     {
         public int Id { get; set; }
         public string Title { get; set; }

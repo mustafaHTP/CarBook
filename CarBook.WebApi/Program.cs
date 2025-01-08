@@ -10,11 +10,19 @@ using CarBook.Domain.Entities;
 using CarBook.Persistence.Context;
 using CarBook.Persistence.Repositories;
 using System.Reflection;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers();
+// Resolve circular references between entities
+
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+    options.JsonSerializerOptions.MaxDepth = 64;
+});
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -55,7 +63,6 @@ builder.Services.AddScoped<GetCarByIdQueryHandler>();
 builder.Services.AddScoped<CreateCarCommandHandler>();
 builder.Services.AddScoped<UpdateCarCommandHandler>();
 builder.Services.AddScoped<DeleteCarCommandHandler>();
-builder.Services.AddScoped<GetAllCarsWithBrandQueryHandler>();
 //Add Contact handlers
 builder.Services.AddScoped<GetContactsQueryHandler>();
 builder.Services.AddScoped<GetContactByIdQueryHandler>();

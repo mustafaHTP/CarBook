@@ -1,4 +1,5 @@
-﻿using CarBook.Domain.Entities;
+﻿using CarBook.Application.Features.CarFeatures.Queries;
+using CarBook.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace CarBook.Application.Interfaces
     public interface ICarRepository : IRepository<Car>
     {
         List<Car> GetAllCarsWithBrand();
+        List<Car> GetAll(GetCarsQuery getCarsQuery);
     }
 }

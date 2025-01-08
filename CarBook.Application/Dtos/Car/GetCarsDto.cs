@@ -6,13 +6,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarBook.Application.Features.CarFeatures.Results
+namespace CarBook.Application.Dtos.Car
 {
-    public class GetAllCarsWithBrandQueryResult
+    public class GetCarsDto
     {
         public int Id { get; set; }
         public int ModelId { get; set; }
-        public string ModelName { get; set; } // for now
+        public Model Model { get; set; }
+        public int BrandId { get; set; }
+        public Brand Brand { get; set; }
         public int Km { get; set; }
         public byte SeatCount { get; set; }
         public byte Luggage { get; set; }

@@ -1,6 +1,7 @@
 ﻿using CarBook.Application.Features.CarFeatures.Commands;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CarBook.Application.Features.CarFeatures.Handlers
 {
-    public class CreateCarCommandHandler
+    public class CreateCarCommandHandler : IRequestHandler<CreateCarCommand>
     {
         private readonly IRepository<Car> _repository;
 
@@ -18,18 +19,35 @@ namespace CarBook.Application.Features.CarFeatures.Handlers
             _repository = repository;
         }
 
-        public async Task Handle(CreateCarCommand createCarCommand)
+        //public async Task Handle(CreateCarCommand request)
+        //{
+        //    var carToBeCreated = new Car()
+        //    {
+        //        ModelId = request.ModelId,
+        //        BigImageUrl = request.BigImageUrl,
+        //        CoverImageUrl = request.CoverImageUrl,
+        //        FuelType = request.FuelType,
+        //        Km = request.Km,
+        //        Luggage = request.Luggage,
+        //        SeatCount = request.SeatCount,
+        //        TransmissionType = request.TransmissionType
+        //    };
+
+        //    await _repository.CreateAsync(carToBeCreated);
+        //}
+
+        public async Task Handle(CreateCarCommand request, CancellationToken cancellationToken)
         {
             var carToBeCreated = new Car()
             {
-                ModelId = createCarCommand.ModelId,
-                BigImageUrl = createCarCommand.BigImageUrl,
-                CoverImageUrl = createCarCommand.CoverImageUrl,
-                FuelType = createCarCommand.FuelType,
-                Km = createCarCommand.Km,
-                Luggage = createCarCommand.Luggage,
-                SeatCount = createCarCommand.SeatCount,
-                TransmissionType = createCarCommand.TransmissionType
+                ModelId = request.ModelId,
+                BigImageUrl = request.BigImageUrl,
+                CoverImageUrl = request.CoverImageUrl,
+                FuelType = request.FuelType,
+                Km = request.Km,
+                Luggage = request.Luggage,
+                SeatCount = request.SeatCount,
+                TransmissionType = request.TransmissionType
             };
 
             await _repository.CreateAsync(carToBeCreated);

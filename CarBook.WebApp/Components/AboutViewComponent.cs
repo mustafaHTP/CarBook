@@ -18,7 +18,7 @@ namespace CarBook.WebApp.ViewComponents
             var response = await client.GetAsync("https://localhost:7116/api/Abouts/GetAll");
             if (response.IsSuccessStatusCode)
             {
-                var abouts = await response.Content.ReadFromJsonAsync<List<GetAboutDto>>();
+                var abouts = await response.Content.ReadFromJsonAsync<List<GetAboutsDto>>();
 
                 return View(abouts);
             }

@@ -32,7 +32,7 @@ namespace CarBook.WebApi.Controllers
             _getContactByIdQueryHandler = getContactByIdQueryHandler;
         }
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<IActionResult> ContactList()
         {
             var contacts = await _getAllContactsQueryHandler.Handle();
