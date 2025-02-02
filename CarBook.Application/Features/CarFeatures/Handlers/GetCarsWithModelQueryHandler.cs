@@ -1,32 +1,32 @@
 ﻿using CarBook.Application.Features.CarFeatures.Queries;
 using CarBook.Application.Features.CarFeatures.Results;
 using CarBook.Application.Interfaces;
-using CarBook.Domain.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CarBook.Application.Features.CarFeatures.Handlers
 {
-    public class GetCarsQueryHandler : IRequestHandler<GetCarsQuery, List<GetCarsQueryResult>>
+    public class GetCarsWithModelQueryHandler : IRequestHandler<GetCarsWithModelQuery, List<GetCarsWithModelQueryResult>>
     {
-        private readonly ICarRepository _repository;
+        private ICarRepository _repository;
 
-        public GetCarsQueryHandler(ICarRepository repository)
+        public GetCarsWithModelQueryHandler(ICarRepository repository)
         {
             _repository = repository;
         }
 
-        public async Task<List<GetCarsQueryResult>> Handle(GetCarsQuery request, CancellationToken cancellationToken)
+        public Task<List<GetCarsWithModelQueryResult>> Handle(GetCarsWithModelQuery request, CancellationToken cancellationToken)
         {
-            var cars = _repository.GetAll();
-            var result = cars.Select(c => new GetCarsQueryResult()
+            var cars = _repository.GetAllCarsWithModel();
+            return Task.FromResult(cars.Select(c => new GetCarsWithModelQueryResult()
             {
                 Id = c.Id,
+                Model = c.Model,
+                ModelId = c.ModelId,
                 BigImageUrl = c.BigImageUrl,
                 CoverImageUrl = c.CoverImageUrl,
                 FuelType = c.FuelType,
@@ -34,9 +34,7 @@ namespace CarBook.Application.Features.CarFeatures.Handlers
                 Luggage = c.Luggage,
                 SeatCount = c.SeatCount,
                 TransmissionType = c.TransmissionType
-            }).ToList();
-
-            return await Task.FromResult(result);
+            }).ToList());
         }
     }
 }

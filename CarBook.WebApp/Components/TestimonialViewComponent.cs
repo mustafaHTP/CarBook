@@ -1,6 +1,8 @@
 ﻿using CarBook.Application.Dtos.About;
 using CarBook.Application.Dtos.Testimonial;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace CarBook.WebApp.ViewComponents
 {
@@ -19,9 +21,10 @@ namespace CarBook.WebApp.ViewComponents
             var response = await client.GetAsync("https://localhost:7116/api/Testimonials/GetAll");
             if (response.IsSuccessStatusCode)
             {
-                var testimonials = await response.Content.ReadFromJsonAsync<List<GetTestimonialsDto>>();
+                var value = await response.Content.ReadAsStringAsync();
+                var jsonContent = JsonConvert.DeserializeObject<List<GetTestimonialsDto>>(value);
 
-                return View(testimonials);
+                return View(jsonContent);
             }
 
             return View();

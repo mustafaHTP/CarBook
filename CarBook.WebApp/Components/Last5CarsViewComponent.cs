@@ -1,14 +1,15 @@
-﻿using CarBook.Application.Dtos.About;
+﻿using CarBook.Application.Dtos.Car;
+using CarBook.Application.Dtos.FooterAddress;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
-namespace CarBook.WebApp.ViewComponents
+namespace CarBook.WebApp.Components
 {
-    public class AboutViewComponent : ViewComponent
+    public class Last5CarsViewComponent : ViewComponent
     {
         private readonly IHttpClientFactory _httpClientFactory;
 
-        public AboutViewComponent(IHttpClientFactory httpClientFactory)
+        public Last5CarsViewComponent(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
         }
@@ -16,13 +17,14 @@ namespace CarBook.WebApp.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:7116/api/Abouts/GetAll");
+            var response = await client.GetAsync("https://localhost:7116/api/Cars/GetLast5CarsWithBrand");
+
             if (response.IsSuccessStatusCode)
             {
                 var jsonData = await response.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<List<GetAboutsDto>>(jsonData);
+                var result = JsonConvert.DeserializeObject<List<GetLast5CarsWithBrandDto>>(jsonData);
 
-                return View(values);
+                return View(result);
             }
 
             return View();

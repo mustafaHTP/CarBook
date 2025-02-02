@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 
 namespace CarBook.Application.Dtos.Car
 {
-    public class GetCarsDto
+    public class GetCarsWithModelDto
     {
         public int Id { get; set; }
+        public int ModelId { get; set; }
+        public Model Model { get; set; }
         public int Km { get; set; }
         public byte SeatCount { get; set; }
         public byte Luggage { get; set; }

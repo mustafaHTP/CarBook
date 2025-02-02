@@ -9,7 +9,7 @@ namespace CarBook.WebApp.Components
 
         public FooterAddressViewComponent(IHttpClientFactory httpClientFactory)
         {
-            this._httpClientFactory = httpClientFactory;
+            _httpClientFactory = httpClientFactory;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()

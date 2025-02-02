@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace CarBook.Domain.Entities
 {
-    public class BlogCategory : BaseEntity
+    public class BlogAuthor : BaseEntity
     {
         public string Name { get; set; }
-        public List<Blog> Blogs { get; set; }
+        public string Description { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

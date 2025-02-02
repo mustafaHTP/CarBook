@@ -13,6 +13,8 @@ namespace CarBook.Persistence.Context
     {
         public DbSet<About> Abouts { get; set; }
         public DbSet<Banner> Banners { get; set; }
+        public DbSet<BlogAuthor> BlogAuthors { get; set; }
+        public DbSet<Blog> Blogs { get; set; }
         public DbSet<BlogCategory> BlogCategories { get; set; }
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Car> Cars { get; set; }

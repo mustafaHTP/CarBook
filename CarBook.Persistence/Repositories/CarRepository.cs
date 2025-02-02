@@ -18,27 +18,24 @@ namespace CarBook.Persistence.Repositories
         {
         }
 
-        public List<Car> GetAllCarsWithBrand()
+        public List<Car> GetAllCarsWithModel()
         {
             return [.. _context.Cars.Include( c => c.Model)];
         }
 
-        public List<Car> GetAll(GetCarsQuery getCarsQuery)
+        public List<Car> GetAll()
         {
-            var carsQuery = _context.Cars.AsQueryable();
+            return [.. _context.Cars];
+        }
 
-            if (getCarsQuery.IncludeBrand)
-            {
-                carsQuery = carsQuery.Include(c => c.Model).ThenInclude(m => m.Brand);
+        public List<Car> GetAllCarsWithBrand()
+        {
+            return [.. _context.Cars.Include(c => c.Model).ThenInclude(m => m.Brand)];
+        }
 
-            }
-            else if (getCarsQuery.IncludeModel)  // Only include Brand without Model
-            {
-                // Include Brand directly in case Model is not included
-                carsQuery = carsQuery.Include(c => c.Model);
-            }
-
-            return carsQuery.ToList();
+        public List<Car> GetLast5CarsWithBrand()
+        {
+            return [.. _context.Cars.Include(c => c.Model).ThenInclude(m => m.Brand).OrderByDescending(c => c.Id)];
         }
     }
 }

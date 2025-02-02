@@ -1,5 +1,4 @@
-﻿using CarBook.Application.Features.CarFeatures.Handlers;
-using CarBook.Application.Features.CarFeatures.Results;
+﻿using CarBook.Application.Features.CarFeatures.Results;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CarBook.Application.Features.CarFeatures.Queries
 {
-    public class GetCarsQuery : IRequest<List<GetCarsQueryResult>>
+    public class GetCarsWithBrandQuery : IRequest<List<GetCarsWithBrandQueryResult>>
     {
     }
 }

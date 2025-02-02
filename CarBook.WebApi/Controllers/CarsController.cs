@@ -18,17 +18,13 @@ namespace CarBook.WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAll([FromQuery] GetCarsQuery getCarsQuery)
+        [HttpGet()]
+        public async Task<IActionResult> GetAll()
         {
-            var cars = await _mediator.Send(getCarsQuery);
+            var cars = await _mediator.Send(new GetCarsQuery());
             var carsDto = cars.Select(c => new GetCarsDto()
             {
                 Id = c.Id,
-                ModelId = c.ModelId,
-                Model = c.Model,
-                BrandId = c.Model.BrandId,
-                Brand = c.Model.Brand,
                 BigImageUrl = c.BigImageUrl,
                 CoverImageUrl = c.CoverImageUrl,
                 FuelType = c.FuelType,
@@ -36,6 +32,73 @@ namespace CarBook.WebApi.Controllers
                 Luggage = c.Luggage,
                 SeatCount = c.SeatCount,
                 TransmissionType = c.TransmissionType
+            });
+
+            return Ok(carsDto);
+        }
+
+        [HttpGet("GetAllWithModel")]
+        public async Task<IActionResult> GetAllWithModel()
+        {
+            var cars = await _mediator.Send(new GetCarsWithModelQuery());
+            var carsDto = cars.Select(c => new GetCarsWithModelDto()
+            {
+                Id = c.Id,
+                ModelId = c.ModelId,
+                Model = c.Model,
+                BigImageUrl = c.BigImageUrl,
+                CoverImageUrl = c.CoverImageUrl,
+                FuelType = c.FuelType,
+                Km = c.Km,
+                Luggage = c.Luggage,
+                SeatCount = c.SeatCount,
+                TransmissionType = c.TransmissionType,
+            });
+
+            return Ok(carsDto);
+        }
+
+        [HttpGet("GetAllWithBrand")]
+        public async Task<IActionResult> GetAllWithBrand()
+        {
+            var cars = await _mediator.Send(new GetCarsWithBrandQuery());
+            var carsDto = cars.Select(c => new GetCarsWithBrandDto()
+            {
+                Id = c.Id,
+                ModelId = c.ModelId,
+                Model = c.Model,
+                BrandId = c.BrandId,
+                Brand = c.Brand,
+                BigImageUrl = c.BigImageUrl,
+                CoverImageUrl = c.CoverImageUrl,
+                FuelType = c.FuelType,
+                Km = c.Km,
+                Luggage = c.Luggage,
+                SeatCount = c.SeatCount,
+                TransmissionType = c.TransmissionType,
+            });
+
+            return Ok(carsDto);
+        }
+
+        [HttpGet("GetLast5CarsWithBrand")]
+        public async Task<IActionResult> GetLast5CarsWithBrand()
+        {
+            var cars = await _mediator.Send(new GetLast5CarsWithBrandQuery());
+            var carsDto = cars.Select(c => new GetLast5CarsWithBrandDto()
+            {
+                Id = c.Id,
+                ModelId = c.ModelId,
+                Model = c.Model,
+                BrandId = c.BrandId,
+                Brand = c.Brand,
+                BigImageUrl = c.BigImageUrl,
+                CoverImageUrl = c.CoverImageUrl,
+                FuelType = c.FuelType,
+                Km = c.Km,
+                Luggage = c.Luggage,
+                SeatCount = c.SeatCount,
+                TransmissionType = c.TransmissionType,
             });
 
             return Ok(carsDto);
