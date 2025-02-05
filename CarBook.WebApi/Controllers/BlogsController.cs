@@ -1,0 +1,68 @@
+﻿using CarBook.Application.Features.BlogFeatures.Commands;
+using CarBook.Application.Features.BlogFeatures.Queries;
+using MediatR;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+
+namespace CarBook.WebApi.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class BlogsController : ControllerBase
+    {
+        private readonly IMediator _mediator;
+
+        public BlogsController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
+        [HttpGet()]
+        public async Task<IActionResult> GetAll()
+        {
+            var blogs = await _mediator.Send(new GetBlogsQuery());
+
+            return Ok(blogs);
+        }
+
+        [HttpGet("Last3Blogs")]
+        public async Task<IActionResult> GetLast3Blogs()
+        {
+            var blogs = await _mediator.Send(new GetLast3BlogsWithAuthorAndCategoryQuery());
+
+            return Ok(blogs);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var blog = await _mediator.Send(new GetBlogByIdQuery() { Id = id });
+
+            return Ok(blog);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateBlogCommand createBlogCommand)
+        {
+            await _mediator.Send(createBlogCommand);
+
+            return Ok("Blog has been created");
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update(UpdateBlogCommand updateBlogCommand)
+        {
+            await _mediator.Send(updateBlogCommand);
+
+            return Ok("Blog has been updated");
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(DeleteBlogCommand deleteBlogCommand)
+        {
+            await _mediator.Send(deleteBlogCommand);
+
+            return Ok("Blog has been deleted");
+        }
+    }
+}

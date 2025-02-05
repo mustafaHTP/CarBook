@@ -1,4 +1,4 @@
-﻿using CarBook.Application.Dtos.FooterAddress;
+﻿using CarBook.Application.Dtos.FooterAddressDtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarBook.WebApp.Components

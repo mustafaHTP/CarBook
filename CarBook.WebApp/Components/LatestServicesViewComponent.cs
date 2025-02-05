@@ -1,4 +1,4 @@
-﻿using CarBook.Application.Dtos.Service;
+﻿using CarBook.Application.Dtos.ServiceDtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarBook.WebApp.Components

@@ -76,6 +76,44 @@ namespace CarBook.Persistence.Migrations
                     b.ToTable("Banners");
                 });
 
+            modelBuilder.Entity("CarBook.Domain.Entities.Blog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BlogAuthorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BlogCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CoverImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlogAuthorId");
+
+                    b.HasIndex("BlogCategoryId");
+
+                    b.ToTable("Blogs");
+                });
+
             modelBuilder.Entity("CarBook.Domain.Entities.BlogAuthor", b =>
                 {
                     b.Property<int>("Id")
@@ -238,14 +276,14 @@ namespace CarBook.Persistence.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("ReservationPricingId")
+                    b.Property<int>("PricingPlanId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CarId");
 
-                    b.HasIndex("ReservationPricingId");
+                    b.HasIndex("PricingPlanId");
 
                     b.ToTable("CarReservationPricings");
                 });
@@ -367,7 +405,7 @@ namespace CarBook.Persistence.Migrations
                     b.ToTable("Models");
                 });
 
-            modelBuilder.Entity("CarBook.Domain.Entities.ReservationPricing", b =>
+            modelBuilder.Entity("CarBook.Domain.Entities.PricingPlan", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -381,7 +419,7 @@ namespace CarBook.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ReservationPricings");
+                    b.ToTable("PricingPlans");
                 });
 
             modelBuilder.Entity("CarBook.Domain.Entities.Service", b =>
@@ -463,6 +501,25 @@ namespace CarBook.Persistence.Migrations
                     b.ToTable("Testimonials");
                 });
 
+            modelBuilder.Entity("CarBook.Domain.Entities.Blog", b =>
+                {
+                    b.HasOne("CarBook.Domain.Entities.BlogAuthor", "BlogAuthor")
+                        .WithMany("Blogs")
+                        .HasForeignKey("BlogAuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CarBook.Domain.Entities.BlogCategory", "BlogCategory")
+                        .WithMany("Blogs")
+                        .HasForeignKey("BlogCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BlogAuthor");
+
+                    b.Navigation("BlogCategory");
+                });
+
             modelBuilder.Entity("CarBook.Domain.Entities.Car", b =>
                 {
                     b.HasOne("CarBook.Domain.Entities.Model", "Model")
@@ -512,15 +569,15 @@ namespace CarBook.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CarBook.Domain.Entities.ReservationPricing", "ReservationPricing")
+                    b.HasOne("CarBook.Domain.Entities.PricingPlan", "PricingPlan")
                         .WithMany("CarReservationPricings")
-                        .HasForeignKey("ReservationPricingId")
+                        .HasForeignKey("PricingPlanId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Car");
 
-                    b.Navigation("ReservationPricing");
+                    b.Navigation("PricingPlan");
                 });
 
             modelBuilder.Entity("CarBook.Domain.Entities.Model", b =>
@@ -532,6 +589,16 @@ namespace CarBook.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Brand");
+                });
+
+            modelBuilder.Entity("CarBook.Domain.Entities.BlogAuthor", b =>
+                {
+                    b.Navigation("Blogs");
+                });
+
+            modelBuilder.Entity("CarBook.Domain.Entities.BlogCategory", b =>
+                {
+                    b.Navigation("Blogs");
                 });
 
             modelBuilder.Entity("CarBook.Domain.Entities.Brand", b =>
@@ -558,7 +625,7 @@ namespace CarBook.Persistence.Migrations
                     b.Navigation("Cars");
                 });
 
-            modelBuilder.Entity("CarBook.Domain.Entities.ReservationPricing", b =>
+            modelBuilder.Entity("CarBook.Domain.Entities.PricingPlan", b =>
                 {
                     b.Navigation("CarReservationPricings");
                 });

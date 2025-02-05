@@ -37,5 +37,10 @@ namespace CarBook.Persistence.Repositories
         {
             return [.. _context.Cars.Include(c => c.Model).ThenInclude(m => m.Brand).OrderByDescending(c => c.Id)];
         }
+
+        public List<Car> GetCarsWithReservationPricings()
+        {
+            return [.. _context.Cars.Include(c => c.Model).ThenInclude(m => m.Brand).Include(c => c.CarReservationPricings).ThenInclude(cr => cr.PricingPlan)];
+        }
     }
 }

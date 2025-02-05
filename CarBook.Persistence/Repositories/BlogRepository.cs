@@ -1,0 +1,24 @@
+﻿using CarBook.Application.Interfaces;
+using CarBook.Domain.Entities;
+using CarBook.Persistence.Context;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CarBook.Persistence.Repositories
+{
+    public class BlogRepository : Repository<Blog>, IBlogRepository
+    {
+        public BlogRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
+        {
+        }
+
+        public List<Blog> GetLast3BlogsWithAuthorAndCategory()
+        {
+            return _context.Set<Blog>().Include(b => b.BlogAuthor).Include(b => b.BlogCategory).OrderByDescending(b => b.Id).Take(3).ToList();
+        }
+    }
+}

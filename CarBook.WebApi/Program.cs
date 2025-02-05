@@ -32,6 +32,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ApplicationDbContext>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<ICarRepository, CarRepository>();
+builder.Services.AddScoped<IBlogRepository, BlogRepository>();
+builder.Services.AddScoped<ICarReservationPricingRepository, CarReservationPricingRepository>();
 
 //Add About handlers
 builder.Services.AddScoped<GetAboutsQueryHandler>();

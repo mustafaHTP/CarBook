@@ -11,9 +11,8 @@ namespace CarBook.Domain.Entities
     {
         public int CarId { get; set; }
         public Car Car { get; set; }
-        public int ReservationPricingId { get; set; }
-        public ReservationPricing ReservationPricing { get; set; }
+        public int PricingPlanId { get; set; }
+        public PricingPlan PricingPlan { get; set; }
         public decimal Price { get; set; }
-
     }
 }
