@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.CarReservationPricingFeatures.Queries;
+﻿using CarBook.Application.Dtos.CarReservationPricingDtos;
+using CarBook.Application.Features.CarReservationPricingFeatures.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -29,7 +30,17 @@ namespace CarBook.WebApi.Controllers
         {
             var carReservationPricings = await _mediator.Send(new GetCarReservationPricingsWithDayPricingPlanQuery());
 
-            return Ok(carReservationPricings);
+            var carReservationPricingsDto = carReservationPricings.Select(crp => new GetCarReservationPricingsWithDayPricingPlanDto()
+            {
+                Id = crp.Id,
+                CarId = crp.CarId,
+                Car = crp.Car,
+                PricingPlanId = crp.PricingPlanId,
+                PricingPlan = crp.PricingPlan,
+                Price = crp.Price
+            });
+
+            return Ok(carReservationPricingsDto);
         }
     }
 }

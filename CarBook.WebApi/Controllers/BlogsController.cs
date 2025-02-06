@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.BlogFeatures.Commands;
+﻿using CarBook.Application.Dtos.BlogDtos;
+using CarBook.Application.Features.BlogFeatures.Commands;
 using CarBook.Application.Features.BlogFeatures.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -31,6 +32,48 @@ namespace CarBook.WebApi.Controllers
             var blogs = await _mediator.Send(new GetLast3BlogsWithAuthorAndCategoryQuery());
 
             return Ok(blogs);
+        }
+
+        [HttpGet("WithAuthorAndCategory")]
+        public async Task<IActionResult> GetAllWithAuthorAndCategory()
+        {
+            var blogs = await _mediator.Send(new GetBlogsWithAuthorAndCategoryQuery());
+            var blogsDto = blogs.Select(b => new GetBlogsWithAuthorAndCategoryDto()
+            {
+                Id = b.Id,
+                Title = b.Title,
+                Content = b.Content,
+                Description = b.Description,
+                CoverImageUrl = b.CoverImageUrl,
+                CreatedDate = b.CreatedDate,
+                BlogAuthorId = b.BlogAuthorId,
+                BlogAuthorName = b.BlogAuthorName,
+                BlogCategoryId = b.BlogCategoryId,
+                BlogCategoryName = b.BlogCategoryName
+            });
+
+            return Ok(blogsDto);
+        }
+
+        [HttpGet("WithAuthor/{id}")]
+        public async Task<IActionResult> GetByIdWithAuthor(int id)
+        {
+            var blog = await _mediator.Send(new GetBlogByIdWithAuthorQuery() { Id = id });
+            var blogDto = new GetBlogByIdWithAuthorDto()
+            {
+                Id = blog.Id,
+                Title = blog.Title,
+                Content = blog.Content,
+                Description = blog.Description,
+                CoverImageUrl = blog.CoverImageUrl,
+                CreatedDate = blog.CreatedDate,
+                BlogAuthorId = blog.BlogAuthorId,
+                BlogAuthorName = blog.BlogAuthorName,
+                BlogAuthorDescription = blog.BlogAuthorDescription,
+                BlogAuthorImageUrl = blog.BlogAuthorImageUrl
+            };
+
+            return Ok(blogDto);
         }
 
         [HttpGet("{id}")]
