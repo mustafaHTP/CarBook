@@ -16,6 +16,9 @@ namespace CarBook.Persistence.Context
         public DbSet<BlogAuthor> BlogAuthors { get; set; }
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<BlogCategory> BlogCategories { get; set; }
+        public DbSet<BlogTag> BlogTags { get; set; }
+        public DbSet<BlogComment> BlogComments { get; set; }
+        public DbSet<BlogTagCloud> BlogTagClouds { get; set; }
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Car> Cars { get; set; }
         public DbSet<CarDescription> CarDescriptions { get; set; }

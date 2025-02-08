@@ -33,7 +33,7 @@
                             </div>
                             <h3 class="heading mt-2"><a href="#">@item.Title</a></h3>
                             <p>@item.Description</p>
-                            <p><a asp-controller="Blog" asp-action="GetById" asp-route-id="2" class="btn btn-primary">Continue <span class="icon-long-arrow-right"></span></a></p>
+                            <p><a asp-controller="Blog" asp-action="GetById" asp-route-id="@item.Id" class="btn btn-primary">Continue <span class="icon-long-arrow-right"></span></a></p>
                         </div>
                     </div>
                 </div>

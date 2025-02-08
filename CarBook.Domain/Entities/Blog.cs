@@ -17,5 +17,7 @@ namespace CarBook.Domain.Entities
         public BlogAuthor BlogAuthor { get; set; }
         public int BlogCategoryId { get; set; }
         public BlogCategory BlogCategory { get; set; }
+        public List<BlogTagCloud> BlogTagClouds { get; set; }
+        public List<BlogComment> BlogComments { get; set; }
     }
 }

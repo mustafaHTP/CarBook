@@ -30,6 +30,8 @@ namespace CarBook.WebApp.Controllers
 
         public async Task<IActionResult> GetById(int id)
         {
+            ViewData["BlogId"] = id;
+
             var client = _httpClientFactory.CreateClient();
             var result = await client.GetAsync($"https://localhost:7116/api/Blogs/WithAuthor/{id}");
             if (result.IsSuccessStatusCode)

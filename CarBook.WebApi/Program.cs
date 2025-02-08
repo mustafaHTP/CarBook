@@ -34,6 +34,9 @@ builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<ICarRepository, CarRepository>();
 builder.Services.AddScoped<IBlogRepository, BlogRepository>();
 builder.Services.AddScoped<ICarReservationPricingRepository, CarReservationPricingRepository>();
+builder.Services.AddScoped<IBlogTagCloudRepository, BlogTagCloudRepository>();
+builder.Services.AddScoped<IBlogTagRepository, BlogTagRepository>();
+builder.Services.AddScoped<IBlogCommentRepository, BlogCommentRepository>();
 
 //Add About handlers
 builder.Services.AddScoped<GetAboutsQueryHandler>();
