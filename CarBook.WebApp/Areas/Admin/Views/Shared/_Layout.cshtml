@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Carbook @(string.IsNullOrEmpty(ViewData["Title"]?.ToString()) ? "" : $"- {ViewData["Title"]}")</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="MyraStudio" name="author" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Bootstrap icons-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="~/admin-template/vertical/assets/images/favicon.ico">
+
+    <!-- App css -->
+    <link href="~/admin-template/vertical/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/admin-template/vertical/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/admin-template/vertical/assets/css/theme.min.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+    <div id="layout-wrapper">
+        <!-- Navbar -->
+        <partial name="/Areas/Admin/Views/Shared/PartialViews/_Navbar.cshtml" />
+        <!-- Left Sidebar-->
+        <partial name="/Areas/Admin/Views/Shared/PartialViews/_Sidebar.cshtml" />
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="page-content">
+                <!-- Use container-row-col for the content here -->
+                @RenderBody()
+            </div>
+
+            <!-- Footer -->
+            <partial name="/Areas/Admin/Views/Shared/PartialViews/_Footer.cshtml" />
+        </div>
+    </div>
+
+    <!-- Overlay-->
+    <div class="menu-overlay"></div>
+
+
+    <!-- jQuery  -->
+    <script src="~/admin-template/vertical/assets/js/jquery.min.js"></script>
+    <script src="~/admin-template/vertical/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="~/admin-template/vertical/assets/js/metismenu.min.js"></script>
+    <script src="~/admin-template/vertical/assets/js/waves.js"></script>
+    <script src="~/admin-template/vertical/assets/js/simplebar.min.js"></script>
+
+    <!-- App js -->
+    <script src="~/admin-template/vertical/assets/js/theme.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+﻿@model List<GetCarsWithBrandDto>
+
+<div class="container-fluid">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Car List</h4>
+                <p class="card-subtitle mb-4">
+                    For basic styling—light padding and only horizontal
+                    dividers—add the base class <code>.table</code> to any
+                    <code>&lt;table&gt;</code>.
+                </p>
+                <div class="table-responsive">
+                    <table class="table table-striped mb-0">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Brand</th>
+                                <th>Model</th>
+                                <th>Km</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.Count; ++i)
+                            {
+                                <tr>
+                                    <th scope="row">@(i + 1)</th>
+                                    <td>@Model[i].Brand.Name</td>
+                                    <td>@Model[i].Model.Name</td>
+                                    <td>@Model[i].Km</td>
+                                    <td>
+                                        <a class="btn btn-warning text-white">
+                                            <i class="bi bi-pencil-fill"></i>
+                                            Edit
+                                        </a>
+                                        <a class="btn btn-info text-white">
+                                            <i class="bi bi-list"></i>
+                                            Detail
+                                        </a>
+                                        <a class="btn btn-danger text-white">
+                                            <i class="bi bi-trash3-fill"></i>
+                                            Remove
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <!-- end card-body-->
+        </div>
+        <!-- end card -->
+
+    </div>
+</div>
