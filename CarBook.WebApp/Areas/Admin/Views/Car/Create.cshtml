@@ -1,58 +1,64 @@
 ﻿@model CreateCarViewModel
 
-<div class="card">
-    <div class="card-body">
-        <h4 class="card-title">Create Car</h4>
-        <p class="card-subtitle mb-4">Here’s a quick example to demonstrate Bootstrap’s form styles. Keep reading for documentation on required classes, form layout, and more.</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Create Car</h4>
+                    <p class="card-subtitle mb-4">Here’s a quick example to demonstrate Bootstrap’s form styles. Keep reading for documentation on required classes, form layout, and more.</p>
 
-        <form method="post" asp-area="Admin" asp-controller="Car" asp-action="Create">
+                    <form method="post" asp-area="Admin" asp-controller="Car" asp-action="Create">
 
-            <div class="form-group">
-                <label asp-for="ModelId">Car Model</label>
-                <select asp-for="ModelId" asp-items="ViewBag.Models" class="form-control">
-                </select>
+                        <div class="form-group">
+                            <label asp-for="ModelId">Car Model</label>
+                            <select asp-for="ModelId" asp-items="ViewBag.Models" class="form-control">
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Km">Km</label>
+                            <input asp-for="Km" type="number" class="form-control" placeholder="Enter Km">
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="SeatCount">Seat Count</label>
+                            <input asp-for="SeatCount" type="number" class="form-control" placeholder="Enter Seat Count">
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Luggage">Luggage</label>
+                            <input asp-for="Luggage" type="number" class="form-control" placeholder="Enter Luggage Amount">
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="TransmissionType">Transmission Type</label>
+                            <select asp-for="TransmissionType" asp-items="ViewBag.TransmissionTypes" class="form-control"></select>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="FuelType">Fuel Type</label>
+                            <select asp-for="FuelType" asp-items="ViewBag.FuelTypes" class="form-control"></select>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="CoverImageUrl">Cover Image Url</label>
+                            <input asp-for="CoverImageUrl" class="form-control" placeholder="Enter a cover image url" />
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="BigImageUrl">Big Image Url</label>
+                            <input asp-for="BigImageUrl" class="form-control" placeholder="Enter a big image url" />
+                        </div>
+
+                        <button type="submit" class="btn btn-success waves-effect waves-light">
+                            <i class="bi bi-floppy"></i>
+                            Save
+                        </button>
+                    </form>
+
+                </div>
             </div>
-
-            <div class="form-group">
-                <label asp-for="Km">Km</label>
-                <input asp-for="Km" type="number" class="form-control" placeholder="Enter Km">
-            </div>
-
-            <div class="form-group">
-                <label asp-for="SeatCount">Seat Count</label>
-                <input asp-for="SeatCount" type="number" class="form-control" placeholder="Enter Seat Count">
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Luggage">Luggage</label>
-                <input asp-for="Luggage" type="number" class="form-control" placeholder="Enter Luggage Amount">
-            </div>
-
-            <div class="form-group">
-                <label asp-for="TransmissionType">Transmission Type</label>
-                <select asp-for="TransmissionType" asp-items="ViewBag.TransmissionTypes" class="form-control"></select>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="FuelType">Fuel Type</label>
-                <select asp-for="FuelType" asp-items="ViewBag.FuelTypes" class="form-control"></select>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="CoverImageUrl">Cover Image Url</label>
-                <input asp-for="CoverImageUrl" class="form-control" placeholder="Enter a cover image url"/>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="BigImageUrl">Big Image Url</label>
-                <input asp-for="BigImageUrl" class="form-control" placeholder="Enter a big image url"/>
-            </div>
-
-            <button type="submit" class="btn btn-success waves-effect waves-light">
-                <i class="bi bi-floppy"></i>
-                Save
-            </button>
-        </form>
-
+        </div>
     </div>
 </div>
