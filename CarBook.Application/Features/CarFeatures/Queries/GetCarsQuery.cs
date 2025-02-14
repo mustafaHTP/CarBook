@@ -1,11 +1,5 @@
-﻿using CarBook.Application.Features.CarFeatures.Handlers;
-using CarBook.Application.Features.CarFeatures.Results;
+﻿using CarBook.Application.Features.CarFeatures.Results;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CarBook.Application.Features.CarFeatures.Queries
 {

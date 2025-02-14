@@ -1,15 +1,7 @@
-using CarBook.Application.Features.AboutFeatures.Handlers;
-using CarBook.Application.Features.BannerFeatures.Handlers;
-using CarBook.Application.Features.BlogFeatures.Handlers;
-using CarBook.Application.Features.BrandFeatures.Handlers;
-using CarBook.Application.Features.CarFeatures.Handlers;
-using CarBook.Application.Features.ContactFeatures.Handlers;
 using CarBook.Application.Interfaces;
 using CarBook.Application.Services;
-using CarBook.Domain.Entities;
 using CarBook.Persistence.Context;
 using CarBook.Persistence.Repositories;
-using System.Reflection;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);

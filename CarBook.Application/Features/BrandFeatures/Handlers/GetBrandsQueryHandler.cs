@@ -2,12 +2,6 @@
 using CarBook.Application.Features.BrandFeatures.Results;
 using CarBook.Application.Interfaces;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CarBook.Application.Features.BrandFeatures.Handlers
 {

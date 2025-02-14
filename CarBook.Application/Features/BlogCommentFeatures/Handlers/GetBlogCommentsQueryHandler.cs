@@ -3,11 +3,6 @@ using CarBook.Application.Features.BlogCommentFeatures.Results;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CarBook.Application.Features.BlogCommentFeatures.Handlers
 {
@@ -22,7 +17,7 @@ namespace CarBook.Application.Features.BlogCommentFeatures.Handlers
 
         public async Task<List<GetBlogCommentsQueryResult>> Handle(GetBlogCommentsQuery request, CancellationToken cancellationToken)
         {
-            var blogComments = await  _repository.GetAllAsync();
+            var blogComments = await _repository.GetAllAsync();
             var result = blogComments.Select(x => new GetBlogCommentsQueryResult
             {
                 Id = x.Id,

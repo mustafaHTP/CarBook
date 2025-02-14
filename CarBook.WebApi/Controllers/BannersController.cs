@@ -1,8 +1,6 @@
 ﻿using CarBook.Application.Features.BannerFeatures.Commands;
-using CarBook.Application.Features.BannerFeatures.Handlers;
 using CarBook.Application.Features.BannerFeatures.Queries;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarBook.WebApi.Controllers

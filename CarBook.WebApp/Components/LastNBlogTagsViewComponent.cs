@@ -1,5 +1,4 @@
-﻿using CarBook.Application.Dtos.BlogTagCloudDtos;
-using CarBook.Application.Dtos.BlogTagDtos;
+﻿using CarBook.Application.Dtos.BlogTagDtos;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 

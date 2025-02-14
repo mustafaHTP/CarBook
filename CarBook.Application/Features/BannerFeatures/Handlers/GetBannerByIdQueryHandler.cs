@@ -1,15 +1,8 @@
-﻿using CarBook.Application.Features.AboutFeatures.Queries;
-using CarBook.Application.Features.AboutFeatures.Results;
-using CarBook.Application.Features.BannerFeatures.Queries;
+﻿using CarBook.Application.Features.BannerFeatures.Queries;
 using CarBook.Application.Features.BannerFeatures.Results;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CarBook.Application.Features.BannerFeatures.Handlers
 {

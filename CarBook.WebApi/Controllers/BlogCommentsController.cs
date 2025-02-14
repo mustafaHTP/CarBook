@@ -1,7 +1,6 @@
 ﻿using CarBook.Application.Features.BlogCommentFeatures.Commands;
 using CarBook.Application.Features.BlogCommentFeatures.Queries;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarBook.WebApi.Controllers

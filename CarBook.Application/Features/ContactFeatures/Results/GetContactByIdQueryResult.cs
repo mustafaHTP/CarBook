@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarBook.Application.Features.ContactFeatures.Results
+﻿namespace CarBook.Application.Features.ContactFeatures.Results
 {
     public class GetContactByIdQueryResult
     {

@@ -3,12 +3,7 @@ using CarBook.Application.Dtos.BlogDtos;
 using CarBook.Application.Features.BlogCommentFeatures.Queries;
 using CarBook.Application.Features.BlogFeatures.Commands;
 using CarBook.Application.Features.BlogFeatures.Queries;
-using CarBook.Application.Features.BlogTagFeatures.Commands;
-using CarBook.Application.Features.BlogTagFeatures.Queries;
-using CarBook.Application.Features.ServiceFeatures.Commands;
-using CarBook.Application.Features.ServiceFeatures.Queries;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarBook.WebApi.Controllers
@@ -93,7 +88,7 @@ namespace CarBook.WebApi.Controllers
         [HttpGet("{id}/comments")]
         public async Task<IActionResult> GetAllBlogCommentsById(int id)
         {
-            var blogComments = await _mediator.Send(new GetBlogCommentsByBlogIdQuery() { BlogId = id});
+            var blogComments = await _mediator.Send(new GetBlogCommentsByBlogIdQuery() { BlogId = id });
             var blogCommentsDto = blogComments.Select(bc => new GetBlogCommentsByBlogIdDto()
             {
                 Id = bc.Id,

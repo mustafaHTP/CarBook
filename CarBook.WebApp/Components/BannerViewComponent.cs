@@ -1,5 +1,4 @@
 ﻿using CarBook.Application.Dtos.BannerDtos;
-using CarBook.Application.Dtos.FooterAddressDtos;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 

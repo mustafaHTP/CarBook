@@ -1,8 +1,6 @@
-﻿using CarBook.Application.Dtos.AboutDtos;
-using CarBook.Application.Dtos.TestimonialDtos;
+﻿using CarBook.Application.Dtos.TestimonialDtos;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Text.Json;
 
 namespace CarBook.WebApp.ViewComponents
 {

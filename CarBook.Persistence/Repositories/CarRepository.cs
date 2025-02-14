@@ -1,14 +1,7 @@
-﻿using CarBook.Application.Features.CarFeatures.Queries;
-using CarBook.Application.Interfaces;
+﻿using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
 using CarBook.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace CarBook.Persistence.Repositories
 {
@@ -20,7 +13,7 @@ namespace CarBook.Persistence.Repositories
 
         public List<Car> GetAllCarsWithModel()
         {
-            return [.. _context.Cars.Include( c => c.Model)];
+            return [.. _context.Cars.Include(c => c.Model)];
         }
 
         public List<Car> GetAll()

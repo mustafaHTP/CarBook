@@ -1,11 +1,6 @@
-﻿using CarBook.Application.Features.BlogFeatures.Commands;
-using CarBook.Application.Features.BlogFeatures.Handlers;
-using CarBook.Application.Features.BlogFeatures.Queries;
-using CarBook.Application.Features.ContactFeatures.Commands;
-using CarBook.Application.Features.ContactFeatures.Handlers;
+﻿using CarBook.Application.Features.ContactFeatures.Commands;
 using CarBook.Application.Features.ContactFeatures.Queries;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarBook.WebApi.Controllers

@@ -1,5 +1,4 @@
-﻿using CarBook.Application.Dtos.CarDtos;
-using CarBook.Application.Dtos.CarReservationPricingDtos;
+﻿using CarBook.Application.Dtos.CarReservationPricingDtos;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 

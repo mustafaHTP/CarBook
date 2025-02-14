@@ -2,11 +2,6 @@
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CarBook.Application.Features.BannerFeatures.Handlers
 {
@@ -25,7 +20,7 @@ namespace CarBook.Application.Features.BannerFeatures.Handlers
 
             // Update here
             bannerToBeUpdated.VideoDescription = request.VideoDescription;
-            bannerToBeUpdated.Description = request .Description;
+            bannerToBeUpdated.Description = request.Description;
             bannerToBeUpdated.VideoUrl = request.VideoUrl;
             bannerToBeUpdated.Title = request.Title;
 

@@ -1,7 +1,6 @@
 ﻿using CarBook.Application.Dtos.CarReservationPricingDtos;
 using CarBook.Application.Features.CarReservationPricingFeatures.Queries;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarBook.WebApi.Controllers

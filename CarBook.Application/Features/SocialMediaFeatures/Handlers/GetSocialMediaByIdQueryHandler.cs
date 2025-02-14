@@ -1,14 +1,8 @@
-﻿using CarBook.Application.Features.LocationFeatures.Results;
-using CarBook.Application.Features.SocialMediaFeatures.Queries;
+﻿using CarBook.Application.Features.SocialMediaFeatures.Queries;
 using CarBook.Application.Features.SocialMediaFeatures.Results;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CarBook.Application.Features.SocialMediaFeatures.Handlers
 {

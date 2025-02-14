@@ -1,7 +1,6 @@
 ﻿using CarBook.Application.Dtos.BlogTagCloudDtos;
 using CarBook.Application.Features.BlogTagCloudFeatures.Commands;
 using CarBook.Application.Features.BlogTagCloudFeatures.Queries;
-using CarBook.Application.Features.BlogTagFeatures.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -41,12 +40,12 @@ namespace CarBook.WebApi.Controllers
             var result = await _mediator.Send(query);
 
             var resultDto = result.Select(x => new GetBlogTagsByBlogIdDto()
-                {
-                    Id = x.Id,
-                    BlogId = x.BlogId,
-                    BlogTag = x.BlogTag,
-                    BlogTagId = x.BlogTagId
-                }).ToList();
+            {
+                Id = x.Id,
+                BlogId = x.BlogId,
+                BlogTag = x.BlogTag,
+                BlogTagId = x.BlogTagId
+            }).ToList();
 
             return Ok(resultDto);
         }

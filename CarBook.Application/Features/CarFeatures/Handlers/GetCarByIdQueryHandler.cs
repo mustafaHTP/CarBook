@@ -1,13 +1,7 @@
 ﻿using CarBook.Application.Features.CarFeatures.Queries;
 using CarBook.Application.Features.CarFeatures.Results;
 using CarBook.Application.Interfaces;
-using CarBook.Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CarBook.Application.Features.CarFeatures.Handlers
 {
@@ -23,8 +17,8 @@ namespace CarBook.Application.Features.CarFeatures.Handlers
         public async Task<GetCarByIdQueryResult> Handle(GetCarByIdQuery request, CancellationToken cancellationToken)
         {
             var car = _repository.GetById(
-                request.Id, 
-                request.IncludeModel, 
+                request.Id,
+                request.IncludeModel,
                 request.IncludeBrand);
 
             var result = new GetCarByIdQueryResult()

@@ -1,7 +1,6 @@
 ﻿using CarBook.Application.Features.FooterAddressFeatures.Commands;
 using CarBook.Application.Features.FooterAddressFeatures.Queries;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarBook.WebApi.Controllers
