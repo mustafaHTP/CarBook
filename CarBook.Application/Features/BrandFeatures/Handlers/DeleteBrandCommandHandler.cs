@@ -3,6 +3,7 @@ using CarBook.Application.Features.BrandFeatures.Queries;
 using CarBook.Application.Features.BrandFeatures.Results;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace CarBook.Application.Features.BrandFeatures.Handlers
 {
-    public class DeleteBrandCommandHandler
+    public class DeleteBrandCommandHandler : IRequestHandler<DeleteBrandCommand>
     {
         private readonly IRepository<Brand> _repository;
 
@@ -20,9 +21,10 @@ namespace CarBook.Application.Features.BrandFeatures.Handlers
             _repository = repository;
         }
 
-        public async Task Handle(DeleteBrandCommand deleteBrandCommand)
+        public async Task Handle(DeleteBrandCommand request, CancellationToken cancellationToken)
         {
-            var brandToBeDeleted = await _repository.GetByIdAsync(deleteBrandCommand.Id);
+            var brandToBeDeleted = await _repository.GetByIdAsync(request.Id);
+
             await _repository.DeleteAsync(brandToBeDeleted);
         }
     }

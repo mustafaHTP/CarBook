@@ -13,45 +13,35 @@ namespace CarBook.Application.Features.CarFeatures.Handlers
 {
     public class GetCarByIdQueryHandler : IRequestHandler<GetCarByIdQuery, GetCarByIdQueryResult>
     {
-        private readonly IRepository<Car> _repository;
+        private readonly ICarRepository _repository;
 
-        public GetCarByIdQueryHandler(IRepository<Car> repository)
+        public GetCarByIdQueryHandler(ICarRepository repository)
         {
             _repository = repository;
         }
 
-        //public async Task<GetCarByIdQueryResult> Handle(GetCarByIdQuery getCarByIdQuery)
-        //{
-        //    var car = await _repository.GetByIdAsync(getCarByIdQuery.Id);
-        //    return new()
-        //    {
-        //        Id = car.Id,
-        //        ModelId = car.ModelId,
-        //        BigImageUrl = car.BigImageUrl,
-        //        CoverImageUrl = car.CoverImageUrl,
-        //        FuelType = car.FuelType,
-        //        Km = car.Km,
-        //        Luggage = car.Luggage,
-        //        SeatCount = car.SeatCount,
-        //        TransmissionType = car.TransmissionType
-        //    };
-        //}
-
         public async Task<GetCarByIdQueryResult> Handle(GetCarByIdQuery request, CancellationToken cancellationToken)
         {
-            var car = await _repository.GetByIdAsync(request.Id);
-            return new()
+            var car = _repository.GetById(
+                request.Id, 
+                request.IncludeModel, 
+                request.IncludeBrand);
+
+            var result = new GetCarByIdQueryResult()
             {
                 Id = car.Id,
                 ModelId = car.ModelId,
-                BigImageUrl = car.BigImageUrl,
-                CoverImageUrl = car.CoverImageUrl,
-                FuelType = car.FuelType,
+                Model = car.Model,
                 Km = car.Km,
-                Luggage = car.Luggage,
                 SeatCount = car.SeatCount,
-                TransmissionType = car.TransmissionType
+                Luggage = car.Luggage,
+                TransmissionType = car.TransmissionType,
+                FuelType = car.FuelType,
+                CoverImageUrl = car.CoverImageUrl,
+                BigImageUrl = car.BigImageUrl
             };
+
+            return await Task.FromResult(result);
         }
     }
 }

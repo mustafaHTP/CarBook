@@ -1,6 +1,8 @@
-﻿using CarBook.Application.Features.BannerFeatures.Results;
+﻿using CarBook.Application.Features.BannerFeatures.Queries;
+using CarBook.Application.Features.BannerFeatures.Results;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CarBook.Application.Features.BannerFeatures.Handlers
 {
-    public class GetBannersQueryHandler
+    public class GetBannersQueryHandler : IRequestHandler<GetBannersQuery, List<GetBannersQueryResult>>
     {
         private readonly IRepository<Banner> _repository;
 
@@ -18,11 +20,10 @@ namespace CarBook.Application.Features.BannerFeatures.Handlers
             _repository = repository;
         }
 
-        public async Task<List<GetBannersQueryResult>> Handle()
+        public async Task<List<GetBannersQueryResult>> Handle(GetBannersQuery request, CancellationToken cancellationToken)
         {
             var banners = await _repository.GetAllAsync();
-
-            return banners.Select(b => new GetBannersQueryResult()
+            var result = banners.Select(b => new GetBannersQueryResult()
             {
                 Id = b.Id,
                 Description = b.Description,
@@ -30,6 +31,8 @@ namespace CarBook.Application.Features.BannerFeatures.Handlers
                 VideoDescription = b.VideoDescription,
                 VideoUrl = b.VideoUrl,
             }).ToList();
+
+            return await Task.FromResult(result);
         }
     }
 }

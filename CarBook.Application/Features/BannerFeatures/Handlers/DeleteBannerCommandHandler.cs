@@ -1,6 +1,7 @@
 ﻿using CarBook.Application.Features.BannerFeatures.Commands;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
+using MediatR;
 using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CarBook.Application.Features.BannerFeatures.Handlers
 {
-    public class DeleteBannerCommandHandler
+    public class DeleteBannerCommandHandler : IRequestHandler<DeleteBannerCommand>
     {
         private readonly IRepository<Banner> _repository;
 
@@ -19,9 +20,10 @@ namespace CarBook.Application.Features.BannerFeatures.Handlers
             _repository = repository;
         }
 
-        public async Task Handle(DeleteBannerCommand deleteBannerCommand)
+        public async Task Handle(DeleteBannerCommand request, CancellationToken cancellationToken)
         {
-            var bannerToBeDeleted = await _repository.GetByIdAsync(deleteBannerCommand.Id);
+            var bannerToBeDeleted = await _repository.GetByIdAsync(request.Id);
+
             await _repository.DeleteAsync(bannerToBeDeleted);
         }
     }

@@ -23,13 +23,14 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.MaxDepth = 64;
 });
 
-
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//add db context
+//Add db context
 builder.Services.AddScoped<ApplicationDbContext>();
+
+//Add repositories
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<ICarRepository, CarRepository>();
 builder.Services.AddScoped<IBlogRepository, BlogRepository>();
@@ -37,43 +38,8 @@ builder.Services.AddScoped<ICarReservationPricingRepository, CarReservationPrici
 builder.Services.AddScoped<IBlogTagCloudRepository, BlogTagCloudRepository>();
 builder.Services.AddScoped<IBlogTagRepository, BlogTagRepository>();
 builder.Services.AddScoped<IBlogCommentRepository, BlogCommentRepository>();
-
-//Add About handlers
-builder.Services.AddScoped<GetAboutsQueryHandler>();
-builder.Services.AddScoped<GetAboutByIdQueryHandler>();
-builder.Services.AddScoped<CreateAboutCommandHandler>();
-builder.Services.AddScoped<UpdateAboutCommandHandler>();
-builder.Services.AddScoped<DeleteAboutCommandHandler>();
-//Add Banner handlers
-builder.Services.AddScoped<GetBannersQueryHandler>();
-builder.Services.AddScoped<GetBannerByIdQueryHandler>();
-builder.Services.AddScoped<CreateBannerCommandHandler>();
-builder.Services.AddScoped<UpdateBannerCommandHandler>();
-builder.Services.AddScoped<DeleteBannerCommandHandler>();
-//Add Brand handlers
-builder.Services.AddScoped<GetBrandsQueryHandler>();
-builder.Services.AddScoped<GetBrandByIdQueryHandler>();
-builder.Services.AddScoped<CreateBrandCommandHandler>();
-builder.Services.AddScoped<UpdateBrandCommandHandler>();
-builder.Services.AddScoped<DeleteBrandCommandHandler>();
-//Add BlogCategory handlers
-builder.Services.AddScoped<GetBlogCategoriesQueryHandler>();
-builder.Services.AddScoped<GetBlogCategoryByIdQueryHandler>();
-builder.Services.AddScoped<CreateBlogCategoryCommandHandler>();
-builder.Services.AddScoped<UpdateBlogCategoryCommandHandler>();
-builder.Services.AddScoped<DeleteBlogCategoryCommandHandler>();
-//Add Car handlers
-builder.Services.AddScoped<GetCarsQueryHandler>();
-builder.Services.AddScoped<GetCarByIdQueryHandler>();
-builder.Services.AddScoped<CreateCarCommandHandler>();
-builder.Services.AddScoped<UpdateCarCommandHandler>();
-builder.Services.AddScoped<DeleteCarCommandHandler>();
-//Add Contact handlers
-builder.Services.AddScoped<GetContactsQueryHandler>();
-builder.Services.AddScoped<GetContactByIdQueryHandler>();
-builder.Services.AddScoped<CreateContactCommandHandler>();
-builder.Services.AddScoped<UpdateContactCommandHandler>();
-builder.Services.AddScoped<DeleteContactCommandHandler>();
+builder.Services.AddScoped<IBrandRepository, BrandRepository>();
+builder.Services.AddScoped<IModelRepository, ModelRepository>();
 
 //Add application services
 builder.Services.AddApplicationService();

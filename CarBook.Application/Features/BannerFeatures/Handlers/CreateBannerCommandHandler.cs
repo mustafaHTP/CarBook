@@ -2,6 +2,7 @@
 using CarBook.Application.Features.BannerFeatures.Commands;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CarBook.Application.Features.BannerFeatures.Handlers
 {
-    public class CreateBannerCommandHandler
+    public class CreateBannerCommandHandler : IRequestHandler<CreateBannerCommand>
     {
         private readonly IRepository<Banner> _repository;
 
@@ -19,14 +20,14 @@ namespace CarBook.Application.Features.BannerFeatures.Handlers
             _repository = repository;
         }
 
-        public async Task Handle(CreateBannerCommand createBannerCommand)
+        public async Task Handle(CreateBannerCommand request, CancellationToken cancellationToken)
         {
             var bannerToBeCreated = new Banner()
             {
-                Description = createBannerCommand.Description,
-                Title = createBannerCommand.Title,
-                VideoDescription = createBannerCommand.VideoDescription,
-                VideoUrl = createBannerCommand.VideoUrl,
+                Description = request.Description,
+                Title = request.Title,
+                VideoDescription = request.VideoDescription,
+                VideoUrl = request.VideoUrl,
             };
 
             await _repository.CreateAsync(bannerToBeCreated);

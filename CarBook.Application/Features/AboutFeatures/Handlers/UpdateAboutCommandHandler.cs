@@ -1,6 +1,7 @@
 ﻿using CarBook.Application.Features.AboutFeatures.Commands;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CarBook.Application.Features.AboutFeatures.Handlers
 {
-    public class UpdateAboutCommandHandler
+    public class UpdateAboutCommandHandler : IRequestHandler<UpdateAboutCommand>
     {
         private readonly IRepository<About> _repository;
 
@@ -18,13 +19,14 @@ namespace CarBook.Application.Features.AboutFeatures.Handlers
             _repository = repository;
         }
 
-        public async Task Handle(UpdateAboutCommand updateAboutCommand)
+        public async Task Handle(UpdateAboutCommand request, CancellationToken cancellationToken)
         {
-            var aboutToBeUpdated = await _repository.GetByIdAsync(updateAboutCommand.Id);
-            //update here
-            aboutToBeUpdated.Description = updateAboutCommand.Description;
-            aboutToBeUpdated.Title = updateAboutCommand.Title;
-            aboutToBeUpdated.ImageUrl = updateAboutCommand.ImageUrl;
+            var aboutToBeUpdated = await _repository.GetByIdAsync(request.Id);
+
+            // Update here
+            aboutToBeUpdated.Description = request.Description;
+            aboutToBeUpdated.Title = request.Title;
+            aboutToBeUpdated.ImageUrl = request.ImageUrl;
 
             await _repository.UpdateAsync(aboutToBeUpdated);
         }

@@ -1,6 +1,7 @@
 ﻿using CarBook.Application.Features.AboutFeatures.Commands;
 using CarBook.Application.Features.AboutFeatures.Handlers;
 using CarBook.Application.Features.AboutFeatures.Queries;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,29 +11,17 @@ namespace CarBook.WebApi.Controllers
     [ApiController]
     public class AboutsController : ControllerBase
     {
-        private readonly CreateAboutCommandHandler _createAboutCommandHandler;
-        private readonly UpdateAboutCommandHandler _updateAboutCommandHandler;
-        private readonly DeleteAboutCommandHandler _deleteAboutCommandHandler;
-        private readonly GetAboutsQueryHandler _getAllAboutQueryHandler;
-        private readonly GetAboutByIdQueryHandler _getAboutByIdQueryHandler;
+        private readonly IMediator _mediator;
 
-        public AboutsController(CreateAboutCommandHandler createAboutCommandHandler, 
-            UpdateAboutCommandHandler updateAboutCommandHandler, 
-            DeleteAboutCommandHandler deleteAboutCommandHandler, 
-            GetAboutsQueryHandler getAboutQueryHandler, 
-            GetAboutByIdQueryHandler getAboutByIdQueryHandler)
+        public AboutsController(IMediator mediator)
         {
-            _createAboutCommandHandler = createAboutCommandHandler;
-            _updateAboutCommandHandler = updateAboutCommandHandler;
-            _deleteAboutCommandHandler = deleteAboutCommandHandler;
-            _getAllAboutQueryHandler = getAboutQueryHandler;
-            _getAboutByIdQueryHandler = getAboutByIdQueryHandler;
+            _mediator = mediator;
         }
 
         [HttpGet("GetAll")]
         public async Task<IActionResult> AboutList()
         {
-            var abouts = await _getAllAboutQueryHandler.Handle();
+            var abouts = await _mediator.Send(new GetAboutsQuery());
 
             return Ok(abouts);
         }
@@ -41,7 +30,7 @@ namespace CarBook.WebApi.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var query = new GetAboutByIdQuery(id);
-            var about = await _getAboutByIdQueryHandler.Handle(query);
+            var about = await _mediator.Send(query);
 
             return Ok(about);
         }
@@ -49,7 +38,7 @@ namespace CarBook.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateAboutCommand createAboutCommand)
         {
-            await _createAboutCommandHandler.Handle(createAboutCommand);
+            await _mediator.Send(createAboutCommand);
 
             return Ok("About has been created");
         }
@@ -58,7 +47,7 @@ namespace CarBook.WebApi.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var command = new DeleteAboutCommand(id);
-            await _deleteAboutCommandHandler.Handle(command);
+            await _mediator.Send(command);
 
             return Ok("About has been deleted");
         }
@@ -67,7 +56,7 @@ namespace CarBook.WebApi.Controllers
         [HttpPut]
         public async Task<IActionResult> Update(UpdateAboutCommand updateAboutCommand)
         {
-            await _updateAboutCommandHandler.Handle(updateAboutCommand);
+            await _mediator.Send(updateAboutCommand);
 
             return Ok("About has been updated");
         }

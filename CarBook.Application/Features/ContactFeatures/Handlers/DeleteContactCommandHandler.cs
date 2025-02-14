@@ -1,6 +1,7 @@
 ﻿using CarBook.Application.Features.ContactFeatures.Commands;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CarBook.Application.Features.ContactFeatures.Handlers
 {
-    public class DeleteContactCommandHandler
+    public class DeleteContactCommandHandler : IRequestHandler<DeleteContactCommand>
     {
         private readonly IRepository<Contact> _repository;
 
@@ -18,10 +19,11 @@ namespace CarBook.Application.Features.ContactFeatures.Handlers
             _repository = repository;
         }
 
-        public async Task Handle(DeleteContactCommand deleteContactCommand)
+        public async Task Handle(DeleteContactCommand request, CancellationToken cancellationToken)
         {
-            var contactToBeDeleted = await _repository.GetByIdAsync(deleteContactCommand.Id);
-            await _repository.DeleteAsync(contactToBeDeleted);
+            var contact = await _repository.GetByIdAsync(request.Id);
+
+            await _repository.DeleteAsync(contact);
         }
     }
 }

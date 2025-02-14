@@ -11,25 +11,10 @@ namespace CarBook.WebApi.Controllers
     [ApiController]
     public class BlogCategoriesController : ControllerBase
     {
-        private readonly CreateBlogCategoryCommandHandler _createBlogCategoryCommandHandler;
-        private readonly UpdateBlogCategoryCommandHandler _updateBlogCategoryCommandHandler;
-        private readonly DeleteBlogCategoryCommandHandler _deleteBlogCategoryCommandHandler;
-        private readonly GetBlogCategoriesQueryHandler _getAllBlogCategoriesQueryHandler;
-        private readonly GetBlogCategoryByIdQueryHandler _getBlogCategoryByIdQueryHandler;
         private readonly IMediator _mediator;
 
-        public BlogCategoriesController(CreateBlogCategoryCommandHandler createBlogCategoryCommandHandler,
-            UpdateBlogCategoryCommandHandler updateBlogCategoryCommandHandler,
-            DeleteBlogCategoryCommandHandler deleteBlogCategoryCommandHandler,
-            GetBlogCategoriesQueryHandler getAllBlogCategoriesQueryHandler,
-            GetBlogCategoryByIdQueryHandler getBlogCategoryByIdQueryHandler,
-            IMediator mediator)
+        public BlogCategoriesController(IMediator mediator)
         {
-            _createBlogCategoryCommandHandler = createBlogCategoryCommandHandler;
-            _updateBlogCategoryCommandHandler = updateBlogCategoryCommandHandler;
-            _deleteBlogCategoryCommandHandler = deleteBlogCategoryCommandHandler;
-            _getAllBlogCategoriesQueryHandler = getAllBlogCategoriesQueryHandler;
-            _getBlogCategoryByIdQueryHandler = getBlogCategoryByIdQueryHandler;
             _mediator = mediator;
         }
 

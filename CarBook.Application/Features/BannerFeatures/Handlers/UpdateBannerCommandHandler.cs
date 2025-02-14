@@ -1,6 +1,7 @@
 ﻿using CarBook.Application.Features.BannerFeatures.Commands;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CarBook.Application.Features.BannerFeatures.Handlers
 {
-    public class UpdateBannerCommandHandler
+    public class UpdateBannerCommandHandler : IRequestHandler<UpdateBannerCommand>
     {
         private readonly IRepository<Banner> _repository;
 
@@ -18,14 +19,15 @@ namespace CarBook.Application.Features.BannerFeatures.Handlers
             _repository = repository;
         }
 
-        public async Task Handle(UpdateBannerCommand updateBannerCommand)
+        public async Task Handle(UpdateBannerCommand request, CancellationToken cancellationToken)
         {
-            var bannerToBeUpdated = await _repository.GetByIdAsync(updateBannerCommand.Id);
-            //update here
-            bannerToBeUpdated.VideoDescription = updateBannerCommand.VideoDescription;
-            bannerToBeUpdated.Description = updateBannerCommand.Description;
-            bannerToBeUpdated.VideoUrl = updateBannerCommand.VideoUrl;
-            bannerToBeUpdated.Title = updateBannerCommand.Title;
+            var bannerToBeUpdated = await _repository.GetByIdAsync(request.Id);
+
+            // Update here
+            bannerToBeUpdated.VideoDescription = request.VideoDescription;
+            bannerToBeUpdated.Description = request .Description;
+            bannerToBeUpdated.VideoUrl = request.VideoUrl;
+            bannerToBeUpdated.Title = request.Title;
 
             await _repository.UpdateAsync(bannerToBeUpdated);
         }

@@ -19,26 +19,9 @@ namespace CarBook.Application.Features.CarFeatures.Handlers
             _repository = repository;
         }
 
-        //public async Task Handle(CreateCarCommand request)
-        //{
-        //    var carToBeCreated = new Car()
-        //    {
-        //        ModelId = request.ModelId,
-        //        BigImageUrl = request.BigImageUrl,
-        //        CoverImageUrl = request.CoverImageUrl,
-        //        FuelType = request.FuelType,
-        //        Km = request.Km,
-        //        Luggage = request.Luggage,
-        //        SeatCount = request.SeatCount,
-        //        TransmissionType = request.TransmissionType
-        //    };
-
-        //    await _repository.CreateAsync(carToBeCreated);
-        //}
-
         public async Task Handle(CreateCarCommand request, CancellationToken cancellationToken)
         {
-            var carToBeCreated = new Car()
+            var car = new Car()
             {
                 ModelId = request.ModelId,
                 BigImageUrl = request.BigImageUrl,
@@ -50,7 +33,7 @@ namespace CarBook.Application.Features.CarFeatures.Handlers
                 TransmissionType = request.TransmissionType
             };
 
-            await _repository.CreateAsync(carToBeCreated);
+            await _repository.CreateAsync(car);
         }
     }
 }

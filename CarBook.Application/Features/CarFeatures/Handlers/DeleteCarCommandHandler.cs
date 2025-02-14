@@ -19,18 +19,11 @@ namespace CarBook.Application.Features.CarFeatures.Handlers
             _repository = repository;
         }
 
-        //public async Task Handle(DeleteCarCommand deleteCarCommand)
-        //{
-        //    var carToBeDeleted = await _repository.GetByIdAsync(deleteCarCommand.Id);
-
-        //    await _repository.DeleteAsync(carToBeDeleted);
-        //}
-
         public async Task Handle(DeleteCarCommand request, CancellationToken cancellationToken)
         {
-            var carToBeDeleted = await _repository.GetByIdAsync(request.Id);
+            var car = await _repository.GetByIdAsync(request.Id);
 
-            await _repository.DeleteAsync(carToBeDeleted);
+            await _repository.DeleteAsync(car);
         }
     }
 }

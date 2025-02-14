@@ -3,6 +3,7 @@ using CarBook.Application.Features.BrandFeatures.Queries;
 using CarBook.Application.Features.BrandFeatures.Results;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace CarBook.Application.Features.BrandFeatures.Handlers
 {
-    public class UpdateBrandCommandHandler
+    public class UpdateBrandCommandHandler : IRequestHandler<UpdateBrandCommand>
     {
         private readonly IRepository<Brand> _repository;
 
@@ -20,15 +21,14 @@ namespace CarBook.Application.Features.BrandFeatures.Handlers
             _repository = repository;
         }
 
-        public async Task Handle(UpdateBrandCommand updateBrandCommand)
+        public async Task Handle(UpdateBrandCommand request, CancellationToken cancellationToken)
         {
-            var brandToBeUpdated = new Brand()
-            {
-                Id = updateBrandCommand.Id,
-                Name = updateBrandCommand.Name,
-            };
+            var brand = await _repository.GetByIdAsync(request.Id);
 
-            await _repository.UpdateAsync(brandToBeUpdated);
+            // Update here
+            brand.Name = request.Name;
+
+            await _repository.UpdateAsync(brand);
         }
     }
 }

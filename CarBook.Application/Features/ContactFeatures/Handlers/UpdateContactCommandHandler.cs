@@ -1,6 +1,7 @@
 ﻿using CarBook.Application.Features.ContactFeatures.Commands;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CarBook.Application.Features.ContactFeatures.Handlers
 {
-    public class UpdateContactCommandHandler
+    public class UpdateContactCommandHandler : IRequestHandler<UpdateContactCommand>
     {
         private readonly IRepository<Contact> _repository;
 
@@ -18,17 +19,17 @@ namespace CarBook.Application.Features.ContactFeatures.Handlers
             _repository = repository;
         }
 
-        public async Task Handle(UpdateContactCommand updateContactCommand)
+        public async Task Handle(UpdateContactCommand request, CancellationToken cancellationToken)
         {
-            var contactToBeUpdated = await _repository.GetByIdAsync(updateContactCommand.Id);
+            var contact = await _repository.GetByIdAsync(request.Id);
 
-            contactToBeUpdated.Email = updateContactCommand.Email;
-            contactToBeUpdated.Message = updateContactCommand.Message;
-            contactToBeUpdated.Name = updateContactCommand.Name;
-            contactToBeUpdated.SendDate = updateContactCommand.SendDate;
-            contactToBeUpdated.Subject = updateContactCommand.Subject;
+            contact.Email = request.Email;
+            contact.Message = request.Message;
+            contact.Name = request.Name;
+            contact.SendDate = request.SendDate;
+            contact.Subject = request.Subject;
 
-            await _repository.UpdateAsync(contactToBeUpdated);
+            await _repository.UpdateAsync(contact);
         }
     }
 }

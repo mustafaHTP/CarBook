@@ -3,6 +3,7 @@ using CarBook.Application.Features.BrandFeatures.Queries;
 using CarBook.Application.Features.BrandFeatures.Results;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace CarBook.Application.Features.BrandFeatures.Handlers
 {
-    public class CreateBrandCommandHandler
+    public class CreateBrandCommandHandler : IRequestHandler<CreateBrandCommand>
     {
         private readonly IRepository<Brand> _repository;
 
@@ -20,11 +21,11 @@ namespace CarBook.Application.Features.BrandFeatures.Handlers
             _repository = repository;
         }
 
-        public async Task Handle(CreateBrandCommand createBrandCommand)
+        public async Task Handle(CreateBrandCommand request, CancellationToken cancellationToken)
         {
             var brandToBeCreated = new Brand()
             {
-                Name = createBrandCommand.Name,
+                Name = request.Name,
             };
 
             await _repository.CreateAsync(brandToBeCreated);

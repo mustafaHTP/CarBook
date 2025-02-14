@@ -2,6 +2,7 @@
 using CarBook.Application.Features.BrandFeatures.Results;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CarBook.Application.Features.BrandFeatures.Handlers
 {
-    public class GetBrandByIdQueryHandler
+    public class GetBrandByIdQueryHandler : IRequestHandler<GetBrandByIdQuery, GetBrandByIdQueryResult>
     {
         private readonly IRepository<Brand> _repository;
 
@@ -19,15 +20,16 @@ namespace CarBook.Application.Features.BrandFeatures.Handlers
             _repository = repository;
         }
 
-        public async Task<GetBrandByIdQueryResult> Handle(GetBrandByIdQuery getBrandByIdQuery)
+        public async Task<GetBrandByIdQueryResult> Handle(GetBrandByIdQuery request, CancellationToken cancellationToken)
         {
-            var brand = await _repository.GetByIdAsync(getBrandByIdQuery.Id);
-
-            return new()
+            var brand = await _repository.GetByIdAsync(request.Id);
+            var result = new GetBrandByIdQueryResult()
             {
                 Id = brand.Id,
                 Name = brand.Name,
             };
+
+            return await Task.FromResult(result);
         }
     }
 }

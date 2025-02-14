@@ -20,38 +20,21 @@ namespace CarBook.Application.Features.CarFeatures.Handlers
             _repository = repository;
         }
 
-        //public async Task Handle(UpdateCarCommand request)
-        //{
-        //    var carToBeUpdated = await _repository.GetByIdAsync(request.Id);
-
-        //    carToBeUpdated.Id = request.Id;
-        //    carToBeUpdated.ModelId = request.ModelId;
-        //    carToBeUpdated.BigImageUrl = request.BigImageUrl;
-        //    carToBeUpdated.CoverImageUrl = request.CoverImageUrl;
-        //    carToBeUpdated.FuelType = request.FuelType;
-        //    carToBeUpdated.Km = request.Km;
-        //    carToBeUpdated.Luggage = request.Luggage;
-        //    carToBeUpdated.SeatCount = request.SeatCount;
-        //    carToBeUpdated.TransmissionType = request.TransmissionType;
-
-        //    await _repository.UpdateAsync(carToBeUpdated);
-        //}
-
         public async Task Handle(UpdateCarCommand request, CancellationToken cancellationToken)
         {
-            var carToBeUpdated = await _repository.GetByIdAsync(request.Id);
+            var car = await _repository.GetByIdAsync(request.Id);
 
-            carToBeUpdated.Id = request.Id;
-            carToBeUpdated.ModelId = request.ModelId;
-            carToBeUpdated.BigImageUrl = request.BigImageUrl;
-            carToBeUpdated.CoverImageUrl = request.CoverImageUrl;
-            carToBeUpdated.FuelType = request.FuelType;
-            carToBeUpdated.Km = request.Km;
-            carToBeUpdated.Luggage = request.Luggage;
-            carToBeUpdated.SeatCount = request.SeatCount;
-            carToBeUpdated.TransmissionType = request.TransmissionType;
+            car.Id = request.Id;
+            car.ModelId = request.ModelId;
+            car.BigImageUrl = request.BigImageUrl;
+            car.CoverImageUrl = request.CoverImageUrl;
+            car.FuelType = request.FuelType;
+            car.Km = request.Km;
+            car.Luggage = request.Luggage;
+            car.SeatCount = request.SeatCount;
+            car.TransmissionType = request.TransmissionType;
 
-            await _repository.UpdateAsync(carToBeUpdated);
+            await _repository.UpdateAsync(car);
         }
     }
 }

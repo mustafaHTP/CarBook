@@ -105,23 +105,56 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById([FromRoute] int id, [FromQuery] GetCarByIdQueryDto getCarByIdQueryDto)
         {
-            var query = new GetCarByIdQuery(id);
-            var car = await _mediator.Send(query);
+            var query = new GetCarByIdQuery()
+            {
+                Id = id,
+                IncludeModel = getCarByIdQueryDto.IncludeModel,
+                IncludeBrand = getCarByIdQueryDto.IncludeBrand
+            };
 
-            return Ok(car);
+            var car = await _mediator.Send(query);
+            var carDto = new GetCarByIdDto()
+            {
+                Id = car.Id,
+                ModelId = car.ModelId,
+                ModelName = car.Model?.Name,
+                BrandId = car.Model?.BrandId ?? 0,
+                BrandName = car.Model?.Brand?.Name,
+                Km = car.Km,
+                SeatCount = car.SeatCount,
+                Luggage = car.Luggage,
+                TransmissionType = car.TransmissionType,
+                FuelType = car.FuelType,
+                CoverImageUrl = car.CoverImageUrl,
+                BigImageUrl = car.BigImageUrl
+            };
+
+            return Ok(carDto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateCarCommand createCarCommand)
+        public async Task<IActionResult> Create(CreateCarDto createCarDto)
         {
+            CreateCarCommand createCarCommand = new()
+            {
+                ModelId = createCarDto.ModelId,
+                Km = createCarDto.Km,
+                SeatCount = createCarDto.SeatCount,
+                Luggage = createCarDto.Luggage,
+                TransmissionType = createCarDto.TransmissionType,
+                FuelType = createCarDto.FuelType,
+                CoverImageUrl = createCarDto.CoverImageUrl,
+                BigImageUrl = createCarDto.BigImageUrl
+            };
+
             await _mediator.Send(createCarCommand);
 
             return Ok("Car has been created");
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var command = new DeleteCarCommand(id);
@@ -132,8 +165,21 @@ namespace CarBook.WebApi.Controllers
 
 
         [HttpPut]
-        public async Task<IActionResult> Update(UpdateCarCommand updateCarCommand)
+        public async Task<IActionResult> Update(UpdateCarDto updateCarDto)
         {
+            var updateCarCommand = new UpdateCarCommand()
+            {
+                Id = updateCarDto.Id,
+                ModelId = updateCarDto.ModelId,
+                Km = updateCarDto.Km,
+                SeatCount = updateCarDto.SeatCount,
+                Luggage = updateCarDto.Luggage,
+                TransmissionType = updateCarDto.TransmissionType,
+                FuelType = updateCarDto.FuelType,
+                CoverImageUrl = updateCarDto.CoverImageUrl,
+                BigImageUrl = updateCarDto.BigImageUrl
+            };
+
             await _mediator.Send(updateCarCommand);
 
             return Ok("Car has been updated");

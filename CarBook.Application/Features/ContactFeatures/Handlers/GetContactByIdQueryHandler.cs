@@ -3,6 +3,7 @@ using CarBook.Application.Features.ContactFeatures.Queries;
 using CarBook.Application.Features.ContactFeatures.Results;
 using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace CarBook.Application.Features.ContactFeatures.Handlers
 {
-    public class GetContactByIdQueryHandler
+    public class GetContactByIdQueryHandler : IRequestHandler<GetContactByIdQuery, GetContactByIdQueryResult>
     {
         private readonly IRepository<Contact> _repository;
 
@@ -20,11 +21,10 @@ namespace CarBook.Application.Features.ContactFeatures.Handlers
             _repository = repository;
         }
 
-        public async Task<GetContactByIdQueryResult> Handle(GetContactByIdQuery getContactByIdQuery)
+        public async Task<GetContactByIdQueryResult> Handle(GetContactByIdQuery request, CancellationToken cancellationToken)
         {
-            var contact = await _repository.GetByIdAsync(getContactByIdQuery.Id);
-
-            return new GetContactByIdQueryResult()
+            var contact = await _repository.GetByIdAsync(request.Id);
+            var result = new GetContactByIdQueryResult()
             {
                 Id = contact.Id,
                 Email = contact.Email,
@@ -34,6 +34,7 @@ namespace CarBook.Application.Features.ContactFeatures.Handlers
                 Subject = contact.Subject,
             };
 
+            return await Task.FromResult(result);
         }
     }
 }

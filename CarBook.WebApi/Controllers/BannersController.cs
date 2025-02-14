@@ -1,6 +1,7 @@
 ﻿using CarBook.Application.Features.BannerFeatures.Commands;
 using CarBook.Application.Features.BannerFeatures.Handlers;
 using CarBook.Application.Features.BannerFeatures.Queries;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,29 +11,17 @@ namespace CarBook.WebApi.Controllers
     [ApiController]
     public class BannersController : ControllerBase
     {
-        private readonly CreateBannerCommandHandler _createBannerCommandHandler;
-        private readonly UpdateBannerCommandHandler _updateBannerCommandHandler;
-        private readonly DeleteBannerCommandHandler _deleteBannerCommandHandler;
-        private readonly GetBannersQueryHandler _getAllBannerQueryHandler;
-        private readonly GetBannerByIdQueryHandler _getBannerByIdQueryHandler;
+        private readonly IMediator _mediator;
 
-        public BannersController(CreateBannerCommandHandler createBannerCommandHandler, 
-            UpdateBannerCommandHandler updateBannerCommandHandler, 
-            DeleteBannerCommandHandler deleteBannerCommandHandler, 
-            GetBannersQueryHandler getBannerQueryHandler, 
-            GetBannerByIdQueryHandler getBannerByIdQueryHandler)
+        public BannersController(IMediator mediator)
         {
-            _createBannerCommandHandler = createBannerCommandHandler;
-            _updateBannerCommandHandler = updateBannerCommandHandler;
-            _deleteBannerCommandHandler = deleteBannerCommandHandler;
-            _getAllBannerQueryHandler = getBannerQueryHandler;
-            _getBannerByIdQueryHandler = getBannerByIdQueryHandler;
+            _mediator = mediator;
         }
 
         [HttpGet]
         public async Task<IActionResult> BannerList()
         {
-            var banners = await _getAllBannerQueryHandler.Handle();
+            var banners = await _mediator.Send(new GetBannersQuery());
 
             return Ok(banners);
         }
@@ -41,7 +30,7 @@ namespace CarBook.WebApi.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var query = new GetBannerByIdQuery(id);
-            var about = await _getBannerByIdQueryHandler.Handle(query);
+            var about = await _mediator.Send(query);
 
             return Ok(about);
         }
@@ -49,7 +38,7 @@ namespace CarBook.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateBannerCommand createBannerCommand)
         {
-            await _createBannerCommandHandler.Handle(createBannerCommand);
+            await _mediator.Send(createBannerCommand);
 
             return Ok("Banner has been created");
         }
@@ -58,7 +47,7 @@ namespace CarBook.WebApi.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var command = new DeleteBannerCommand(id);
-            await _deleteBannerCommandHandler.Handle(command);
+            await _mediator.Send(command);
 
             return Ok("Banner has been deleted");
         }
@@ -67,7 +56,7 @@ namespace CarBook.WebApi.Controllers
         [HttpPut]
         public async Task<IActionResult> Update(UpdateBannerCommand updateBannerCommand)
         {
-            await _updateBannerCommandHandler.Handle(updateBannerCommand);
+            await _mediator.Send(updateBannerCommand);
 
             return Ok("Banner has been updated");
         }

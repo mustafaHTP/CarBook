@@ -42,5 +42,21 @@ namespace CarBook.Persistence.Repositories
         {
             return [.. _context.Cars.Include(c => c.Model).ThenInclude(m => m.Brand).Include(c => c.CarReservationPricings).ThenInclude(cr => cr.PricingPlan)];
         }
+
+        public Car? GetById(int id, bool includeModel, bool includeBrand)
+        {
+            var cars = _context.Cars.AsQueryable();
+
+            if (includeBrand)
+            {
+                cars = cars.Include(c => c.Model).ThenInclude(m => m.Brand);
+            }
+            else if (includeModel)
+            {
+                cars = cars.Include(c => c.Model);
+            }
+
+            return cars.FirstOrDefault(c => c.Id == id);
+        }
     }
 }

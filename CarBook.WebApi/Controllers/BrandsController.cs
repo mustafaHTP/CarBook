@@ -1,6 +1,10 @@
-﻿using CarBook.Application.Features.BrandFeatures.Commands;
+﻿using CarBook.Application.Dtos.BrandDtos;
+using CarBook.Application.Dtos.ModelDtos;
+using CarBook.Application.Features.BrandFeatures.Commands;
 using CarBook.Application.Features.BrandFeatures.Handlers;
 using CarBook.Application.Features.BrandFeatures.Queries;
+using CarBook.Application.Features.BrandFeatures.Results;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,46 +14,45 @@ namespace CarBook.WebApi.Controllers
     [ApiController]
     public class BrandsController : ControllerBase
     {
-        private readonly CreateBrandCommandHandler _createBrandCommandHandler;
-        private readonly UpdateBrandCommandHandler _updateBrandCommandHandler;
-        private readonly DeleteBrandCommandHandler _deleteBrandCommandHandler;
-        private readonly GetBrandsQueryHandler _getAllBrandQueryHandler;
-        private readonly GetBrandByIdQueryHandler _getBrandByIdQueryHandler;
+        private readonly IMediator _mediator;
 
-        public BrandsController(CreateBrandCommandHandler createBrandCommandHandler,
-            UpdateBrandCommandHandler updateBrandCommandHandler,
-            DeleteBrandCommandHandler deleteBrandCommandHandler,
-            GetBrandsQueryHandler getBrandQueryHandler,
-            GetBrandByIdQueryHandler getBrandByIdQueryHandler)
+        public BrandsController(IMediator mediator)
         {
-            _createBrandCommandHandler = createBrandCommandHandler;
-            _updateBrandCommandHandler = updateBrandCommandHandler;
-            _deleteBrandCommandHandler = deleteBrandCommandHandler;
-            _getAllBrandQueryHandler = getBrandQueryHandler;
-            _getBrandByIdQueryHandler = getBrandByIdQueryHandler;
+            _mediator = mediator;
         }
 
         [HttpGet]
-        public async Task<IActionResult> BrandList()
+        public async Task<IActionResult> GetAll([FromQuery] GetBrandsQuery getBrandsQuery)
         {
-            var Brands = await _getAllBrandQueryHandler.Handle();
+            var brands = await _mediator.Send(getBrandsQuery);
+            var brandsDto = brands.Select(b => new GetBrandsDto
+            {
+                Id = b.Id,
+                Name = b.Name,
+                Models = b.Models?.Select(m => new ModelWithNameDto
+                {
+                    Id = m.Id,
+                    Name = m.Name,
+                    BrandId = m.BrandId
+                }).ToList()
+            }).ToList();
 
-            return Ok(Brands);
+            return Ok(brandsDto);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var query = new GetBrandByIdQuery(id);
-            var Brand = await _getBrandByIdQueryHandler.Handle(query);
+            var brand = await _mediator.Send(query);
 
-            return Ok(Brand);
+            return Ok(brand);
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(CreateBrandCommand createBrandCommand)
         {
-            await _createBrandCommandHandler.Handle(createBrandCommand);
+            await _mediator.Send(createBrandCommand);
 
             return Ok("Brand has been created");
         }
@@ -58,7 +61,7 @@ namespace CarBook.WebApi.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var command = new DeleteBrandCommand(id);
-            await _deleteBrandCommandHandler.Handle(command);
+            await _mediator.Send(command);
 
             return Ok("Brand has been deleted");
         }
@@ -67,7 +70,7 @@ namespace CarBook.WebApi.Controllers
         [HttpPut]
         public async Task<IActionResult> Update(UpdateBrandCommand updateBrandCommand)
         {
-            await _updateBrandCommandHandler.Handle(updateBrandCommand);
+            await _mediator.Send(updateBrandCommand);
 
             return Ok("Brand has been updated");
         }

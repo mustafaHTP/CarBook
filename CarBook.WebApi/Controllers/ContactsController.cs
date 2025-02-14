@@ -4,6 +4,7 @@ using CarBook.Application.Features.BlogFeatures.Queries;
 using CarBook.Application.Features.ContactFeatures.Commands;
 using CarBook.Application.Features.ContactFeatures.Handlers;
 using CarBook.Application.Features.ContactFeatures.Queries;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,29 +14,17 @@ namespace CarBook.WebApi.Controllers
     [ApiController]
     public class ContactsController : ControllerBase
     {
-        private readonly CreateContactCommandHandler _createContactCommandHandler;
-        private readonly UpdateContactCommandHandler _updateContactCommandHandler;
-        private readonly DeleteContactCommandHandler _deleteContactCommandHandler;
-        private readonly GetContactsQueryHandler _getAllContactsQueryHandler;
-        private readonly GetContactByIdQueryHandler _getContactByIdQueryHandler;
+        private readonly IMediator _mediator;
 
-        public ContactsController(CreateContactCommandHandler createContactCommandHandler, 
-            UpdateContactCommandHandler updateContactCommandHandler, 
-            DeleteContactCommandHandler deleteContactCommandHandler, 
-            GetContactsQueryHandler getAllContactsQueryHandler, 
-            GetContactByIdQueryHandler getContactByIdQueryHandler)
+        public ContactsController(IMediator mediator)
         {
-            _createContactCommandHandler = createContactCommandHandler;
-            _updateContactCommandHandler = updateContactCommandHandler;
-            _deleteContactCommandHandler = deleteContactCommandHandler;
-            _getAllContactsQueryHandler = getAllContactsQueryHandler;
-            _getContactByIdQueryHandler = getContactByIdQueryHandler;
+            _mediator = mediator;
         }
 
         [HttpGet("GetAll")]
         public async Task<IActionResult> ContactList()
         {
-            var contacts = await _getAllContactsQueryHandler.Handle();
+            var contacts = await _mediator.Send(new GetContactsQuery());
 
             return Ok(contacts);
         }
@@ -44,7 +33,7 @@ namespace CarBook.WebApi.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var query = new GetContactByIdQuery(id);
-            var contact = await _getContactByIdQueryHandler.Handle(query);
+            var contact = await _mediator.Send(query);
 
             return Ok(contact);
         }
@@ -52,7 +41,7 @@ namespace CarBook.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateContactCommand createContactCommand)
         {
-            await _createContactCommandHandler.Handle(createContactCommand);
+            await _mediator.Send(createContactCommand);
 
             return Ok("Contact has been created");
         }
@@ -61,7 +50,8 @@ namespace CarBook.WebApi.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var command = new DeleteContactCommand(id);
-            await _deleteContactCommandHandler.Handle(command);
+
+            await _mediator.Send(command);
 
             return Ok("Contact has been deleted");
         }
@@ -70,7 +60,7 @@ namespace CarBook.WebApi.Controllers
         [HttpPut]
         public async Task<IActionResult> Update(UpdateContactCommand updateContactCommand)
         {
-            await _updateContactCommandHandler.Handle(updateContactCommand);
+            await _mediator.Send(updateContactCommand);
 
             return Ok("Contact has been updated");
         }
