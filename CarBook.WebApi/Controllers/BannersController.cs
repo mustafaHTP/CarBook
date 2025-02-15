@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.BannerFeatures.Commands;
+﻿using CarBook.Application.Dtos.BannerDtos;
+using CarBook.Application.Features.BannerFeatures.Commands;
 using CarBook.Application.Features.BannerFeatures.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -17,31 +18,54 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> BannerList()
+        public async Task<IActionResult> GetAll()
         {
             var banners = await _mediator.Send(new GetBannersQuery());
+            var bannersDto = banners.Select(banner => new GetBannersDto
+            {
+                Id = banner.Id,
+                Title = banner.Title,
+                Description = banner.Description,
+                VideoDescription = banner.VideoDescription,
+                VideoUrl = banner.VideoUrl
+            }).ToList();
 
-            return Ok(banners);
+            return Ok(bannersDto);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var query = new GetBannerByIdQuery(id);
-            var about = await _mediator.Send(query);
+            var banner = await _mediator.Send(query);
+            var bannerDto = new GetBannersDto
+            {
+                Id = banner.Id,
+                Title = banner.Title,
+                Description = banner.Description,
+                VideoDescription = banner.VideoDescription,
+                VideoUrl = banner.VideoUrl
+            };
 
-            return Ok(about);
+            return Ok(bannerDto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateBannerCommand createBannerCommand)
+        public async Task<IActionResult> Create(CreateBannerDto createBannerDto)
         {
+            var createBannerCommand = new CreateBannerCommand
+            {
+                Title = createBannerDto.Title,
+                Description = createBannerDto.Description,
+                VideoDescription = createBannerDto.VideoDescription,
+                VideoUrl = createBannerDto.VideoUrl
+            };
             await _mediator.Send(createBannerCommand);
 
             return Ok("Banner has been created");
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var command = new DeleteBannerCommand(id);
@@ -52,8 +76,16 @@ namespace CarBook.WebApi.Controllers
 
 
         [HttpPut]
-        public async Task<IActionResult> Update(UpdateBannerCommand updateBannerCommand)
+        public async Task<IActionResult> Update(UpdateBannerDto updateBannerDto)
         {
+            var updateBannerCommand = new UpdateBannerCommand
+            {
+                Id = updateBannerDto.Id,
+                Title = updateBannerDto.Title,
+                Description = updateBannerDto.Description,
+                VideoDescription = updateBannerDto.VideoDescription,
+                VideoUrl = updateBannerDto.VideoUrl
+            };
             await _mediator.Send(updateBannerCommand);
 
             return Ok("Banner has been updated");

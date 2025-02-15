@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.BlogFeatures.Commands;
+﻿using CarBook.Application.Dtos.BlogCategoryDtos;
+using CarBook.Application.Features.BlogFeatures.Commands;
 using CarBook.Application.Features.BlogFeatures.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -20,8 +21,13 @@ namespace CarBook.WebApi.Controllers
         public async Task<IActionResult> GetAll()
         {
             var blogCategories = await _mediator.Send(new GetBlogCategoriesQuery());
+            var blogCategoriesDto = blogCategories.Select(blogCategory => new GetBlogCategoriesDto
+            {
+                Id = blogCategory.Id,
+                Name = blogCategory.Name
+            });
 
-            return Ok(blogCategories);
+            return Ok(blogCategoriesDto);
         }
 
         [HttpGet("{id}")]
@@ -29,19 +35,28 @@ namespace CarBook.WebApi.Controllers
         {
             var query = new GetBlogCategoryByIdQuery() { Id = id };
             var blogCategory = await _mediator.Send(query);
+            var blogCategoryDto = new GetBlogCategoryByIdDto
+            {
+                Id = blogCategory.Id,
+                Name = blogCategory.Name
+            };
 
-            return Ok(blogCategory);
+            return Ok(blogCategoryDto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateBlogCategoryCommand createBlogCategoryCommand)
+        public async Task<IActionResult> Create(CreateBlogCategoryDto createBlogCategoryDto)
         {
-            await _mediator.Send(createBlogCategoryCommand);
+            var command = new CreateBlogCategoryCommand
+            {
+                Name = createBlogCategoryDto.Name
+            };
+            await _mediator.Send(command);
 
             return Ok("BlogCategory has been created");
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var command = new DeleteBlogCategoryCommand() { Id = id };
@@ -51,10 +66,15 @@ namespace CarBook.WebApi.Controllers
         }
 
 
-        [HttpPut]
-        public async Task<IActionResult> Update(UpdateBlogCategoryCommand updateBlogCategoryCommand)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody]UpdateBlogCategoryCommand updateBlogCategoryCommand)
         {
-            await _mediator.Send(updateBlogCategoryCommand);
+            var command = new UpdateBlogCategoryCommand
+            {
+                Id = id,
+                Name = updateBlogCategoryCommand.Name
+            };
+            await _mediator.Send(command);
 
             return Ok("BlogCategory has been updated");
         }

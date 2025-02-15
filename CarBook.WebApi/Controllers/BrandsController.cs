@@ -42,19 +42,29 @@ namespace CarBook.WebApi.Controllers
         {
             var query = new GetBrandByIdQuery(id);
             var brand = await _mediator.Send(query);
+            var brandDto = new GetBrandByIdDto()
+            {
+                Id = brand.Id,
+                Name = brand.Name,
+            };
 
-            return Ok(brand);
+            return Ok(brandDto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateBrandCommand createBrandCommand)
+        public async Task<IActionResult> Create(CreateBrandDto createBrandDto)
         {
+            var createBrandCommand = new CreateBrandCommand()
+            {
+                Name = createBrandDto.Name
+            };
+
             await _mediator.Send(createBrandCommand);
 
             return Ok("Brand has been created");
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var command = new DeleteBrandCommand(id);
@@ -65,8 +75,14 @@ namespace CarBook.WebApi.Controllers
 
 
         [HttpPut]
-        public async Task<IActionResult> Update(UpdateBrandCommand updateBrandCommand)
+        public async Task<IActionResult> Update(UpdateBrandDto updateBrandDto)
         {
+            var updateBrandCommand = new UpdateBrandCommand()
+            {
+                Id = updateBrandDto.Id,
+                Name = updateBrandDto.Name
+            };
+
             await _mediator.Send(updateBrandCommand);
 
             return Ok("Brand has been updated");

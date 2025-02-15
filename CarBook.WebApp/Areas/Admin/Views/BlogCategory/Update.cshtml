@@ -1,0 +1,30 @@
+﻿@model UpdateBlogCategoryViewModel
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Update Blog Category</h4>
+                    <p class="card-subtitle mb-4">Here’s a quick example to demonstrate Bootstrap’s form styles. Keep reading for documentation on required classes, form layout, and more.</p>
+
+                    <form method="post" asp-area="Admin" asp-controller="BlogCategory" asp-action="Update">
+
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="form-group">
+                            <label asp-for="Name">Name</label>
+                            <input asp-for="Name" class="form-control" placeholder="Enter a name" />
+                        </div>
+
+                        <button type="submit" class="btn btn-success waves-effect waves-light">
+                            <i class="bi bi-floppy"></i>
+                            Save Changes
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

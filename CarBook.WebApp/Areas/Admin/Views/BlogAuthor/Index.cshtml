@@ -1,24 +1,24 @@
-﻿@model List<GetFeaturesDto>
+﻿@model List<GetBlogAuthorsDto>
 
 <div class="container-fluid">
     <div class="row">
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Car Feature List</h4>
+                    <h4 class="card-title">Blog Author List</h4>
                     <p class="card-subtitle mb-4">
                         Manage car features efficiently. Add, edit, or remove features like sunroof, leather seats, or parking sensors using the provided actions.
                     </p>
                     <div class="mb-2">
-                        <a asp-area="Admin" asp-controller="Feature" asp-action="Create" class="btn btn-success waves-effect waves-light">
+                        <a asp-area="Admin" asp-controller="BlogAuthor" asp-action="Create" class="btn btn-success waves-effect waves-light">
                             <i class="fas fa-plus"></i>
-                            Create Feature
+                            Create Blog Author
                         </a>
                     </div>
                     @if (!Model.Any())
                     {
                         <div class="alert alert-info">
-                            There is no car feature here. Please create a new one.
+                            There is no blog author here. Please create a new one.
                         </div>
                     }
                     else
@@ -29,6 +29,8 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Image Url</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -36,14 +38,23 @@
                                     @for (int i = 0; i < Model.Count; ++i)
                                     {
                                         <tr>
-                                            <th scope="row">@(i + 1)</th>
+                                            <td scope="row">@(i + 1)</td>
                                             <td>@Model[i].Name</td>
+                                            <td>@Model[i].Description</td>
                                             <td>
-                                                <a asp-area="Admin" asp-controller="Feature" asp-action="Update" asp-route-id="@Model[i].Id" class="btn btn-warning text-white">
+                                                @Model[i].ImageUrl
+                                                <a target="_blank" href="@Model[i].ImageUrl" class="btn btn-primary btn-rounded text-white">
+                                                    <i class="fas fa-image"></i>
+                                                    View Image
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a asp-area="Admin" asp-controller="BlogAuthor" asp-action="Update" asp-route-id="@Model[i].Id" class="btn btn-warning text-white">
                                                     <i class="bi bi-pencil-fill"></i>
                                                     Edit
                                                 </a>
-                                                <a asp-area="Admin" asp-controller="Feature" asp-action="Delete" asp-route-id="@Model[i].Id" class="btn btn-danger text-white">
+
+                                                <a asp-area="Admin" asp-controller="BlogAuthor" asp-action="Delete" asp-route-id="@Model[i].Id" class="btn btn-danger text-white">
                                                     <i class="bi bi-trash3-fill"></i>
                                                     Remove
                                                 </a>
@@ -56,10 +67,7 @@
                     }
 
                 </div>
-                <!-- end card-body-->
             </div>
-            <!-- end card -->
-
         </div>
     </div>
 </div>

@@ -32,6 +32,7 @@ builder.Services.AddScoped<IBlogTagRepository, BlogTagRepository>();
 builder.Services.AddScoped<IBlogCommentRepository, BlogCommentRepository>();
 builder.Services.AddScoped<IBrandRepository, BrandRepository>();
 builder.Services.AddScoped<IModelRepository, ModelRepository>();
+builder.Services.AddScoped<IBlogAuthorRepository, BlogAuthorRepository>();
 
 //Add application services
 builder.Services.AddApplicationService();
