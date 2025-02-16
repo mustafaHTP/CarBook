@@ -65,22 +65,12 @@ namespace CarBook.WebApi.Controllers
             return Ok("Banner has been created");
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var command = new DeleteBannerCommand(id);
-            await _mediator.Send(command);
-
-            return Ok("Banner has been deleted");
-        }
-
-
-        [HttpPut]
-        public async Task<IActionResult> Update(UpdateBannerDto updateBannerDto)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateBannerDto updateBannerDto)
         {
             var updateBannerCommand = new UpdateBannerCommand
             {
-                Id = updateBannerDto.Id,
+                Id = id,
                 Title = updateBannerDto.Title,
                 Description = updateBannerDto.Description,
                 VideoDescription = updateBannerDto.VideoDescription,
@@ -89,6 +79,15 @@ namespace CarBook.WebApi.Controllers
             await _mediator.Send(updateBannerCommand);
 
             return Ok("Banner has been updated");
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var command = new DeleteBannerCommand(id);
+            await _mediator.Send(command);
+
+            return Ok("Banner has been deleted");
         }
     }
 }

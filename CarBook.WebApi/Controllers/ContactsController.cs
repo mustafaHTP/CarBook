@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.ContactFeatures.Commands;
+﻿using CarBook.Application.Dtos.ContactDtos;
+using CarBook.Application.Features.ContactFeatures.Commands;
 using CarBook.Application.Features.ContactFeatures.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -16,12 +17,21 @@ namespace CarBook.WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("GetAll")]
-        public async Task<IActionResult> ContactList()
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
         {
             var contacts = await _mediator.Send(new GetContactsQuery());
+            var contactDtos = contacts.Select(c => new GetContactsDto()
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Email = c.Email,
+                Subject = c.Subject,
+                Message = c.Message,
+                SendDate = c.SendDate
+            });
 
-            return Ok(contacts);
+            return Ok(contactDtos);
         }
 
         [HttpGet("{id}")]
@@ -29,19 +39,37 @@ namespace CarBook.WebApi.Controllers
         {
             var query = new GetContactByIdQuery(id);
             var contact = await _mediator.Send(query);
+            var contactDto = new GetContactByIdDto()
+            {
+                Id = contact.Id,
+                Name = contact.Name,
+                Email = contact.Email,
+                Subject = contact.Subject,
+                Message = contact.Message,
+                SendDate = contact.SendDate
+            };
 
-            return Ok(contact);
+            return Ok(contactDto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateContactCommand createContactCommand)
+        public async Task<IActionResult> Create(CreateContactDto createContactDto)
         {
-            await _mediator.Send(createContactCommand);
+            var command = new CreateContactCommand()
+            {
+                Name = createContactDto.Name,
+                Email = createContactDto.Email,
+                Subject = createContactDto.Subject,
+                Message = createContactDto.Message,
+                SendDate = createContactDto.SendDate
+            };
+
+            await _mediator.Send(command);
 
             return Ok("Contact has been created");
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var command = new DeleteContactCommand(id);
@@ -52,10 +80,20 @@ namespace CarBook.WebApi.Controllers
         }
 
 
-        [HttpPut]
-        public async Task<IActionResult> Update(UpdateContactCommand updateContactCommand)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateContactDto updateContactDto)
         {
-            await _mediator.Send(updateContactCommand);
+            var command = new UpdateContactCommand()
+            {
+                Id = id,
+                Name = updateContactDto.Name,
+                Email = updateContactDto.Email,
+                Subject = updateContactDto.Subject,
+                Message = updateContactDto.Message,
+                SendDate = updateContactDto.SendDate
+            };
+
+            await _mediator.Send(command);
 
             return Ok("Contact has been updated");
         }

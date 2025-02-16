@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.ServiceFeatures.Commands;
+﻿using CarBook.Application.Dtos.ServiceDtos;
+using CarBook.Application.Features.ServiceFeatures.Commands;
 using CarBook.Application.Features.ServiceFeatures.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -16,42 +17,73 @@ namespace CarBook.WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("GetAll")]
+        [HttpGet()]
         public async Task<IActionResult> GetAll()
         {
-            var Services = await _mediator.Send(new GetServicesQuery());
+            var services = await _mediator.Send(new GetServicesQuery());
+            var serviceDtos = services.Select(service => new GetServicesDto
+            {
+                Id = service.Id,
+                Title = service.Title,
+                Description = service.Description,
+                IconUrl = service.IconUrl
+            });
 
-            return Ok(Services);
+            return Ok(serviceDtos);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var Service = await _mediator.Send(new GetServiceByIdQuery() { Id = id });
+            var service = await _mediator.Send(new GetServiceByIdQuery() { Id = id });
+            var serviceDto = new GetServiceByIdDto
+            {
+                Id = service.Id,
+                Title = service.Title,
+                Description = service.Description,
+                IconUrl = service.IconUrl
+            };
 
-            return Ok(Service);
+            return Ok(serviceDto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateServiceCommand createServiceCommand)
+        public async Task<IActionResult> Create(CreateServiceDto createServiceDto)
         {
-            await _mediator.Send(createServiceCommand);
+            var command = new CreateServiceCommand
+            {
+                Title = createServiceDto.Title,
+                Description = createServiceDto.Description,
+                IconUrl = createServiceDto.IconUrl
+            };
+
+            await _mediator.Send(command);
 
             return Ok("Service has been created");
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update(UpdateServiceCommand updateServiceCommand)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromRoute ]int id, [FromBody] UpdateServiceDto updateServiceDto)
         {
-            await _mediator.Send(updateServiceCommand);
+            var command = new UpdateServiceCommand
+            {
+                Id = id,
+                Title = updateServiceDto.Title,
+                Description = updateServiceDto.Description,
+                IconUrl = updateServiceDto.IconUrl
+            };
+
+            await _mediator.Send(command);
 
             return Ok("Service has been updated");
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete(DeleteServiceCommand deleteServiceCommand)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            await _mediator.Send(deleteServiceCommand);
+            var command = new DeleteServiceCommand { Id = id };
+
+            await _mediator.Send(command);
 
             return Ok("Service has been deleted");
         }

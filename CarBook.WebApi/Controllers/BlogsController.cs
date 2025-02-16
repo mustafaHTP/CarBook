@@ -20,11 +20,32 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpGet()]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] GetBlogsQueryDto getBlogsQueryDto)
         {
-            var blogs = await _mediator.Send(new GetBlogsQuery());
+            //Parse includes query string to list
+            var includes = getBlogsQueryDto.Includes?.Split(',').ToList();
+            var query = new GetBlogsQuery()
+            {
+                Includes = includes ?? []
+            };
+            var blogs = await _mediator.Send(query);
+            var blogsDto = blogs.Select(b => new GetBlogsDto()
+            {
+                Id = b.Id,
+                Title = b.Title,
+                Content = b.Content,
+                Description = b.Description,
+                CoverImageUrl = b.CoverImageUrl,
+                CreatedDate = b.CreatedDate,
+                BlogAuthorId = b.BlogAuthorId,
+                BlogAuthorName = b.BlogAuthor?.Name,
+                BlogAuthorDescription = b.BlogAuthor?.Description,
+                BlogAuthorImageUrl = b.BlogAuthor?.ImageUrl,
+                BlogCategoryId = b.BlogCategoryId,
+                BlogCategoryName = b.BlogCategory?.Name
+            });
 
-            return Ok(blogs);
+            return Ok(blogsDto);
         }
 
         [HttpGet("Last3Blogs")]
@@ -78,11 +99,34 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById([FromRoute] int id, [FromQuery] GetBlogByIdQueryDto getBlogByIdQueryDto)
         {
-            var blog = await _mediator.Send(new GetBlogByIdQuery() { Id = id });
+            // Parse includes query string to list
+            var includes = getBlogByIdQueryDto.Includes?.Split(',').ToList();
+            var query = new GetBlogByIdQuery()
+            {
+                Id = id,
+                Includes = includes ?? []
+            };
 
-            return Ok(blog);
+            var blog = await _mediator.Send(query);
+            var blogDto = new GetBlogByIdDto()
+            {
+                Id = blog.Id,
+                Title = blog.Title,
+                Content = blog.Content,
+                Description = blog.Description,
+                CoverImageUrl = blog.CoverImageUrl,
+                CreatedDate = blog.CreatedDate,
+                BlogAuthorId = blog.BlogAuthorId,
+                BlogAuthorName = blog.BlogAuthor?.Name,
+                BlogAuthorDescription = blog.BlogAuthor?.Description,
+                BlogAuthorImageUrl = blog.BlogAuthor?.ImageUrl,
+                BlogCategoryId = blog.BlogCategoryId,
+                BlogCategoryName = blog.BlogCategory?.Name
+            };
+
+            return Ok(blogDto);
         }
 
         [HttpGet("{id}/comments")]
@@ -102,25 +146,46 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateBlogCommand createBlogCommand)
+        public async Task<IActionResult> Create(CreateBlogDto createBlogDto)
         {
-            await _mediator.Send(createBlogCommand);
+            var command = new CreateBlogCommand()
+            {
+                Title = createBlogDto.Title,
+                Description = createBlogDto.Description,
+                Content = createBlogDto.Content,
+                CoverImageUrl = createBlogDto.CoverImageUrl,
+                CreatedDate = createBlogDto.CreatedDate,
+                BlogAuthorId = createBlogDto.BlogAuthorId,
+                BlogCategoryId = createBlogDto.BlogCategoryId
+            };
+            await _mediator.Send(command);
 
             return Ok("Blog has been created");
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update(UpdateBlogCommand updateBlogCommand)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromRoute]int id, [FromBody] UpdateBlogDto updateBlogDto)
         {
-            await _mediator.Send(updateBlogCommand);
+            var command = new UpdateBlogCommand()
+            {
+                Id = id,
+                Title = updateBlogDto.Title,
+                Description = updateBlogDto.Description,
+                Content = updateBlogDto.Content,
+                CoverImageUrl = updateBlogDto.CoverImageUrl,
+                BlogAuthorId = updateBlogDto.BlogAuthorId,
+                BlogCategoryId = updateBlogDto.BlogCategoryId
+            };
+            await _mediator.Send(command);
 
             return Ok("Blog has been updated");
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete(DeleteBlogCommand deleteBlogCommand)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            await _mediator.Send(deleteBlogCommand);
+            var command = new DeleteBlogCommand() { Id = id };
+            await _mediator.Send(command);
 
             return Ok("Blog has been deleted");
         }

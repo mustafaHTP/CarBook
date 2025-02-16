@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.ReservationPricingFeatures.Commands;
+﻿using CarBook.Application.Dtos.PricingPlanDtos;
+using CarBook.Application.Features.ReservationPricingFeatures.Commands;
 using CarBook.Application.Features.ReservationPricingFeatures.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -20,38 +21,61 @@ namespace CarBook.WebApi.Controllers
         public async Task<IActionResult> GetAll()
         {
             var pricingPlans = await _mediator.Send(new GetPricingPlansQuery());
+            var pricingPlanDtos = pricingPlans.Select(pricingPlan => new GetPricingPlansDto
+            {
+                Id = pricingPlan.Id,
+                Name = pricingPlan.Name
+            });
 
-            return Ok(pricingPlans);
+            return Ok(pricingPlanDtos);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var pricingPlan = await _mediator.Send(new GetPricingPlanByIdQuery() { Id = id });
+            var pricingPlanDto = new GetPricingPlanByIdDto
+            {
+                Id = pricingPlan.Id,
+                Name = pricingPlan.Name
+            };
 
-            return Ok(pricingPlan);
+            return Ok(pricingPlanDto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreatePricingPlanCommand createReservationPricingCommand)
+        public async Task<IActionResult> Create(CreatePricingPlanDto createPricingPlanDto)
         {
-            await _mediator.Send(createReservationPricingCommand);
+            var command = new CreatePricingPlanCommand
+            {
+                Name = createPricingPlanDto.Name
+            };
+            await _mediator.Send(command);
 
             return Ok("Pricing Plan has been created");
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update(UpdatePricingPlanCommand updateReservationPricingCommand)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdatePricingPlanDto updatePricingPlanDto)
         {
-            await _mediator.Send(updateReservationPricingCommand);
+            var command = new UpdatePricingPlanCommand
+            {
+                Id = id,
+                Name = updatePricingPlanDto.Name
+            };
+            await _mediator.Send(command);
 
             return Ok("Pricing Plan has been updated");
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete(DeletePricingPlanCommand deleteReservationPricingCommand)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            await _mediator.Send(deleteReservationPricingCommand);
+            var command = new DeletePricingPlanCommand
+            {
+                Id = id
+            };
+            await _mediator.Send(command);
 
             return Ok("Pricing Plan has been deleted");
         }

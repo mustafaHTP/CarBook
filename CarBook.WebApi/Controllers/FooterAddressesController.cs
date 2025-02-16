@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.FooterAddressFeatures.Commands;
+﻿using CarBook.Application.Dtos.FooterAddressDtos;
+using CarBook.Application.Features.FooterAddressFeatures.Commands;
 using CarBook.Application.Features.FooterAddressFeatures.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -20,38 +21,73 @@ namespace CarBook.WebApi.Controllers
         public async Task<IActionResult> GetAll()
         {
             var footerAddresses = await _mediator.Send(new GetFooterAddressesQuery());
+            var footerAddressDtos = footerAddresses.Select(footerAddress => new GetFooterAddressesDto
+            {
+                Id = footerAddress.Id,
+                Description = footerAddress.Description,
+                Address = footerAddress.Address,
+                Email = footerAddress.Email,
+                Phone = footerAddress.Phone
+            }).ToList();
 
-            return Ok(footerAddresses);
+            return Ok(footerAddressDtos);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var footerAddress = await _mediator.Send(new GetFooterAddressByIdQuery() { Id = id });
+            var footerAddressDto = new GetFooterAddressesDto
+            {
+                Id = footerAddress.Id,
+                Description = footerAddress.Description,
+                Address = footerAddress.Address,
+                Email = footerAddress.Email,
+                Phone = footerAddress.Phone
+            };
 
-            return Ok(footerAddress);
+            return Ok(footerAddressDto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateFooterAddressCommand createFooterAddressCommand)
+        public async Task<IActionResult> Create(CreateFooterAddressDto createFooterAddressDto)
         {
-            await _mediator.Send(createFooterAddressCommand);
+            var command = new CreateFooterAddressCommand
+            {
+                Description = createFooterAddressDto.Description,
+                Address = createFooterAddressDto.Address,
+                Email = createFooterAddressDto.Email,
+                Phone = createFooterAddressDto.Phone
+            };
+
+            await _mediator.Send(command);
 
             return Ok("Footer Address has been created");
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update(UpdateFooterAddressCommand updateFooterAddressCommand)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateFooterAddressDto updateFooterAddressDto)
         {
-            await _mediator.Send(updateFooterAddressCommand);
+            var command = new UpdateFooterAddressCommand
+            {
+                Id = id,
+                Description = updateFooterAddressDto.Description,
+                Address = updateFooterAddressDto.Address,
+                Email = updateFooterAddressDto.Email,
+                Phone = updateFooterAddressDto.Phone
+            };
+
+            await _mediator.Send(command);
 
             return Ok("Footer Address has been updated");
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete(DeleteFooterAddressCommand deleteFooterAddressCommand)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            await _mediator.Send(deleteFooterAddressCommand);
+            var command = new DeleteFooterAddressCommand { Id = id };
+
+            await _mediator.Send(command);
 
             return Ok("Footer Address has been deleted");
         }

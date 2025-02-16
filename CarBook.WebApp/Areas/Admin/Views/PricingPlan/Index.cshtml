@@ -1,0 +1,68 @@
+﻿@{ 
+    int rowNumber = 1;
+}
+
+
+@model IEnumerable<GetPricingPlansDto>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Rental Period List</h4>
+                    <p class="card-subtitle mb-4">
+                        Manage car features efficiently. Add, edit, or remove features like sunroof, leather seats, or parking sensors using the provided actions.
+                    </p>
+                    <div class="mb-2">
+                        <a asp-area="Admin" asp-controller="PricingPlan" asp-action="Create" class="btn btn-success waves-effect waves-light">
+                            <i class="fas fa-plus"></i>
+                            Create Rental Period
+                        </a>
+                    </div>
+                    @if (!Model.Any())
+                    {
+                        <div class="alert alert-info">
+                            There is no rental period here. Please create a new one.
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-striped mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td scope="row">@(rowNumber++)</td>
+                                            <td>@item.Name</td>
+                                            <td>
+                                                <a asp-area="Admin" asp-controller="PricingPlan" asp-action="Update" asp-route-id="@item.Id" class="btn btn-warning text-white">
+                                                    <i class="bi bi-pencil-fill"></i>
+                                                    Edit
+                                                </a>
+
+                                                <a asp-area="Admin" asp-controller="PricingPlan" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger text-white">
+                                                    <i class="bi bi-trash3-fill"></i>
+                                                    Remove
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

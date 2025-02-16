@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.LocationFeatures.Commands;
+﻿using CarBook.Application.Dtos.LocationDtos;
+using CarBook.Application.Features.LocationFeatures.Commands;
 using CarBook.Application.Features.LocationFeatures.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -20,38 +21,50 @@ namespace CarBook.WebApi.Controllers
         public async Task<IActionResult> GetAll()
         {
             var locations = await _mediator.Send(new GetLocationsQuery());
+            var locationDtos = locations.Select(location => new GetLocationsDto() { Id = location.Id, Name = location.Name });
 
-            return Ok(locations);
+            return Ok(locationDtos);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var location = await _mediator.Send(new GetLocationByIdQuery() { Id = id });
+            var locationDto = new GetLocationByIdDto() { Id = location.Id, Name = location.Name };
 
-            return Ok(location);
+            return Ok(locationDto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateLocationCommand createLocationCommand)
+        public async Task<IActionResult> Create(CreateLocationDto createLocationDto)
         {
-            await _mediator.Send(createLocationCommand);
+            var command = new CreateLocationCommand() { Name = createLocationDto.Name };
+
+            await _mediator.Send(command);
 
             return Ok("Location has been created");
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update(UpdateLocationCommand updateLocationCommand)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateLocationDto updateLocationDto)
         {
-            await _mediator.Send(updateLocationCommand);
+            var command = new UpdateLocationCommand()
+            {
+                Id = id,
+                Name = updateLocationDto.Name
+            };
+
+            await _mediator.Send(command);
 
             return Ok("Location has been updated");
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete(DeleteLocationCommand deleteLocationCommand)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            await _mediator.Send(deleteLocationCommand);
+            var command = new DeleteLocationCommand() { Id = id };
+
+            await _mediator.Send(command);
 
             return Ok("Location has been deleted");
         }

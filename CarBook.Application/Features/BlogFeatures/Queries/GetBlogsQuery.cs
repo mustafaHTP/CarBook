@@ -5,5 +5,6 @@ namespace CarBook.Application.Features.BlogFeatures.Queries
 {
     public class GetBlogsQuery : IRequest<List<GetBlogsQueryResult>>
     {
+        public List<string> Includes { get; set; } = [];
     }
 }

@@ -131,37 +131,14 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
             {
                 return RedirectToAction(nameof(Index));
             }
-
-            // If the update fails, return the view with the model
-            // Get the car by id
-            response = await client.GetAsync($"https://localhost:7116/api/Cars/{updateCarViewModel.Id}?IncludeModel=false&IncludeBrand=false");
-
-            if (response.IsSuccessStatusCode)
+            else
             {
                 ViewBag.Models = await GetModelList();
                 ViewBag.TransmissionTypes = GetTransmissionTypeList();
                 ViewBag.FuelTypes = GetFuelTypeList();
 
-                jsonData = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<GetCarByIdDto>(jsonData);
-
-                updateCarViewModel = new UpdateCarViewModel()
-                {
-                    Id = result.Id,
-                    ModelId = result.ModelId,
-                    Km = result.Km,
-                    SeatCount = result.SeatCount,
-                    Luggage = result.Luggage,
-                    TransmissionType = result.TransmissionType,
-                    FuelType = result.FuelType,
-                    CoverImageUrl = result.CoverImageUrl,
-                    BigImageUrl = result.BigImageUrl
-                };
-
                 return View(updateCarViewModel);
             }
-
-            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Delete(int id)

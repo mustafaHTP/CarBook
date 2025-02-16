@@ -1,0 +1,52 @@
+﻿@model IEnumerable<GetBlogCommentsByBlogIdDto>
+
+<div class="container-fluid">
+    <div class="row">
+
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex flex-row justify-content-between">
+                        <div>
+                            <h4 class="card-title">Comment List</h4>
+                            <p class="card-subtitle mb-4">
+                                List of comments for the selected blog.
+                            </p>
+                        </div>
+                        @if (Model.Any())
+                        {
+                            <div>
+                                <a asp-area="" asp-controller="Blog" asp-action="GetById" asp-route-id="@Model.First().BlogId" class="btn btn-info text-white">
+                                    <i class="fas fa-file-alt"></i>
+                                    Go Blog
+                                </a>
+                            </div>
+                        }
+                    </div>
+                    <div class="row">
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">@item.Name</h4>
+                                        <p class="card-text">
+                                            @item.Content
+                                        </p>
+                                        <a href="#" class="btn btn-primary waves-effect waves-light">Go somewhere</a>
+                                    </div>
+                                    <h4 class="card-header">@item.CreatedDate.ToShortDateString()</h4>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

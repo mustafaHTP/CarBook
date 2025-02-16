@@ -90,9 +90,8 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(UpdateBannerViewModel updateBannerViewModel)
         {
-            UpdateBannerDto updateCarDto = new()
+            UpdateBannerDto updateBannerDto = new()
             {
-                Id = updateBannerViewModel.Id,
                 Title = updateBannerViewModel.Title,
                 Description = updateBannerViewModel.Description,
                 VideoDescription = updateBannerViewModel.VideoDescription,
@@ -100,9 +99,9 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
             };
 
             var client = _httpClientFactory.CreateClient();
-            var jsonData = JsonConvert.SerializeObject(updateCarDto);
+            var jsonData = JsonConvert.SerializeObject(updateBannerDto);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var response = await client.PutAsync("https://localhost:7116/api/Banners", content);
+            var response = await client.PutAsync($"https://localhost:7116/api/Banners/{updateBannerViewModel.Id}", content);
 
             if (response.IsSuccessStatusCode)
             {

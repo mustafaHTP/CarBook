@@ -40,7 +40,7 @@
                     </div>
                 </div>
 
-                <div class="pt-5 mt-5">
+                <div id="BlogComments" class="pt-5 mt-5">
                     @await Component.InvokeAsync("BlogComments", new { blogId = ViewData["BlogId"] })
 
                     <partial name="~/Views/Shared/PartialViews/_BlogCommentForm.cshtml" />

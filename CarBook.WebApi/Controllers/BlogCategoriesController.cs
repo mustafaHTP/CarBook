@@ -56,18 +56,8 @@ namespace CarBook.WebApi.Controllers
             return Ok("BlogCategory has been created");
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var command = new DeleteBlogCategoryCommand() { Id = id };
-            await _mediator.Send(command);
-
-            return Ok("BlogCategory has been deleted");
-        }
-
-
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update([FromRoute] int id, [FromBody]UpdateBlogCategoryCommand updateBlogCategoryCommand)
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateBlogCategoryCommand updateBlogCategoryCommand)
         {
             var command = new UpdateBlogCategoryCommand
             {
@@ -77,6 +67,15 @@ namespace CarBook.WebApi.Controllers
             await _mediator.Send(command);
 
             return Ok("BlogCategory has been updated");
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var command = new DeleteBlogCategoryCommand() { Id = id };
+            await _mediator.Send(command);
+
+            return Ok("BlogCategory has been deleted");
         }
     }
 }

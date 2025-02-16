@@ -1,0 +1,48 @@
+﻿@{ 
+    int rowNumber = 1;
+}
+
+
+@model IEnumerable<GetContactsDto>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Contacts Table</h4>
+                    <p class="card-subtitle mb-4">
+                        This table stores messages submitted through the Contact Us page, including sender details, message content, and submission status. It helps manage inquiries efficiently by tracking responses and organizing communications.
+                    </p>
+
+                    <table id="basic-datatable" class="table dt-responsive nowrap">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Subject</th>
+                                <th>Send Date</th>
+                                <th>Message</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@(rowNumber++)</td>
+                                    <td>@item.Name</td>
+                                    <td>@item.Email</td>
+                                    <td>@item.Message</td>
+                                    <td>@item.SendDate.ToShortDateString()</td>
+                                    <td>@item.Message</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                </div> <!-- end card body-->
+            </div> <!-- end card -->
+        </div><!-- end col-->
+    </div>
+</div>
