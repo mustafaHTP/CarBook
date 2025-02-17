@@ -14,6 +14,11 @@ namespace CarBook.Persistence.Repositories
             _context = context;
         }
 
+        public int Count()
+        {
+            return _context.Set<T>().Count();
+        }
+
         public async Task CreateAsync(T entity)
         {
             await _context.AddAsync(entity);

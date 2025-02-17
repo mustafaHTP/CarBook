@@ -16,7 +16,7 @@ namespace CarBook.WebApp.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:7116/api/Testimonials/GetAll");
+            var response = await client.GetAsync("https://localhost:7116/api/Testimonials");
             if (response.IsSuccessStatusCode)
             {
                 var value = await response.Content.ReadAsStringAsync();

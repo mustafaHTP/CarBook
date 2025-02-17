@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.SocialMediaFeatures.Commands;
+﻿using CarBook.Application.Dtos.SocialMediaDtos;
+using CarBook.Application.Features.SocialMediaFeatures.Commands;
 using CarBook.Application.Features.SocialMediaFeatures.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -20,38 +21,69 @@ namespace CarBook.WebApi.Controllers
         public async Task<IActionResult> GetAll()
         {
             var socialMedias = await _mediator.Send(new GetSocialMediasQuery());
+            var socialMediaDtos = socialMedias.Select(socialMedia => new GetSocialMediasDto
+            {
+                Id = socialMedia.Id,
+                Name = socialMedia.Name,
+                Url = socialMedia.Url,
+                Icon = socialMedia.Icon
+            });
 
-            return Ok(socialMedias);
+            return Ok(socialMediaDtos);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var socialMedia = await _mediator.Send(new GetSocialMediaByIdQuery() { Id = id });
+            var socialMediaDto = new GetSocialMediaByIdDto
+            {
+                Id = socialMedia.Id,
+                Name = socialMedia.Name,
+                Url = socialMedia.Url,
+                Icon = socialMedia.Icon
+            };
 
-            return Ok(socialMedia);
+            return Ok(socialMediaDto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateSocialMediaCommand createSocialMediaCommand)
+        public async Task<IActionResult> Create(CreateSocialMediaDto createSocialMediaDto)
         {
-            await _mediator.Send(createSocialMediaCommand);
+            var command = new CreateSocialMediaCommand
+            {
+                Name = createSocialMediaDto.Name,
+                Url = createSocialMediaDto.Url,
+                Icon = createSocialMediaDto.Icon
+            };
+
+            await _mediator.Send(command);
 
             return Ok("Socia lMedia has been created");
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update(UpdateSocialMediaCommand updateSocialMediaCommand)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromRoute]int id, [FromBody] UpdateSocialMediaDto updateSocialMediaDto)
         {
-            await _mediator.Send(updateSocialMediaCommand);
+            var command = new UpdateSocialMediaCommand
+            {
+                Id = id,
+                Name = updateSocialMediaDto.Name,
+                Url = updateSocialMediaDto.Url,
+                Icon = updateSocialMediaDto.Icon
+            };
+
+            await _mediator.Send(command);
 
             return Ok("Social Media has been updated");
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete(DeleteSocialMediaCommand deleteSocialMediaCommand)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            await _mediator.Send(deleteSocialMediaCommand);
+            var command = new DeleteSocialMediaCommand { Id = id };
+
+            await _mediator.Send(command);
 
             return Ok("Social Media has been deleted");
         }

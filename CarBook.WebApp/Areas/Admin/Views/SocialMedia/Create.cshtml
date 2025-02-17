@@ -1,0 +1,38 @@
+﻿@model CreateSocialMediaViewModel
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Create Social Media</h4>
+                    <p class="card-subtitle mb-4">Here’s a quick example to demonstrate Bootstrap’s form styles. Keep reading for documentation on required classes, form layout, and more.</p>
+
+                    <form method="post" asp-area="Admin" asp-controller="SocialMedia" asp-action="Create">
+                        <div class="form-group">
+                            <label asp-for="Name">Name</label>
+                            <input asp-for="Name" class="form-control" placeholder="Enter a social media name" />
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Url">Url</label>
+                            <input asp-for="Url" class="form-control" placeholder="Enter a url" />
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Icon">Icon</label>
+                            <input asp-for="Icon" class="form-control" placeholder="Enter a icon url" />
+                            <small class="form-text">You can find icon url in website template</small>
+                        </div>
+
+                        <button type="submit" class="btn btn-success waves-effect waves-light">
+                            <i class="bi bi-floppy"></i>
+                            Save
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,4 @@
-﻿using CarBook.Application.Dtos.FeatureDtos;
-using CarBook.Application.Dtos.FooterAddressDtos;
-using CarBook.WebApp.Areas.Admin.Models.FeatureModels;
+﻿using CarBook.Application.Dtos.FooterAddressDtos;
 using CarBook.WebApp.Areas.Admin.Models.FooterAddressModels;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
