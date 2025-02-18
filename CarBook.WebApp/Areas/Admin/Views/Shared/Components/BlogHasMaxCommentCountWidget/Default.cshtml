@@ -1,0 +1,22 @@
+﻿@model GetBlogHasMaxCommentCountDto
+
+<div class="col-md-6 col-xl-3">
+    <div class="card bg-info bg-gradient">
+        <div class="card-body">
+            <div class="mb-4">
+                <h5 class="card-title mb-0 text-white">Blog Has Max Comment Count</h5>
+            </div>
+            <div class="row d-flex align-items-center mb-4">
+                <div class="col-8">
+                    <h2 class="d-flex align-items-center text-white mb-0">
+                        <i class="fas fa-comments mr-2"></i>
+                        @Model.CommentCount
+                    </h2>
+                </div>
+                <div class="col-4 text-right">
+                    <span class="text-white-50">@Model.BlogTitle</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

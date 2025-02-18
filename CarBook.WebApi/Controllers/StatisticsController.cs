@@ -20,9 +20,13 @@ namespace CarBook.WebApi.Controllers
         [HttpGet("car/count")]
         public async Task<IActionResult> GetCarCountAsync()
         {
-            var carCount = await _mediator.Send(new GetCarCountQuery());
+            var result = await _mediator.Send(new GetCarCountQuery());
+            var resultDto = new GetCarCountDto
+            {
+                CarCount = result.CarCount
+            };
 
-            return Ok(carCount);
+            return Ok(result);
         }
 
         [HttpGet("car/countByFuelType")]
@@ -32,9 +36,13 @@ namespace CarBook.WebApi.Controllers
             {
                 FuelTypes = getCarCountByFuelTypeQueryDto.FuelTypes
             };
-            var carCount = await _mediator.Send(query);
+            var result = await _mediator.Send(query);
+            var resultDto = new GetCarCountByFuelTypeDto
+            {
+                CarCount = result.CarCount
+            };
 
-            return Ok(carCount);
+            return Ok(resultDto);
         }
 
         [HttpGet("car/countByTransmissionType")]
@@ -44,57 +52,87 @@ namespace CarBook.WebApi.Controllers
             {
                 TransmissionTypes = getCarCountByTransmissionTypeQueryDto.TransmissionTypes
             };
-            var carCount = await _mediator.Send(query);
+            var result = await _mediator.Send(query);
+            var resultDto = new GetCarCountByTransmissionTypeDto
+            {
+                CarCount = result.CarCount
+            };
 
-            return Ok(carCount);
+            return Ok(resultDto);
         }
 
         [HttpGet("blogAuthor/count")]
         public async Task<IActionResult> GetBlogAuthorCountAsync()
         {
-            var blogAuthorCount = await _mediator.Send(new GetBlogAuthorCountQuery());
+            var result = await _mediator.Send(new GetBlogAuthorCountQuery());
+            var resultDto = new GetBlogAuthorCountDto
+            {
+                BlogAuthorCount = result.BlogAuthorCount
+            };
 
-            return Ok(blogAuthorCount);
+            return Ok(resultDto);
         }
 
         [HttpGet("location/count")]
         public async Task<IActionResult> GetLocationCountAsync()
         {
-            var locationCount = await _mediator.Send(new GetLocationCountQuery());
+            var result = await _mediator.Send(new GetLocationCountQuery());
+            var resultDto = new GetLocationCountDto
+            {
+                LocationCount = result.LocationCount
+            };
 
-            return Ok(locationCount);
+            return Ok(resultDto);
         }
 
         [HttpGet("blog/count")]
         public async Task<IActionResult> GetBlogCountAsync()
         {
-            var blogCount = await _mediator.Send(new GetBlogCountQuery());
+            var result = await _mediator.Send(new GetBlogCountQuery());
+            var resultDto = new GetBlogCountDto
+            {
+                BlogCount = result.BlogCount
+            };
 
-            return Ok(blogCount);
+            return Ok(resultDto);
         }
 
         [HttpGet("blog/hasMaxCommentCount")]
         public async Task<IActionResult> GetBlogHasMaxCommentCountAsync()
         {
-            var blog = await _mediator.Send(new GetBlogHasMaxCommentCountQuery());
+            var result = await _mediator.Send(new GetBlogHasMaxCommentCountQuery());
+            var resultDto = new GetBlogHasMaxCommentCountDto
+            {
+                BlogTitle = result.BlogTitle,
+                CommentCount = result.CommentCount
+            };
 
-            return Ok(blog);
+            return Ok(resultDto);
         }
 
         [HttpGet("brand/count")]
         public async Task<IActionResult> GetBrandCountAsync()
         {
-            var brandCount = await _mediator.Send(new GetBrandCountQuery());
+            var result = await _mediator.Send(new GetBrandCountQuery());
+            var resultDto = new GetBrandCountDto
+            {
+                BrandCount = result.BrandCount
+            };
 
-            return Ok(brandCount);
+            return Ok(resultDto);
         }
 
         [HttpGet("brand/hasMaxModelCount")]
         public async Task<IActionResult> GetBrandHasMaxModelCountAsync()
         {
-            var brand = await _mediator.Send(new GetBrandHasMaxModelCountQuery());
+            var result = await _mediator.Send(new GetBrandHasMaxModelCountQuery());
+            var resultDto = new GetBrandHasMaxModelCountDto
+            {
+                BrandName = result.BrandName,
+                ModelCount = result.ModelCount
+            };
 
-            return Ok(brand);
+            return Ok(resultDto);
         }
 
         [HttpGet("carRentalPrice/avg")]
@@ -107,8 +145,12 @@ namespace CarBook.WebApi.Controllers
             };
 
             var result = await _mediator.Send(query);
+            var resultDto = new GetAverageCarRentalPriceDto
+            {
+                AveragePrice = result.AveragePrice
+            };
 
-            return Ok(result);
+            return Ok(resultDto);
         }
     }
 }

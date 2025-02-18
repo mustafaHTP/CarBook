@@ -1,0 +1,19 @@
+﻿@model GetCarCountDto
+
+    <div class="col-md-6 col-xl-3">
+        <div class="card bg-primary border-primary">
+            <div class="card-body">
+                <div class="mb-4">
+                    <h5 class="card-title mb-0 text-white">Total Car Count</h5>
+                </div>
+                <div class="row d-flex align-items-center mb-4">
+                    <div class="col-8">
+                        <h2 class="d-flex align-items-center mb-0 text-white">
+                            <i class="fas fa-car-alt mr-2"></i>
+                            @Model.CarCount
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
