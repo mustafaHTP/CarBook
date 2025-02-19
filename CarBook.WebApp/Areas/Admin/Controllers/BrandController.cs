@@ -35,7 +35,7 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
             return View();
         }

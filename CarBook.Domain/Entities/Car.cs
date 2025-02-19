@@ -13,6 +13,7 @@ namespace CarBook.Domain.Entities
         public FuelType FuelType { get; set; }
         public string CoverImageUrl { get; set; }
         public string BigImageUrl { get; set; }
+        public RentalCar? RentalCar { get; set; }
         public List<CarFeature> CarFeatures { get; set; }
         public List<CarDescription> CarDescriptions { get; set; }
         public List<CarReservationPricing> CarReservationPricings { get; set; }

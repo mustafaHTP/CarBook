@@ -26,7 +26,7 @@ namespace CarBook.WebApi.Controllers
                 CarCount = result.CarCount
             };
 
-            return Ok(result);
+            return Ok(resultDto);
         }
 
         [HttpGet("car/countByFuelType")]
