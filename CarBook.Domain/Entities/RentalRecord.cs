@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,9 +19,12 @@ namespace CarBook.Domain.Entities
         public string CarName { get; set; } = string.Empty;
         public string PickUpDescription { get; set; } = string.Empty;
         public string ReturnDescription { get; set; } = string.Empty;
-        public DateTime RentDate { get; set; }
-        public DateTime ExceptedReturnDate { get; set; }
-        public DateTime? ReturnDate { get; set; }
+        public DateOnly RentDate { get; set; }
+        public TimeOnly RentTime { get; set; }
+        public DateOnly ExceptedReturnDate { get; set; }
+        public TimeOnly ExceptedReturnTime { get; set; }
+        public DateOnly? ReturnDate { get; set; }
+        public TimeOnly? ReturnTime { get; set; }
         public int CustomerId { get; set; }
         public string CustomerFullName { get; set; } = null!;
         public Customer? Customer { get; set; }

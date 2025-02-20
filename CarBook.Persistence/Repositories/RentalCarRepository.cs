@@ -23,6 +23,8 @@ namespace CarBook.Persistence.Repositories
                 .RentalCars
                 .Include(rc => rc.Location)
                 .Include(rc => rc.Car)
+                .ThenInclude(c => c.Model)
+                .ThenInclude(m => m.Brand)
                 .Where(filter).ToListAsync();
         }
     }

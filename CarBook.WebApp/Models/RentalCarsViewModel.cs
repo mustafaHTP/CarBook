@@ -1,15 +1,9 @@
 ﻿using CarBook.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace CarBook.Application.Features.RentalCarFeatures.Results
+namespace CarBook.WebApp.Models
 {
-    public class GetRentalCarsQueryResult
+    public class RentalCarsViewModel
     {
-        public int Id { get; set; }
         public int LocationId { get; set; }
         public Location Location { get; set; } = null!;
         public int CarId { get; set; }

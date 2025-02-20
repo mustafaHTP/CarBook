@@ -38,6 +38,14 @@ namespace CarBook.Persistence.Context
                 UseSqlServer("Data Source=DESKTOP-O5H7DFD;Initial Catalog=CarBook;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
         }
 
+        protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+        {
+            base.ConfigureConventions(configurationBuilder);
+            configurationBuilder
+                .Properties<DateOnly>()
+                .HaveColumnType("date");
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

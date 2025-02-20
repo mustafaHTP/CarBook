@@ -11,8 +11,9 @@ namespace CarBook.Application.Dtos.RentalCarDtos
     {
         public int Id { get; set; }
         public int LocationId { get; set; }
-        public string LocationName { get; set; } = null!;
+        public Location Location { get; set; } = null!;
         public int CarId { get; set; }
+        public Car Car { get; set; } = null!;
         public bool IsAvailable { get; set; }
     }
 }

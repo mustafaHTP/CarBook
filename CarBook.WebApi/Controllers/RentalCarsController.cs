@@ -22,8 +22,17 @@ namespace CarBook.WebApi.Controllers
         public async Task<IActionResult> GetAll([FromQuery] GetRentalCarsQueryDto getRentalCarsQueryDto)
         {
             var rentalCars = await _mediator.Send(new GetRentalCarsQuery { LocationId = getRentalCarsQueryDto.LocationId });
+            var rentalCarDtos = rentalCars.Select(rc => new GetRentalCarsDto()
+            {
+                Id = rc.Id,
+                LocationId = rc.LocationId,
+                Location = rc.Location,
+                CarId = rc.CarId,
+                Car = rc.Car,
+                IsAvailable = rc.IsAvailable,
+            });
 
-            return Ok(rentalCars);
+            return Ok(rentalCarDtos);
         }
     }
 }

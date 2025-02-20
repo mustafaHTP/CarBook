@@ -24,6 +24,7 @@ namespace CarBook.Application.Features.RentalCarFeatures.Handlers
             var rentalCars = await _repository.GetAllByFilterAsync(rc => rc.LocationId == request.LocationId);
             var result = rentalCars.Select(rc => new GetRentalCarsQueryResult
             {
+                Id = rc.Id,
                 LocationId = rc.LocationId,
                 Location = rc.Location,
                 CarId = rc.CarId,
