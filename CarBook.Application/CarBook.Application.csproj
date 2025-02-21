@@ -15,4 +15,9 @@
     <ProjectReference Include="..\CarBook.Domain\CarBook.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\ReservationFeatures\Results\" />
+    <Folder Include="Features\ReservationFeatures\Queries\" />
+  </ItemGroup>
+
 </Project>
