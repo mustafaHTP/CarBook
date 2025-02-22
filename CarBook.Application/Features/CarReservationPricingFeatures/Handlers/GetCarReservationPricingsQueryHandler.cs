@@ -16,15 +16,17 @@ namespace CarBook.Application.Features.CarReservationPricingFeatures.Handlers
 
         public async Task<List<GetCarReservationPricingsQueryResult>> Handle(GetCarReservationPricingsQuery request, CancellationToken cancellationToken)
         {
-            var carReservationPricings = _repository.GetAllWithCarAndPricePlan();
-            var result = carReservationPricings.Select(x => new GetCarReservationPricingsQueryResult
+
+            var rentalPeriods = request.RentalPeriods?.Split(',').ToList();
+            var carReservationPricings = _repository.GetAll(rentalPeriods);
+            var result = carReservationPricings.Select(crp => new GetCarReservationPricingsQueryResult()
             {
-                Id = x.Id,
-                CarId = x.CarId,
-                Car = x.Car,
-                PricingPlanId = x.PricingPlanId,
-                PricingPlan = x.PricingPlan,
-                Price = x.Price
+                Id = crp.Id,
+                CarId = crp.CarId,
+                Car = crp.Car,
+                PricingPlanId = crp.PricingPlanId,
+                PricingPlan = crp.PricingPlan,
+                Price = crp.Price
             }).ToList();
 
             return await Task.FromResult(result);

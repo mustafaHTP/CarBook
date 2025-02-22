@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Dtos.StatisticsDtos;
+﻿using CarBook.Application.Dtos.BlogDtos;
+using CarBook.Application.Dtos.StatisticsDtos;
 using CarBook.Application.Features.StatisticsFeatures.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -92,6 +93,22 @@ namespace CarBook.WebApi.Controllers
             var resultDto = new GetBlogCountDto
             {
                 BlogCount = result.BlogCount
+            };
+
+            return Ok(resultDto);
+        }
+
+        [HttpGet("blog/{id}/comments/count")]
+        public async Task<IActionResult> GetBlogCommentCountByIdAsync(int id)
+        {
+            var query = new GetBlogCommentCountByBlogIdQuery
+            {
+                BlogId = id
+            };
+            var result = await _mediator.Send(query);
+            var resultDto = new GetBlogCommentCountByBlogIdDto
+            {
+                BlogCommentCount = result.BlogCommentCount
             };
 
             return Ok(resultDto);

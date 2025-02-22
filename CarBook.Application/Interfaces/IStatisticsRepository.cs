@@ -10,6 +10,7 @@ namespace CarBook.Application.Interfaces
 {
     public interface IStatisticsRepository
     {
+        int GetBlogCommentCountByBlogId(int blogId);
         int GetCarCountByDistance(int distanceKm, bool countLessThan);
         int GetCarCountByTransmissionType(IEnumerable<TransmissionType?> transmissionTypes);
         int GetCarCountByFuelType(IEnumerable<FuelType?> fuelTypes);

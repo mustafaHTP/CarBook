@@ -48,6 +48,14 @@ namespace CarBook.Persistence.Repositories
                 : 0m;
         }
 
+        public int GetBlogCommentCountByBlogId(int blogId)
+        {
+            return _context
+                .BlogComments
+                .Where(bc => bc.BlogId == blogId)
+                .Count();
+        }
+
         public Blog? GetBlogHasMaxCommentCount()
         {
             var blogHasMaxCommentCount = _context.Blogs.Include(b => b.BlogComments).OrderByDescending(b => b.BlogComments.Count).FirstOrDefault();
