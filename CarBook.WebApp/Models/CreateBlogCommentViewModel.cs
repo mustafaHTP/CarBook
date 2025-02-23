@@ -1,8 +1,8 @@
-﻿using MediatR;
+﻿using CarBook.Domain.Entities;
 
-namespace CarBook.Application.Features.BlogCommentFeatures.Commands
+namespace CarBook.WebApp.Models
 {
-    public class CreateBlogCommentCommand : IRequest
+    public class CreateBlogCommentViewModel
     {
         public string Name { get; set; }
         public string Email { get; set; }

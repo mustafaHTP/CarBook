@@ -22,6 +22,7 @@ namespace CarBook.Application.Features.BlogCommentFeatures.Handlers
             {
                 Id = x.Id,
                 Name = x.Name,
+                Email = x.Email,
                 CreatedDate = x.CreatedDate,
                 Content = x.Content,
                 BlogId = x.BlogId

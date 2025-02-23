@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.BlogCommentFeatures.Commands;
+﻿using CarBook.Application.Dtos.BlogCommentDtos;
+using CarBook.Application.Features.BlogCommentFeatures.Commands;
 using CarBook.Application.Features.BlogCommentFeatures.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -20,38 +21,74 @@ namespace CarBook.WebApi.Controllers
         public async Task<IActionResult> GetAll()
         {
             var blogComments = await _mediator.Send(new GetBlogCommentsQuery());
+            var blogCommentsDto = blogComments.Select(x => new GetBlogCommentsDto()
+            {
+                Id = x.Id,
+                BlogId = x.BlogId,
+                Content = x.Content,
+                Email = x.Email,
+                CreatedDate = x.CreatedDate,
+                Name = x.Name
+            });
 
-            return Ok(blogComments);
+            return Ok(blogCommentsDto);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var blogComment = await _mediator.Send(new GetBlogCommentByIdQuery() { Id = id });
+            var blogCommentDto = new GetBlogCommentByIdDto()
+            {
+                Id = blogComment.Id,
+                BlogId = blogComment.BlogId,
+                Email = blogComment.Email,
+                Content = blogComment.Content,
+                CreatedDate = blogComment.CreatedDate,
+                Name = blogComment.Name
+            };
 
-            return Ok(blogComment);
+            return Ok(blogCommentDto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateBlogCommentCommand createBlogCommentCommand)
+        public async Task<IActionResult> Create(CreateBlogCommentDto createBlogCommentDto)
         {
-            await _mediator.Send(createBlogCommentCommand);
+            var command = new CreateBlogCommentCommand()
+            {
+                BlogId = createBlogCommentDto.BlogId,
+                Content = createBlogCommentDto.Content,
+                Email = createBlogCommentDto.Email,
+                Name = createBlogCommentDto.Name,
+                CreatedDate = DateTime.Now
+            };
+            await _mediator.Send(command);
 
             return Ok("BlogComment has been created");
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update(UpdateBlogCommentCommand updateBlogCommentCommand)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromRoute]int id, [FromBody]UpdateBlogCommentDto updateBlogCommentDto)
         {
-            await _mediator.Send(updateBlogCommentCommand);
+            var command = new UpdateBlogCommentCommand()
+            {
+                Id = id,
+                BlogId = updateBlogCommentDto.BlogId,
+                Content = updateBlogCommentDto.Content,
+                Name = updateBlogCommentDto.Name,
+                Email = updateBlogCommentDto.Email,
+                CreatedDate = DateTime.Now
+            };
+            await _mediator.Send(command);
 
             return Ok("BlogComment has been updated");
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete(DeleteBlogCommentCommand deleteBlogCommentCommand)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            await _mediator.Send(deleteBlogCommentCommand);
+            var command = new DeleteBlogCommentCommand() { Id = id };
+            await _mediator.Send(command);
 
             return Ok("BlogComment has been deleted");
         }

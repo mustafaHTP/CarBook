@@ -36,6 +36,27 @@ namespace CarBook.WebApi.Controllers
             return Ok(carsDto);
         }
 
+        [HttpGet("{carId}/CarFeatures")]
+        public async Task<IActionResult> GetCarFeatures(int carId)
+        {
+            var query = new GetCarFeaturesByCarIdQuery()
+            {
+                CarId = carId
+            };
+
+            var carFeatures =  await _mediator.Send(query);
+            var carFeaturesDto = carFeatures.Select(cf => new GetCarFeaturesByCarIdDto
+            {
+                CarFeatureId = cf.CarFeatureId,
+                CarId = cf.CarId,
+                FeatureId = cf.FeatureId,
+                FeatureName = cf.Feature.Name,
+                IsAvailable = cf.IsAvailable
+            });
+
+            return Ok(carFeaturesDto);
+        }
+
         [HttpGet("GetAllWithModel")]
         public async Task<IActionResult> GetAllWithModel()
         {

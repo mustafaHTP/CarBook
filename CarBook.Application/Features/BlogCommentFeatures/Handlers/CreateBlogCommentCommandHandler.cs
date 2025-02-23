@@ -19,6 +19,7 @@ namespace CarBook.Application.Features.BlogCommentFeatures.Handlers
             var blogComment = new BlogComment
             {
                 Name = request.Name,
+                Email = request.Email,
                 CreatedDate = request.CreatedDate,
                 Content = request.Content,
                 BlogId = request.BlogId

@@ -1,7 +1,9 @@
 ﻿using CarBook.Application.Dtos.CarDtos;
+using CarBook.Application.Dtos.CarFeatureDtos;
 using CarBook.Application.Dtos.FeatureDtos;
 using CarBook.WebApp.Areas.Admin.Models.CarModels;
 using CarBook.WebApp.Areas.Admin.Models.FeatureModels;
+using CarBook.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
@@ -114,6 +116,52 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
             }
 
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> GetCarFeaturesByCarId(int carId)
+        {
+            GetCarFeaturesViewModel getCarFeaturesViewModel = new();
+
+            var client = _httpClientFactory.CreateClient();
+            var carFeaturesResponse = await client.GetAsync($"https://localhost:7116/api/Cars/{carId}/CarFeatures");
+            if (carFeaturesResponse.IsSuccessStatusCode)
+            {
+                var jsonData = await carFeaturesResponse.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<IEnumerable<GetCarFeaturesByCarIdDto>>(jsonData);
+
+                getCarFeaturesViewModel.CarFeatures = result ?? [];
+            }
+
+            var carResponse = await client.GetAsync($"https://localhost:7116/api/Cars/{carId}?IncludeModel=true&IncludeBrand=true");
+            if (carResponse.IsSuccessStatusCode)
+            {
+                var jsonData = await carResponse.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<GetCarByIdDto>(jsonData);
+
+                getCarFeaturesViewModel.GetCarByIdDto = result;
+            }
+
+            return View(getCarFeaturesViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateAvailability([FromForm] int carId, [FromForm] UpdateCarFeatureAvailabilityViewModel updateCarFeatureAvailabilityViewModel)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var updateCarFeatureDto = new UpdateCarFeatureDto
+            {
+                IsAvailable = updateCarFeatureAvailabilityViewModel.IsAvailable
+            };
+
+            var stringContent = new StringContent(
+                JsonConvert.SerializeObject(updateCarFeatureDto),
+                Encoding.UTF8,
+                "application/json");
+            var response = await client.PutAsync(
+                $"https://localhost:7116/api/CarFeatures/{updateCarFeatureAvailabilityViewModel.CarFeatureId}",
+                stringContent);
+
+            return RedirectToAction(nameof(GetCarFeaturesByCarId), new { carId });
         }
     }
 }

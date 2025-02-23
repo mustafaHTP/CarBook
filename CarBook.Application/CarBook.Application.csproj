@@ -16,6 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\CarFeatureFeatures\Queries\" />
+    <Folder Include="Features\CarFeatureFeatures\Results\" />
     <Folder Include="Features\ReservationFeatures\Results\" />
     <Folder Include="Features\ReservationFeatures\Queries\" />
   </ItemGroup>

@@ -1,6 +1,12 @@
-﻿namespace CarBook.Application.Features.BlogCommentFeatures.Results
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CarBook.Application.Dtos.BlogCommentDtos
 {
-    public class GetBlogCommentsQueryResult
+    public class GetBlogCommentByIdDto
     {
         public int Id { get; set; }
         public string Name { get; set; }

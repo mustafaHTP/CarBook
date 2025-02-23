@@ -20,6 +20,7 @@ namespace CarBook.Application.Features.BlogCommentFeatures.Handlers
 
             // Update here
             blogComment.Name = request.Name;
+            blogComment.Email = request.Email;
             blogComment.Content = request.Content;
 
             await _repository.UpdateAsync(blogComment);

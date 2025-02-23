@@ -43,7 +43,7 @@
                 <div id="BlogComments" class="pt-5 mt-5">
                     @await Component.InvokeAsync("BlogComments", new { blogId = ViewData["BlogId"] })
 
-                    <partial name="~/Views/Shared/PartialViews/_BlogCommentForm.cshtml" />
+                    <partial name="~/Views/Shared/PartialViews/_BlogCommentForm.cshtml" model="@ViewData["BlogId"]"/>
                 </div>
 
             </div> <!-- .col-md-8 -->

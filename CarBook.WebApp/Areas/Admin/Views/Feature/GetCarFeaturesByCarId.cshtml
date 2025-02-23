@@ -1,0 +1,138 @@
+﻿@{
+    int rowNumber = 1;
+}
+
+
+@model CarBook.WebApp.Models.GetCarFeaturesViewModel
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Car Feature List</h4>
+                    <p class="card-subtitle mb-4">
+                        Manage car features efficiently. Add, edit, or remove features like sunroof, leather seats, or parking sensors using the provided actions.
+                    </p>
+                    @if (Model.GetCarByIdDto is not null)
+                    {
+                        <div class="table-responsive">
+                            <table class="table mb-3">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Model</th>
+                                        <th>Transmission</th>
+                                        <th>Fuel Type</th>
+                                        <th>Km</th>
+                                        <th>Seat Count</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-info">
+                                        <td scope="row">
+                                            <img width="150" src="@Model.GetCarByIdDto.CoverImageUrl" alt="Alternate Text" />
+                                        </td>
+                                        <td class="align-middle">
+                                            @Model.GetCarByIdDto.BrandName @Model.GetCarByIdDto.ModelName
+                                        </td>
+                                        <td class="align-middle">
+                                            @Model.GetCarByIdDto.TransmissionType.ToString()
+                                        </td>
+                                        <td class="align-middle">
+                                            @Model.GetCarByIdDto.FuelType.ToString()
+                                        </td>
+                                        <td class="align-middle">
+                                            @Model.GetCarByIdDto.Km
+                                        </td>
+                                        <td class="align-middle">
+                                            @Model.GetCarByIdDto.SeatCount
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    @if (!Model.CarFeatures.Any())
+                    {
+                        <div class="alert alert-info">
+                            There is no car feature here. Please create a new one.
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-striped mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Is Available</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.CarFeatures)
+                                    {
+                                        <tr>
+                                            <th scope="row">@(rowNumber++)</th>
+                                            <td>@item.FeatureName</td>
+                                            <td>
+                                                @if (item.IsAvailable)
+                                                {
+                                                    <span class="badge badge-success">Active</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge badge-danger">Passive</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (item.IsAvailable)
+                                                {
+                                                    <form method="post" asp-area="Admin" asp-controller="Feature" asp-action="UpdateAvailability">
+
+                                                        <input type="hidden" name="carId" value="@item.CarId" />
+
+                                                        <input type="hidden" name="CarFeatureId" value="@item.CarFeatureId" />
+
+                                                        <input type="hidden" name="IsAvailable" value="false" />
+
+                                                        <button class="btn btn-danger text-black btn-rounded" type="submit">
+                                                            <i class="fas fa-toggle-off"></i>
+                                                            Toggle Passive
+                                                        </button>
+                                                    </form>
+                                                }
+                                                else
+                                                {
+                                                    <form method="post" asp-area="Admin" asp-controller="Feature" asp-action="UpdateAvailability">
+
+                                                        <input type="hidden" name="carId" value="@item.CarId" />
+
+                                                        <input type="hidden" name="CarFeatureId" value="@item.CarFeatureId" />
+
+                                                        <input type="hidden" name="IsAvailable" value="true" />
+
+                                                        <button class="btn btn-success text-black btn-rounded" type="submit">
+                                                            <i class="fas fa-toggle-off"></i>
+                                                            Toggle Active
+                                                        </button>
+                                                    </form>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+
+                </div>
+                <!-- end card-body-->
+            </div>
+            <!-- end card -->
+
+        </div>
+    </div>
+</div>

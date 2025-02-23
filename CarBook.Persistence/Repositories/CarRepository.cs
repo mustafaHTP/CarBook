@@ -51,5 +51,10 @@ namespace CarBook.Persistence.Repositories
 
             return cars.FirstOrDefault(c => c.Id == id);
         }
+
+        public IEnumerable<CarFeature> GetCarFeaturesByCarId(int carId)
+        {
+            return _context.CarFeatures.Where(cf => cf.CarId == carId).Include(cf => cf.Feature);
+        }
     }
 }
