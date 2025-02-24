@@ -16,10 +16,14 @@ namespace CarBook.Application.Features.CarFeatures.Handlers
 
         public async Task<List<GetCarsQueryResult>> Handle(GetCarsQuery request, CancellationToken cancellationToken)
         {
-            var cars = _repository.GetAll();
+            var cars = _repository.GetAll(
+                 includeModel: request.IncludeModel, 
+                 includeBrand: request.IncludeBrand);
             var result = cars.Select(c => new GetCarsQueryResult()
             {
                 Id = c.Id,
+                ModelId = c.ModelId,
+                Model = c.Model,
                 BigImageUrl = c.BigImageUrl,
                 CoverImageUrl = c.CoverImageUrl,
                 FuelType = c.FuelType,

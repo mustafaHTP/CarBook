@@ -17,13 +17,22 @@ namespace CarBook.WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet()]
-        public async Task<IActionResult> GetAll()
+        [HttpGet]
+        public async Task<IActionResult> GetAll([FromQuery] GetCarsQueryDto getCarsQueryDto)
         {
-            var cars = await _mediator.Send(new GetCarsQuery());
+            var query = new GetCarsQuery
+            {
+                IncludeBrand = getCarsQueryDto.IncludeBrand,
+                IncludeModel = getCarsQueryDto.IncludeModel
+            };
+            var cars = await _mediator.Send(query);
             var carsDto = cars.Select(c => new GetCarsDto()
             {
                 Id = c.Id,
+                ModelId = c.ModelId,
+                ModelName = c.Model?.Name,
+                BrandId = c.Model?.BrandId,
+                BrandName = c.Model?.Brand?.Name,
                 BigImageUrl = c.BigImageUrl,
                 CoverImageUrl = c.CoverImageUrl,
                 FuelType = c.FuelType,

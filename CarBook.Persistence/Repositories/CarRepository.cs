@@ -16,11 +16,6 @@ namespace CarBook.Persistence.Repositories
             return [.. _context.Cars.Include(c => c.Model)];
         }
 
-        public List<Car> GetAll()
-        {
-            return [.. _context.Cars];
-        }
-
         public List<Car> GetAllCarsWithBrand()
         {
             return [.. _context.Cars.Include(c => c.Model).ThenInclude(m => m.Brand)];
@@ -55,6 +50,25 @@ namespace CarBook.Persistence.Repositories
         public IEnumerable<CarFeature> GetCarFeaturesByCarId(int carId)
         {
             return _context.CarFeatures.Where(cf => cf.CarId == carId).Include(cf => cf.Feature);
+        }
+
+        public IEnumerable<Car> GetAll(bool includeModel, bool includeBrand)
+        {
+            var cars = _context.Set<Car>().AsQueryable();
+
+            if (includeBrand)
+            {
+                cars = cars
+                    .Include(c => c.Model)
+                    .ThenInclude(m => m.Brand);
+            }
+            else if (includeModel)
+            {
+                cars = cars
+                    .Include(c => c.Model);
+            }
+
+            return cars;
         }
     }
 }

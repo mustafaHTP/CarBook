@@ -1,4 +1,6 @@
-﻿using CarBook.Application.Dtos.CarReservationPricingDtos;
+﻿using CarBook.Application.Dtos.CarDtos;
+using CarBook.Application.Dtos.CarReservationPricingDtos;
+using CarBook.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -26,6 +28,13 @@ namespace CarBook.WebApp.Controllers
 
                 return View(values);
             }
+
+            return View();
+        }
+
+        public async Task<IActionResult> GetById(int id)
+        {
+            ViewData["CarId"] = id;
 
             return View();
         }

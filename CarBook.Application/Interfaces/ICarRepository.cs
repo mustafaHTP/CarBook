@@ -10,6 +10,6 @@ namespace CarBook.Application.Interfaces
         List<Car> GetLast5CarsWithBrand();
         List<Car> GetAllCarsWithModel();
         List<Car> GetAllCarsWithBrand();
-        List<Car> GetAll();
+        IEnumerable<Car> GetAll(bool includeModel, bool includeBrand);
     }
 }

@@ -35,6 +35,7 @@ builder.Services.AddScoped<IModelRepository, ModelRepository>();
 builder.Services.AddScoped<IBlogAuthorRepository, BlogAuthorRepository>();
 builder.Services.AddScoped<IStatisticsRepository, StatisticsRepository>();
 builder.Services.AddScoped<IRentalCarRepository, RentalCarRepository>();
+builder.Services.AddScoped<ICarFeatureRepository, CarFeatureRepository>();
 
 //Add application services
 builder.Services.AddApplicationService();

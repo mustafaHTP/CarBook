@@ -1,0 +1,23 @@
+﻿@model IEnumerable<GetCarFeaturesByCarIdDto>
+@{
+    int pageSize = 4;
+}
+
+<div class="row">
+    @for (int i = 0; i < Math.Ceiling(((double)Model.Count() / pageSize)); ++i)
+    {
+        <div class="col-4">
+            <ul class="features">
+                @foreach (var item in Model.Skip(i * pageSize).Take(pageSize))
+                {
+                    <li class="check">
+                        <span class="@(item.IsAvailable ? "ion-ios-checkmark" : "ion-ios-close")"
+                              style="color: @(item.IsAvailable ? "#01d28e;" : "red;")">
+                        </span>
+                        @item.FeatureName
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+</div>

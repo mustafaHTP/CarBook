@@ -5,6 +5,10 @@ namespace CarBook.Application.Dtos.CarDtos
     public class GetCarsDto
     {
         public int Id { get; set; }
+        public int? ModelId { get; set; }
+        public string? ModelName { get; set; }
+        public int? BrandId { get; set; }
+        public string? BrandName { get; set; }
         public int Km { get; set; }
         public byte SeatCount { get; set; }
         public byte Luggage { get; set; }
