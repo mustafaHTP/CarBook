@@ -1,13 +1,15 @@
-﻿using CarBook.Domain.Enums;
+﻿using CarBook.Domain.Entities;
+using CarBook.Domain.Enums;
 
-namespace CarBook.WebApp.Models
+namespace CarBook.WebApp.Areas.Admin.Models.CarModels
 {
     public class CarViewModel
     {
-        public int ModelId { get; set; }
-        public string? ModelName { get; set; }
+        public int Id { get; set; }
         public int BrandId { get; set; }
-        public string? BrandName { get; set; }
+        public string BrandName { get; set; }
+        public int ModelId { get; set; }
+        public string ModelName { get; set; }
         public int Km { get; set; }
         public byte SeatCount { get; set; }
         public byte Luggage { get; set; }

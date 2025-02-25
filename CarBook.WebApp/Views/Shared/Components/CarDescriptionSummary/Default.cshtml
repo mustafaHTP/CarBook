@@ -1,0 +1,8 @@
+﻿@model IEnumerable<GetCarDescriptionsByCarIdDto>
+
+@if (Model.Any())
+{
+    <p>
+        @(Model.FirstOrDefault()?.Description ?? "No description available")
+    </p>
+}

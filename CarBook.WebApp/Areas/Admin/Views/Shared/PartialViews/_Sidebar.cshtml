@@ -17,9 +17,8 @@
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title">Special Actions</li>
                 <li>
-                    <a href="~/admin-template/vertical/index.html" class="waves-effect">
+                    <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="waves-effect">
                         <i class="feather-airplay"></i>
-                        <span class="badge badge-pill badge-primary float-right">7</span>
                         <span>Dashboard</span>
                     </a>
                 <li>
@@ -30,7 +29,7 @@
                     </a>
                 </li>
                 <li>
-                    <a asp-area="" asp-controller="Home" asp-action="Index" class="waves-effect">
+                    <a asp-area="" asp-controller="Home" asp-action="Index" target="_blank" class="waves-effect">
                         <i class="fas fa-home"></i>
                         <span>Site</span>
                     </a>
@@ -48,54 +47,69 @@
                         <span>Banners</span>
                     </a>
                 </li>
+
+                @* Blog Actions Sub Menu *@
                 <li>
-                    <a asp-area="Admin" asp-controller="Blog" asp-action="Index" class="waves-effect">
+                    <a class="has-arrow waves-effect">
                         <i class="fas fa-file-signature"></i>
-                        <span>Blogs</span>
+                        <span>Blog Actions</span>
                     </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a asp-area="Admin" asp-controller="Blog" asp-action="Index" class="waves-effect">
+                                <i class="fas fa-list"></i>
+                                <span>Blog List</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="Admin" asp-controller="BlogAuthor" asp-action="Index" class="waves-effect">
+                                <i class="fas fa-pen"></i>
+                                <span>Blog Authors</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="Admin" asp-controller="BlogCategory" asp-action="Index" class="waves-effect">
+                                <i class="fas fa-sitemap"></i>
+                                <span>Blog Categories</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="Admin" asp-controller="BlogTag" asp-action="Index" class="waves-effect">
+                                <i class="fas fa-tags"></i>
+                                <span>Blog Tags</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
+
+                @* Car actions sub menu *@
                 <li>
-                    <a asp-area="Admin" asp-controller="BlogAuthor" asp-action="Index" class="waves-effect">
-                        <i class="fas fa-pen"></i>
-                        <span>Blog Authors</span>
-                    </a>
-                </li>
-                <li>
-                    <a asp-area="Admin" asp-controller="BlogCategory" asp-action="Index" class="waves-effect">
-                        <i class="fas fa-sitemap"></i>
-                        <span>Blog Categories</span>
-                    </a>
-                </li>
-                <li>
-                    <a asp-area="Admin" asp-controller="BlogTag" asp-action="Index" class="waves-effect">
-                        <i class="fas fa-tags"></i>
-                        <span>Blog Tags</span>
-                    </a>
-                </li>
-                <li>
-                    <a asp-area="Admin" asp-controller="Car" asp-action="Index" class="waves-effect">
+                    <a class="has-arrow waves-effect">
                         <i class="fas fa-car"></i>
                         <span>Car Actions</span>
                     </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a asp-area="Admin" asp-controller="Car" asp-action="Index" class="waves-effect">
+                                <i class="fas fa-list"></i>
+                                <span>Car List</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="Admin" asp-controller="Brand" asp-action="Index" class="waves-effect">
+                                <i class="fas fa-building"></i>
+                                <span>Car Brands</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="Admin" asp-controller="Feature" asp-action="Index" class="waves-effect">
+                                <i class="fas fa-tools"></i>
+                                <span>Car Features</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
-                <li>
-                    <a asp-area="Admin" asp-controller="Brand" asp-action="Index" class="waves-effect">
-                        <i class="fas fa-building"></i>
-                        <span>Car Brands</span>
-                    </a>
-                </li>
-                <li>
-                    <a asp-area="Admin" asp-controller="Feature" asp-action="Index" class="waves-effect">
-                        <i class="fas fa-tools"></i>
-                        <span>Car Features</span>
-                    </a>
-                </li>
-                <li>
-                    <a asp-area="Admin" asp-controller="Comment" asp-action="Index" class="waves-effect">
-                        <i class="fas fa-comment-dots"></i>
-                        <span>Comments</span>
-                    </a>
-                </li>
+
                 <li>
                     <a asp-area="Admin" asp-controller="Contact" asp-action="Index" class="waves-effect">
                         <i class="fas fa-phone"></i>
@@ -152,243 +166,15 @@
                     </a>
                 </li>
 
-                @*<li>
-            <a href="~/admin-template/vertical/index.html" class="waves-effect">
-                <i class="feather-airplay"></i>
-                <span class="badge badge-pill badge-primary float-right">7</span>
-                <span>Dashboard</span>
-            </a>
-        </li>
-        <li>
-            <a asp-area="" asp-controller="Home" asp-action="Index" class="waves-effect">
-                <i class="fas fa-home"></i>
-                <span>Site</span>
-            </a>
-        </li>
-        <li>
-            <a asp-area="Admin" asp-controller="Car" asp-action="Index" class="waves-effect">
-                <i class="fas fa-car"></i>
-                <span>Car Actions</span>
-            </a>
-        </li>
-        <li>
-            <a asp-area="Admin" asp-controller="Feature" asp-action="Index" class="waves-effect">
-                <i class="fas fa-tools"></i>
-                <span>Car Features</span>
-            </a>
-        </li>
-        <li>
-            <a asp-area="Admin" asp-controller="Brand" asp-action="Index" class="waves-effect">
-                <i class="fas fa-building"></i>
-                <span>Car Brands</span>
-            </a>
-        </li>
-        <li>
-            <a asp-area="Admin" asp-controller="Banner" asp-action="Index" class="waves-effect">
-                <i class="fas fa-list"></i>
-                <span>Banners</span>
-            </a>
-        </li>
-        <li>
-            <a asp-area="Admin" asp-controller="About" asp-action="Index" class="waves-effect">
-                <i class="fas fa-info-circle"></i>
-                <span>About</span>
-            </a>
-        </li>
-        <li>
-            <a asp-area="Admin" asp-controller="BlogAuthor" asp-action="Index" class="waves-effect">
-                <i class="fas fa-pen"></i>
-                <span>Blog Authors</span>
-            </a>
-        </li>
-        <li>
-            <a asp-area="Admin" asp-controller="BlogCategory" asp-action="Index" class="waves-effect">
-                <i class="fas fa-sitemap"></i>
-                <span>Blog Categories</span>
-            </a>
-        </li>
-        <li>
-            <a asp-area="Admin" asp-controller="BlogTag" asp-action="Index" class="waves-effect">
-                <i class="fas fa-tags"></i>
-                <span>Blog Tags</span>
-            </a>
-        </li>
-        <li>
-            <a asp-area="Admin" asp-controller="Blog" asp-action="Index" class="waves-effect">
-                <i class="fas fa-file-signature"></i>
-                <span>Blogs</span>
-            </a>
-        </li>
-        <li>
-            <a asp-area="Admin" asp-controller="PricingPlan" asp-action="Index" class="waves-effect">
-                <i class="fas fa-clock"></i>
-                <span>Rental Periods</span>
-            </a>
-        </li>
-        <li>
-            <a asp-area="Admin" asp-controller="Comment" asp-action="Index" class="waves-effect">
-                <i class="fas fa-comment-dots"></i>
-                <span>Comments</span>
-            </a>
-        </li>
-        <li>
-            <a asp-area="Admin" asp-controller="Contact" asp-action="Index" class="waves-effect">
-                <i class="fas fa-phone"></i>
-                <span>Contacts</span>
-            </a>
-        </li>
-        <li>
-            <a asp-area="Admin" asp-controller="FooterAddress" asp-action="Index" class="waves-effect">
-                <i class="fas fa-map-marker-alt"></i>
-                <span>Footer Addresses</span>
-            </a>
-        </li>
-        <li>
-            <a asp-area="Admin" asp-controller="Location" asp-action="Index" class="waves-effect">
-                <i class="fas fa-globe-americas"></i>
-                <span>Locations</span>
-            </a>
-        </li>
-        <li>
-            <a asp-area="Admin" asp-controller="Service" asp-action="Index" class="waves-effect">
-                <i class="fas fa-truck-loading"></i>
-                <span>Services</span>
-            </a>
-        </li>
-        <li>
-            <a asp-area="Admin" asp-controller="SocialMedia" asp-action="Index" class="waves-effect">
-                <i class="fab fa-twitter"></i>
-                <span>Social Medias</span>
-            </a>
-        </li>
-        <li>
-            <a asp-area="Admin" asp-controller="Testimonial" asp-action="Index" class="waves-effect">
-                <i class="fas fa-people-carry"></i>
-                <span>Testimonials</span>
-            </a>
-        </li>
-        <li>
-            <a asp-area="Admin" asp-controller="Service" asp-action="Index" class="waves-effect">
-                <i class="fas fa-cog"></i>
-                <span>Settings</span>
-            </a>
-        </li>
-        <li>
-            <a asp-area="Admin" asp-controller="Service" asp-action="Index" class="waves-effect">
-                <i class="fas fa-door-open"></i>
-                <span>Exit</span>
-            </a>
-        </li>*@
+
+                <li class="menu-title">Developer Actions</li>
                 <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect"><i class="feather-copy"></i><span>Pages</span></a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="~/admin-template/vertical/pages-invoice.html">Invoice</a></li>
-                        <li><a href="~/admin-template/vertical/pages-starter.html">Starter Page</a></li>
-                        <li><a href="~/admin-template/vertical/pages-maintenance.html">Maintenance</a></li>
-                        <li><a href="~/admin-template/vertical/pages-faqs.html">FAQs</a></li>
-                        <li><a href="~/admin-template/vertical/pages-pricing.html">Pricing</a></li>
-                        <li><a href="~/admin-template/vertical/pages-login.html">Login</a></li>
-                        <li><a href="~/admin-template/vertical/pages-register.html">Register</a></li>
-                        <li><a href="~/admin-template/vertical/pages-recoverpw.html">Recover Password</a></li>
-                        <li><a href="~/admin-template/vertical/pages-lock-screen.html">Lock Screen</a></li>
-                        <li><a href="~/admin-template/vertical/pages-404.html">Error 404</a></li>
-                        <li><a href="~/admin-template/vertical/pages-500.html">Error 500</a></li>
-                    </ul>
+                    <a href="/admin-template/vertical/index.html" class="waves-effect">
+                        <i class="fas fa-keyboard"></i>
+                        <span>Go to Template</span>
+                    </a>
                 </li>
-
-                <li><a href="calendar.html" class=" waves-effect"><i class="feather-calendar"></i><span>Calendar</span></a></li>
-
-                <li class="menu-title">Components</li>
-
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect"><i class="feather-briefcase"></i><span>UI Elements</span></a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="~/admin-template/vertical/ui-buttons.html">Buttons</a></li>
-                        <li><a href="~/admin-template/vertical/ui-cards.html">Cards</a></li>
-                        <li><a href="~/admin-template/vertical/ui-carousel.html">Carousel</a>
-                        <li><a href="~/admin-template/vertical/ui-embeds.html">Embeds</a>
-                        <li><a href="~/admin-template/vertical/ui-general.html">General</a></li>
-                        <li><a href="~/admin-template/vertical/ui-grid.html">Grid</a></li>
-                        <li><a href="~/admin-template/vertical/ui-media-objects.html">Media Objects</a></li>
-                        <li><a href="~/admin-template/vertical/ui-modals.html">Modals</a></li>
-                        <li><a href="~/admin-template/vertical/ui-progressbars.html">Progress Bars</a></li>
-                        <li><a href="~/admin-template/vertical/ui-tabs.html">Tabs</a></li>
-                        <li><a href="~/admin-template/vertical/ui-typography.html">Typography</a></li>
-                        <li><a href="~/admin-template/vertical/ui-toasts.html">Toasts</a></li>
-                        <li><a href="~/admin-template/vertical/ui-tooltips-popovers.html">Tooltips & Popovers</a></li>
-                        <li><a href="~/admin-template/vertical/ui-scrollspy.html">Scrollspy</a></li>
-                        <li><a href="~/admin-template/vertical/ui-spinners.html">Spinners</a></li>
-                        <li><a href="~/admin-template/vertical/ui-sweetalerts.html">Sweet Alerts</a></li>
-                    </ul>
-                </li>
-
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect"><i class="feather-list"></i><span>Tables</span></a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="~/admin-template/vertical/tables-basic.html">Basic Tables</a></li>
-                        <li><a href="~/admin-template/vertical/tables-datatables.html">Data Tables</a></li>
-                    </ul>
-                </li>
-
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect"><i class="feather-bar-chart-2"></i><span>Charts</span></a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="~/admin-template/vertical/charts-morris.html">Morris</a></li>
-                        <li><a href="~/admin-template/vertical/charts-google.html">Google</a></li>
-                        <li><a href="~/admin-template/vertical/charts-chartjs.html">Chartjs</a></li>
-                        <li><a href="~/admin-template/vertical/charts-sparkline.html">Sparkline</a></li>
-                        <li><a href="~/admin-template/vertical/charts-knob.html">Jquery Knob</a></li>
-                    </ul>
-                </li>
-
-                <li>
-                    <a href="javascript: void(0);" class="waves-effect"><i class="feather-book"></i><span class="badge badge-pill badge-danger float-right">6</span><span>Forms</span></a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="~/admin-template/vertical/forms-elements.html">Elements</a></li>
-                        <li><a href="~/admin-template/vertical/forms-plugins.html">Plugins</a></li>
-                        <li><a href="~/admin-template/vertical/forms-validation.html">Validation</a></li>
-                        <li><a href="~/admin-template/vertical/forms-mask.html">Masks</a></li>
-                        <li><a href="~/admin-template/vertical/forms-quilljs.html">Quilljs</a></li>
-                        <li><a href="~/admin-template/vertical/forms-uploads.html">File Uploads</a></li>
-                    </ul>
-                </li>
-
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect"><i class="feather-box"></i><span>Icons</span></a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="~/admin-template/vertical/icons-materialdesign.html">Material Design</a></li>
-                        <li><a href="~/admin-template/vertical/icons-fontawesome.html">Font awesome</a></li>
-                        <li><a href="~/admin-template/vertical/icons-dripicons.html">Dripicons</a></li>
-                        <li><a href="~/admin-template/vertical/icons-feather.html">Feather Icons</a></li>
-                    </ul>
-                </li>
-
-                <li class="menu-title">More</li>
-
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect"><i class="feather-map"></i><span>Maps</span></a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="maps-google.html">Google Maps</a></li>
-                        <li><a href="maps-vector.html">Vector Maps</a></li>
-                    </ul>
-                </li>
-
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect"><i class="mdi mdi-share-variant"></i><span>Multi Level</span></a>
-                    <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="javascript: void(0);">Level 1.1</a></li>
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow">Level 1.2</a>
-                            <ul class="sub-menu" aria-expanded="true">
-                                <li><a href="javascript: void(0);">Level 2.1</a></li>
-                                <li><a href="javascript: void(0);">Level 2.2</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-
             </ul>
         </div>
-        <!-- Sidebar -->
     </div>
 </div>

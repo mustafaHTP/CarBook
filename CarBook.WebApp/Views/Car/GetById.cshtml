@@ -13,94 +13,6 @@
 
 <section class="ftco-section ftco-car-details">
     <div class="container">
-        @*<div class="row justify-content-center">
-            <div class="col-md-12">
-                <div class="car-details">
-                    <div class="img rounded" style="background-image: url(@Model.Car.CoverImageUrl);"></div>
-                    <div class="text text-center">
-                        <span class="subheading">@Model.Car.BrandName</span>
-                        <h2>@Model.Car.BrandName @Model.Car.ModelName</h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md d-flex align-self-stretch ftco-animate">
-                <div class="media block-6 services">
-                    <div class="media-body py-md-4">
-                        <div class="d-flex mb-3 align-items-center">
-                            <div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-dashboard"></span></div>
-                            <div class="text">
-                                <h3 class="heading mb-0 pl-3">
-                                    Kilometers
-                                    <span>@Model.Car.Km</span>
-                                </h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md d-flex align-self-stretch ftco-animate">
-                <div class="media block-6 services">
-                    <div class="media-body py-md-4">
-                        <div class="d-flex mb-3 align-items-center">
-                            <div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-pistons"></span></div>
-                            <div class="text">
-                                <h3 class="heading mb-0 pl-3">
-                                    Transmission
-                                    <span>@Model.Car.TransmissionType.ToString()</span>
-                                </h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md d-flex align-self-stretch ftco-animate">
-                <div class="media block-6 services">
-                    <div class="media-body py-md-4">
-                        <div class="d-flex mb-3 align-items-center">
-                            <div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-car-seat"></span></div>
-                            <div class="text">
-                                <h3 class="heading mb-0 pl-3">
-                                    Seats
-                                    <span>@Model.Car.SeatCount</span>
-                                </h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md d-flex align-self-stretch ftco-animate">
-                <div class="media block-6 services">
-                    <div class="media-body py-md-4">
-                        <div class="d-flex mb-3 align-items-center">
-                            <div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-backpack"></span></div>
-                            <div class="text">
-                                <h3 class="heading mb-0 pl-3">
-                                    Luggage
-                                    <span>@Model.Car.Luggage</span>
-                                </h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md d-flex align-self-stretch ftco-animate">
-                <div class="media block-6 services">
-                    <div class="media-body py-md-4">
-                        <div class="d-flex mb-3 align-items-center">
-                            <div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-diesel"></span></div>
-                            <div class="text">
-                                <h3 class="heading mb-0 pl-3">
-                                    Fuel
-                                    <span>@Model.Car.FuelType.ToString()</span>
-                                </h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>*@
         @await Component.InvokeAsync("CarDetail", new {carId = ViewData["CarId"] }) 
 
         @* Car Specifications *@
@@ -128,8 +40,7 @@
                         </div>
 
                         <div class="tab-pane fade" id="pills-manufacturer" role="tabpanel" aria-labelledby="pills-manufacturer-tab">
-                            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.</p>
-                            <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way.</p>
+                            @await Component.InvokeAsync("CarDescriptionSummary", new { carId = ViewData["CarId"] })
                         </div>
 
                         <div class="tab-pane fade" id="pills-review" role="tabpanel" aria-labelledby="pills-review-tab">

@@ -70,6 +70,13 @@ namespace CarBook.Persistence.Repositories
             return brandHasMaxModelCount;
         }
 
+        public IEnumerable<Brand> GetAllBrands()
+        {
+            return _context.Brands
+                .Include(b => b.Models)
+                .ThenInclude(m => m.Cars);
+        }
+
         public int GetCarCountByDistance(int distanceKm, bool countLessThan)
         {
             Expression<Func<Car, bool>> expression = countLessThan

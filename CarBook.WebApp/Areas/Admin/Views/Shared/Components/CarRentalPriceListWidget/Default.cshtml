@@ -1,0 +1,38 @@
+﻿@model IEnumerable<GetCarRentalPricingsDto>
+
+<div class="card">
+    <div class="card-body">
+
+        <h4 class="card-title">Car Rental Prices</h4>
+        <p class="card-subtitle mb-4 font-size-13">
+            You can check the car rental prices based on rental periods
+        </p>
+
+        <div class="table-responsive">
+            <table class="table table-centered table-hover table-xl mb-0" id="recent-orders">
+                <thead>
+                    <tr>
+                        <th class="border-top-0">Brand</th>
+                        <th class="border-top-0">Model</th>
+                        <th class="border-top-0">Hourly Price</th>
+                        <th class="border-top-0">Daily Price</th>
+                        <th class="border-top-0">Monthly Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var group in Model.GroupBy(rp => rp.CarId))
+                    {
+                        <tr>
+                            <td class="text-truncate">@group.First().Car.BrandName</td>
+                            <td class="text-truncate">@group.First().Car.ModelName</td>
+                            @foreach (var rp in group)
+                            {
+                                <td class="text-truncate">@rp.Price</td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

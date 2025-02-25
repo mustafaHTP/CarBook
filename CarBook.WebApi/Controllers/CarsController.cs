@@ -66,6 +66,80 @@ namespace CarBook.WebApi.Controllers
             return Ok(carFeaturesDto);
         }
 
+        [HttpGet("RentalPricings")]
+        public async Task<IActionResult> GetAllRentalPricings([FromQuery] GetCarRentalPricingsQueryDto getCarRentalPricingsQueryDto)
+        {
+            var query = new GetCarRentalPricingsQuery
+            {
+                IncludeCar = getCarRentalPricingsQueryDto.IncludeCar
+            };
+            var carRentalPricings = await _mediator.Send(query);
+            var carRentalPricingsDto = carRentalPricings.Select(crp => new GetCarRentalPricingsDto
+            {
+                Id = crp.CarId,
+                Car = new CarLiteDto
+                {
+                    Id = crp.Car.Id,
+                    ModelId = crp.Car.ModelId,
+                    ModelName = crp.Car.Model.Name,
+                    BrandId = crp.Car.Model.BrandId,
+                    BrandName = crp.Car.Model.Brand.Name,
+                    BigImageUrl = crp.Car.BigImageUrl,
+                    FuelType = crp.Car.FuelType,
+                    Km = crp.Car.Km,
+                    Luggage = crp.Car.Luggage,
+                    SeatCount = crp.Car.SeatCount,
+                    TransmissionType = crp.Car.TransmissionType,
+                    CoverImageUrl = crp.Car.CoverImageUrl,
+                },
+                CarId = crp.CarId,
+                PricingPlanId = crp.PricingPlanId,
+                PricingPlanName = crp.PricingPlan.Name,
+                Price = crp.Price
+            });
+
+            return Ok(carRentalPricingsDto);
+        }
+
+        [HttpGet("{carId}/RentalPricings")]
+        public async Task<IActionResult> GetRentalPricings(int carId)
+        {
+            var query = new GetCarRentalPricingsByIdQuery()
+            {
+                CarId = carId
+            };
+            var carRentalPricings = await _mediator.Send(query);
+            var carRentalPricingsDto = carRentalPricings.Select(crp => new GetCarRentalPricingsByCarIdDto
+            {
+                Id = crp.CarId,
+                CarId = crp.CarId,
+                PricingPlanId = crp.PricingPlanId,
+                PricingPlanName = crp.PricingPlan.Name,
+                Price = crp.Price
+            });
+
+            return Ok(carRentalPricingsDto);
+        }
+
+        [HttpGet("{carId}/CarDescriptions")]
+        public async Task<IActionResult> GetCarDescriptions(int carId)
+        {
+            var query = new GetCarDescriptionsByCarIdQuery()
+            {
+                CarId = carId
+            };
+
+            var carDescriptions = await _mediator.Send(query);
+            var carDescriptionsDto = carDescriptions.Select(cf => new GetCarDescriptionsByCarIdDto
+            {
+                CarDescriptionId = cf.CarDescriptionId,
+                CarId = cf.CarId,
+                Description = cf.Description
+            });
+
+            return Ok(carDescriptionsDto);
+        }
+
         [HttpGet("GetAllWithModel")]
         public async Task<IActionResult> GetAllWithModel()
         {

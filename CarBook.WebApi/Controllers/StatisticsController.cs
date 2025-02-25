@@ -139,6 +139,19 @@ namespace CarBook.WebApi.Controllers
             return Ok(resultDto);
         }
 
+        [HttpGet("brand/car/count")]
+        public async Task<IActionResult> GetBrandCarCountAsync()
+        {
+            var result = await _mediator.Send(new GetBrandsCarCountQuery());
+            var resultDto = result.Select(b => new GetBrandsCarCountDto
+            {
+                BrandName = b.BrandName,
+                CarCount = b.CarCount
+            });
+
+            return Ok(resultDto);
+        }
+
         [HttpGet("brand/hasMaxModelCount")]
         public async Task<IActionResult> GetBrandHasMaxModelCountAsync()
         {

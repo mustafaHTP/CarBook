@@ -70,5 +70,33 @@ namespace CarBook.Persistence.Repositories
 
             return cars;
         }
+
+        public IEnumerable<CarDescription> GetCarDescriptionsByCarId(int carId)
+        {
+            return _context.CarDescriptions.Where(cd => cd.CarId == carId);
+        }
+
+        public IEnumerable<CarReservationPricing> GetCarRentalPricingsByCarId(int carId)
+        {
+            return _context.CarReservationPricings.Where(cr => cr.CarId == carId).Include(cr => cr.PricingPlan);
+        }
+
+        public IEnumerable<CarReservationPricing> GetAllRentalPricings(bool includeCar)
+        {
+            var rentalPricings = _context
+                .CarReservationPricings
+                .Include(cr => cr.PricingPlan)
+                .AsQueryable();
+
+            if (includeCar)
+            {
+                rentalPricings = rentalPricings
+                    .Include(cr => cr.Car)
+                    .ThenInclude(c => c.Model)
+                    .ThenInclude(m => m.Brand);
+            }
+
+            return rentalPricings;
+        }
     }
 }

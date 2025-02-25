@@ -1,0 +1,81 @@
+﻿<div class="card">
+    <div class="card-body" style="height: 400px; overflow: hidden; padding-bottom: 100px">
+
+        <h4 class="card-title">Car Count By Brand</h4>
+        <p class="card-subtitle mb-4">
+            Car count by brand in the system.
+        </p>
+        <canvas id="pieChart"></canvas>
+
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        fetch("https://localhost:7116/api/Statistics/brand/car/count")
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+                createPieChart(data.$values);
+            })
+            .catch(error => {
+                console.error("There was a problem with the fetch operation:", error);
+            });
+    });
+
+    function getRandomColor() {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    function createPieChart(data) {
+        if (!Array.isArray(data)) {
+            console.error("Expected data to be an array");
+            return;
+        }
+
+        const labels = data.map(item => item.brandName);
+        const values = data.map(item => item.carCount);
+
+        // Generate random colors based on the number of brands
+        const colors = labels.map(() => getRandomColor());
+
+        var ctx = document.getElementById("pieChart").getContext("2d");
+
+        new Chart(ctx, {
+            type: "pie",
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: values,
+                    backgroundColor: colors, // Use the generated random colors
+                    hoverBackgroundColor: colors.map(color => shadeColor(color, -20)) // Darken each color for hover effect
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+    }
+
+    // Helper function to darken colors for hover effect
+    function shadeColor(color, percent) {
+        const num = parseInt(color.slice(1), 16);
+        const amt = Math.round(2.55 * percent);
+        const R = (num >> 16) + amt;
+        const G = (num >> 8 & 0x00FF) + amt;
+        const B = (num & 0x0000FF) + amt;
+        return "#" + (0x1000000 + (R < 255 ? (R < 1 ? 0 : R) : 255) * 0x10000 + (G < 255 ? (G < 1 ? 0 : G) : 255) * 0x100 + (B < 255 ? (B < 1 ? 0 : B) : 255)).toString(16).slice(1);
+    }
+</script>

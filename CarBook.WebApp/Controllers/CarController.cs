@@ -18,13 +18,13 @@ namespace CarBook.WebApp.Controllers
         public async Task<IActionResult> Index()
         {
             var client = _httpClientFactory.CreateClient();
-            var requestUri = $"https://localhost:7116/api/CarReservationPricings/GetAllWithDayPricingPlan";
+            var requestUri = $"https://localhost:7116/api/Cars?IncludeModel=true&IncludeBrand=true";
 
             var response = await client.GetAsync(requestUri);
             if (response.IsSuccessStatusCode)
             {
                 var jsonData = await response.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<List<GetCarReservationPricingsWithDayPricingPlanDto>>(jsonData);
+                var values = JsonConvert.DeserializeObject<IEnumerable<GetCarsDto>>(jsonData);
 
                 return View(values);
             }
@@ -32,7 +32,7 @@ namespace CarBook.WebApp.Controllers
             return View();
         }
 
-        public async Task<IActionResult> GetById(int id)
+        public IActionResult GetById(int id)
         {
             ViewData["CarId"] = id;
 
