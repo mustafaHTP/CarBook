@@ -62,6 +62,22 @@ namespace CarBook.WebApi.Controllers
             return Ok(resultDto);
         }
 
+        [HttpGet("car/{carId}/carReviews/count")]
+        public async Task<IActionResult> GetCarReviewsCountByCarId(int carId)
+        {
+            var query = new GetCarReviewCountByCarIdQuery
+            {
+                CarId = carId
+            };
+            var result = await _mediator.Send(query);
+            var resultDto = new GetCarReviewsCountByCarIdDto
+            {
+                CarReviewCount = result.CarReviewCount
+            };
+
+            return Ok(resultDto);
+        }
+
         [HttpGet("blogAuthor/count")]
         public async Task<IActionResult> GetBlogAuthorCountAsync()
         {

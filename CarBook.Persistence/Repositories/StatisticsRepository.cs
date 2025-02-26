@@ -95,5 +95,10 @@ namespace CarBook.Persistence.Repositories
         {
             return _context.Cars.Count(c => transmissionTypes.Contains(c.TransmissionType));
         }
+
+        public int GetCarReviewsCountByCarId(int carId)
+        {
+            return _context.CarReviews.Where(cr => cr.CarId == carId).Count();
+        }
     }
 }

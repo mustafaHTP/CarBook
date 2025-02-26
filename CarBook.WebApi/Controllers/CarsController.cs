@@ -1,6 +1,8 @@
 ﻿using CarBook.Application.Dtos.CarDtos;
+using CarBook.Application.Dtos.CarReviewDtos;
 using CarBook.Application.Features.CarFeatures.Commands;
 using CarBook.Application.Features.CarFeatures.Queries;
+using CarBook.Application.Features.CarReviewFeatures.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -138,6 +140,29 @@ namespace CarBook.WebApi.Controllers
             });
 
             return Ok(carDescriptionsDto);
+        }
+
+        [HttpGet("{carId}/CarReviews")]
+        public async Task<IActionResult> GetCarReviewsByCarId(int carId)
+        {
+            var query = new GetCarReviewsByCarIdQuery()
+            {
+                CarId = carId
+            };
+            var carReviews = await _mediator.Send(query);
+            var carReviewsDto = carReviews.Select(cr => new GetCarReviewByCarIdDto
+            {
+                CarId = cr.CarId,
+                CustomerId = cr.CustomerId,
+                CustomerFirstName = cr.Customer.FirstName,
+                CustomerLastName = cr.Customer.LastName,
+                CustomerEmail = cr.Customer.Email,
+                Review = cr.Review,
+                ReviewDate = cr.ReviewDate,
+                RatingStarCount = cr.RatingStarCount
+            });
+
+            return Ok(carReviewsDto);
         }
 
         [HttpGet("GetAllWithModel")]

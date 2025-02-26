@@ -19,6 +19,7 @@ namespace CarBook.Persistence.Context
         public DbSet<CarDescription> CarDescriptions { get; set; }
         public DbSet<CarFeature> CarFeatures { get; set; }
         public DbSet<CarReservationPricing> CarReservationPricings { get; set; }
+        public DbSet<CarReview> CarReviews { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Feature> Features { get; set; }

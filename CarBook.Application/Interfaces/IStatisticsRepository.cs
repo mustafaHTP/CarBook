@@ -10,6 +10,7 @@ namespace CarBook.Application.Interfaces
 {
     public interface IStatisticsRepository
     {
+        int GetCarReviewsCountByCarId(int carId);
         IEnumerable<Brand> GetAllBrands();
         int GetBlogCommentCountByBlogId(int blogId);
         int GetCarCountByDistance(int distanceKm, bool countLessThan);
