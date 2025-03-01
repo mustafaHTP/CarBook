@@ -1,4 +1,6 @@
-﻿namespace CarBook.Application.Interfaces
+﻿using System.Linq.Expressions;
+
+namespace CarBook.Application.Interfaces
 {
     public interface IRepository<T> where T : class
     {
@@ -8,5 +10,7 @@
         Task CreateAsync(T entity);
         Task UpdateAsync(T entity);
         Task DeleteAsync(T entity);
+        IEnumerable<T?> Where(Expression<Func<T, bool>> predicate);
+        T? FirstOrDefault(Expression<Func<T, bool>> predicate);
     }
 }

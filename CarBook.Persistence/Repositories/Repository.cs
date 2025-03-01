@@ -2,6 +2,7 @@
 using CarBook.Application.Interfaces;
 using CarBook.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace CarBook.Persistence.Repositories
 {
@@ -31,6 +32,11 @@ namespace CarBook.Persistence.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public T? FirstOrDefault(Expression<Func<T, bool>> predicate)
+        {
+            return _context.Set<T>().FirstOrDefault(predicate);
+        }
+
         public async Task<List<T>> GetAllAsync()
         {
             return await _context.Set<T>().ToListAsync();
@@ -45,6 +51,11 @@ namespace CarBook.Persistence.Repositories
         {
             _context.Set<T>().Update(entity);
             await _context.SaveChangesAsync();
+        }
+
+        public IEnumerable<T?> Where(Expression<Func<T, bool>> predicate)
+        {
+            return _context.Set<T>().Where(predicate);
         }
     }
 }

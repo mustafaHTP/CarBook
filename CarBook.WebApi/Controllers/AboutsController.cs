@@ -17,7 +17,7 @@ namespace CarBook.WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet()]
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var abouts = await _mediator.Send(new GetAboutsQuery());
@@ -72,12 +72,12 @@ namespace CarBook.WebApi.Controllers
         }
 
 
-        [HttpPut]
-        public async Task<IActionResult> Update(UpdateAboutDto updateAboutDto)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateAboutDto updateAboutDto)
         {
             var updateAboutCommand = new UpdateAboutCommand
             {
-                Id = updateAboutDto.Id,
+                Id = id,
                 Title = updateAboutDto.Title,
                 Description = updateAboutDto.Description,
                 ImageUrl = updateAboutDto.ImageUrl

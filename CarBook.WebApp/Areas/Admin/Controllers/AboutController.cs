@@ -90,7 +90,6 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
         {
             UpdateAboutDto updateAboutDto = new()
             {
-                Id = updateAboutViewModel.Id,
                 Title = updateAboutViewModel.Title,
                 Description = updateAboutViewModel.Description,
                 ImageUrl = updateAboutViewModel.ImageUrl
@@ -99,7 +98,7 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(updateAboutDto);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var response = await client.PutAsync("https://localhost:7116/api/Abouts", content);
+            var response = await client.PutAsync($"https://localhost:7116/api/Abouts/{updateAboutViewModel.Id}", content);
 
             if (response.IsSuccessStatusCode)
             {

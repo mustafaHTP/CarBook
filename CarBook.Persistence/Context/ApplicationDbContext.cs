@@ -7,6 +7,7 @@ namespace CarBook.Persistence.Context
     public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
         public DbSet<About> Abouts { get; set; }
+        public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Banner> Banners { get; set; }
         public DbSet<BlogAuthor> BlogAuthors { get; set; }
         public DbSet<Blog> Blogs { get; set; }

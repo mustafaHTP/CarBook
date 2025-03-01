@@ -1,0 +1,34 @@
+﻿using CarBook.Application.Features.CarReviewFeatures.Commands;
+using CarBook.Application.Interfaces;
+using CarBook.Domain.Entities;
+using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CarBook.Application.Features.CarReviewFeatures.Handlers
+{
+    public class UpdateCarReviewCommandHandler : IRequestHandler<UpdateCarReviewCommand>
+    {
+        private readonly IRepository<CarReview> _repository;
+
+        public UpdateCarReviewCommandHandler(IRepository<CarReview> repository)
+        {
+            _repository = repository;
+        }
+
+        public async Task Handle(UpdateCarReviewCommand request, CancellationToken cancellationToken)
+        {
+            var carReview = await _repository.GetByIdAsync(request.Id);
+
+            // Update here
+            carReview.Review = request.Review;
+            carReview.RatingStarCount = request.RatingStarCount;
+            carReview.ReviewDate = request.ReviewDate;
+
+            await _repository.UpdateAsync(carReview);
+        }
+    }
+}
