@@ -13,7 +13,9 @@ namespace CarBook.Persistence.Repositories
 
         public List<Model> GetAll(bool IncludeCars)
         {
-            var models = _context.Models.AsQueryable();
+            var models = _context.Models
+                .Include(m => m.Brand)
+                .AsQueryable();
 
             models = IncludeCars ? models.Include(x => x.Cars) : models;
 
