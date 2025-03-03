@@ -20,7 +20,7 @@ namespace CarBook.WebApp.Components
         {
             ViewData["BlogId"] = blogId;
 
-            var values = await _apiService.Get<IEnumerable<GetBlogCommentsByBlogIdDto>>($"https://localhost:7116/api/Blogs/{blogId}/comments");
+            var values = await _apiService.GetAsync<IEnumerable<GetBlogCommentsByBlogIdDto>>($"https://localhost:7116/api/Blogs/{blogId}/comments");
 
             return View(values);
         }

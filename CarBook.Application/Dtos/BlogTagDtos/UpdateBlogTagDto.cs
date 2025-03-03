@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarBook.Application.Interfaces
+namespace CarBook.Application.Dtos.BlogTagDtos
 {
-    public interface IApiService
+    public class UpdateBlogTagDto
     {
-        Task<T?> GetAsync<T>(string url) where T : class;
+        public string Name { get; set; } = null!;
     }
 }

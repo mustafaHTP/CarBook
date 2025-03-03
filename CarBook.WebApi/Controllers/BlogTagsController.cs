@@ -17,7 +17,7 @@ namespace CarBook.WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet()]
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var blogTags = await _mediator.Send(new GetBlogTagsQuery());
@@ -47,25 +47,38 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateBlogTagCommand createBlogTagCommand)
+        public async Task<IActionResult> Create(CreateBlogTagDto createBlogTagDto)
         {
-            await _mediator.Send(createBlogTagCommand);
+            var command = new CreateBlogTagCommand
+            {
+                Name = createBlogTagDto.Name
+            };
+
+            await _mediator.Send(command);
 
             return Ok("Blog Tag has been created");
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update(UpdateBlogTagCommand updateBlogTagCommand)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromRoute]int id, [FromBody]UpdateBlogTagDto updateBlogTagDto)
         {
-            await _mediator.Send(updateBlogTagCommand);
+            var command = new UpdateBlogTagCommand
+            {
+                Id = id,
+                Name = updateBlogTagDto.Name
+            };
+
+            await _mediator.Send(command);
 
             return Ok("Blog Tag has been updated");
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete(DeleteBlogTagCommand deleteBlogTagCommand)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            await _mediator.Send(deleteBlogTagCommand);
+            var command = new DeleteBlogTagCommand() { Id = id };
+
+            await _mediator.Send(command);
 
             return Ok("Blog Tag has been deleted");
         }

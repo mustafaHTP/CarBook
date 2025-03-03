@@ -20,7 +20,7 @@ namespace CarBook.Persistence.Services
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<T?> Get<T>(string url) where T : class
+        public async Task<T?> GetAsync<T>(string url) where T : class
         {
             var client = _httpClientFactory.CreateClient();
             var response = await client.GetAsync(url);
