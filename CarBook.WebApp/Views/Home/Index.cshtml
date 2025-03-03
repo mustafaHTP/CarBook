@@ -3,16 +3,15 @@
 }
 
 @await Component.InvokeAsync("Banner")
-@await Component.InvokeAsync("RentalCarFilter") 
+@await Component.InvokeAsync("RentalCarFilter")
 @await Component.InvokeAsync("Last5Cars")
 @await Component.InvokeAsync("About")
-@await Component.InvokeAsync("LatestServices") 
+@await Component.InvokeAsync("LatestServices")
 
 <partial name="~/Views/Shared/PartialViews/_BecomeADriver.cshtml" />
 
-@await Component.InvokeAsync("Testimonial") 
+@await Component.InvokeAsync("Testimonial")
 
-@await Component.InvokeAsync("Last3Blogs") 
+@await Component.InvokeAsync("RecentNBlogs", new { limit = 3 })
 
 @await Component.InvokeAsync("BrandStatistics")
-	

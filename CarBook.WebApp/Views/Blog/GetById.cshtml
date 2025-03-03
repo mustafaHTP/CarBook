@@ -1,4 +1,4 @@
-﻿@model GetBlogByIdWithAuthorDto
+﻿@model GetBlogByIdDto
 
 <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('@Model.CoverImageUrl');" data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
@@ -58,7 +58,7 @@
                 </div>
                 @await Component.InvokeAsync("SidebarBlogCategories")
 
-                @await Component.InvokeAsync("SidebarLast3Blogs")
+                @await Component.InvokeAsync("SidebarRecentNBlogs", new { limit = 3 })
 
                 @await Component.InvokeAsync("LastNBlogTags", new { count = 5 })
             </div>

@@ -19,7 +19,7 @@ namespace CarBook.Persistence.Repositories
         {
         }
 
-        public IEnumerable<Blog> GetAll(IEnumerable<string> includes)
+        public IEnumerable<Blog> GetAll(IEnumerable<string> includes, int limit = 0, bool isDescendingOrder = false)
         {
             var blogs = _context.Blogs.AsQueryable();
 
@@ -35,6 +35,16 @@ namespace CarBook.Persistence.Repositories
                         blogs = blogs.Include(value);
                     }
                 }
+            }
+
+            if (isDescendingOrder)
+            {
+                blogs = blogs.OrderByDescending(b => b.Id);
+            }
+
+            if (limit > 0)
+            {
+                blogs = blogs.Take(limit);
             }
 
             return blogs;
@@ -71,6 +81,13 @@ namespace CarBook.Persistence.Repositories
         public Blog GetByIdWithAuthor(int id)
         {
             return _context.Blogs.Include(b => b.BlogAuthor).FirstOrDefault(b => b.Id == id);
+        }
+
+        public int GetCommentCountById(int id)
+        {
+            return _context.BlogComments
+                .Where(bc => bc.BlogId == id)
+                .Count();
         }
 
         public List<Blog> GetLast3BlogsWithAuthorAndCategory()

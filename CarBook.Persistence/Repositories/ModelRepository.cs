@@ -11,11 +11,10 @@ namespace CarBook.Persistence.Repositories
         {
         }
 
-        public List<Model> GetAll(bool IncludeBrand, bool IncludeCars)
+        public List<Model> GetAll(bool IncludeCars)
         {
             var models = _context.Models.AsQueryable();
 
-            models = IncludeBrand ? models.Include(x => x.Brand) : models;
             models = IncludeCars ? models.Include(x => x.Cars) : models;
 
             return [.. models];

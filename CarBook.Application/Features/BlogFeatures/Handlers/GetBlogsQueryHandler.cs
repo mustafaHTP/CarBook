@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CarBook.Application.Features.BlogFeatures.Handlers
 {
-    public class GetBlogsQueryHandler : IRequestHandler<GetBlogsQuery, List<GetBlogsQueryResult>>
+    public class GetBlogsQueryHandler : IRequestHandler<GetBlogsQuery, IEnumerable<GetBlogsQueryResult>>
     {
         private readonly IBlogRepository _repository;
 
@@ -15,9 +15,9 @@ namespace CarBook.Application.Features.BlogFeatures.Handlers
             _repository = repository;
         }
 
-        public async Task<List<GetBlogsQueryResult>> Handle(GetBlogsQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<GetBlogsQueryResult>> Handle(GetBlogsQuery request, CancellationToken cancellationToken)
         {
-            var blogs = _repository.GetAll(request.Includes);
+            var blogs = _repository.GetAll(request.Includes, request.Limit, request.DescendingOrder);
             var result = blogs.Select(blog => new GetBlogsQueryResult
             {
                 Id = blog.Id,

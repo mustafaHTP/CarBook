@@ -1,4 +1,4 @@
-﻿@model List<GetLast3BlogsWithAuthorAndCategoryDto>
+﻿@model IEnumerable<GetBlogsDto>
 
 <section class="ftco-section">
     <div class="container">
@@ -18,11 +18,22 @@
                         <div class="text pt-4">
                             <div class="meta mb-3">
                                 <div><a href="#">@item.CreatedDate.ToString("MMM. dd, yyyy", System.Globalization.CultureInfo.InvariantCulture)</a></div>
-                                <div><a href="#">@item.BlogAuthor.Name</a></div>
-                                <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
+                                <div><a href="#">@item.BlogAuthorName</a></div>
+                                <div>
+                                    <a asp-controller="Blog" asp-action="GetById" asp-route-id="@item.Id" asp-fragment="BlogComments" class="meta-chat">
+                                        <span class="icon-chat"></span>
+                                        @await Component.InvokeAsync("BlogCommentCount", new { blogId = item.Id })
+                                    </a>
+                                </div>
                             </div>
-                            <h3 class="heading mt-2"><a href="#">@item.Title</a></h3>
-                            <p><a asp-controller="Blog" asp-action="GetById" asp-route-id="@item.Id" class="btn btn-primary">Read more</a></p>
+                            <h3 class="heading mt-2">
+                                <a href="#">@item.Title</a>
+                            </h3>
+                            <p>
+                                <a asp-controller="Blog" asp-action="GetById" asp-route-id="@item.Id" class="btn btn-primary">
+                                    Read more
+                                </a>
+                            </p>
                         </div>
                     </div>
                 </div>

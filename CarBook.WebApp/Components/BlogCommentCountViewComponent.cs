@@ -17,13 +17,12 @@ namespace CarBook.WebApp.Components
         public async Task<string> InvokeAsync(int blogId)
         {
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:7116/api/Statistics/blog/{blogId}/comments/count");
-            
+            var response = await client.GetAsync($"https://localhost:7116/api/Blogs/{blogId}/comments/count");
             int blogCommentCount = 0;
             if (response.IsSuccessStatusCode)
             {
                 var jsonData = await response.Content.ReadAsStringAsync();
-                var value = JsonConvert.DeserializeObject<GetBlogCommentCountByBlogIdDto>(jsonData);
+                var value = JsonConvert.DeserializeObject<GetBlogCommentCountByIdDto>(jsonData);
 
                 blogCommentCount = value?.BlogCommentCount ?? 0;
             }

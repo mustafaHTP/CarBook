@@ -21,7 +21,7 @@ namespace CarBook.WebApp.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var blogs = await _apiService.Get<List<GetBlogsWithAuthorAndCategoryDto>>("https://localhost:7116/api/Blogs/WithAuthorAndCategory");
+            var blogs = await _apiService.Get<IEnumerable<GetBlogsDto>>("https://localhost:7116/api/Blogs?Includes=author,category");
 
             return View(blogs);
         }
@@ -30,7 +30,7 @@ namespace CarBook.WebApp.Controllers
         {
             ViewData["BlogId"] = id;
 
-            var blog = await _apiService.Get<GetBlogByIdWithAuthorDto>($"https://localhost:7116/api/Blogs/WithAuthor/{id}");
+            var blog = await _apiService.Get<GetBlogByIdDto>($"https://localhost:7116/api/Blogs/{id}?Includes=author");
 
             return View(blog);
         }

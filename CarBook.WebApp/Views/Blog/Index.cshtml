@@ -2,7 +2,7 @@
     ViewData["Title"] = "Blog";
 }
 
-@model List<GetBlogsWithAuthorAndCategoryDto>
+@model IEnumerable<GetBlogsDto>
 
 <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/website-template/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
@@ -27,13 +27,31 @@
                         </a>
                         <div class="text px-md-5 pt-4">
                             <div class="meta mb-3">
-                                <div><a href="#">@item.CreatedDate.ToString("MMM. dd, yyyy", System.Globalization.CultureInfo.InvariantCulture)</a></div>
-                                <div><a href="#">@item.BlogAuthorName</a></div>
-                                <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
+                                <div>
+                                    <a href="#">
+                                        @item.CreatedDate.ToString("MMM. dd, yyyy", System.Globalization.CultureInfo.InvariantCulture)
+                                    </a>
+                                </div>
+                                <div>
+                                    <a href="#">@item.BlogAuthorName</a>
+                                </div>
+                                <div>
+                                    <a asp-controller="Blog" asp-action="GetById" asp-route-id="@item.Id" asp-fragment="BlogComments" class="meta-chat">
+                                        <span class="icon-chat"></span>
+                                        @await Component.InvokeAsync("BlogCommentCount", new { blogId = item.Id })
+                                    </a>
+                                </div>
                             </div>
-                            <h3 class="heading mt-2"><a href="#">@item.Title</a></h3>
+                            <h3 class="heading mt-2">
+                                <a href="#">@item.Title</a>
+                            </h3>
                             <p>@item.Description</p>
-                            <p><a asp-controller="Blog" asp-action="GetById" asp-route-id="@item.Id" class="btn btn-primary">Continue <span class="icon-long-arrow-right"></span></a></p>
+                            <p>
+                                <a asp-controller="Blog" asp-action="GetById" asp-route-id="@item.Id" class="btn btn-primary">
+                                    Continue
+                                    <span class="icon-long-arrow-right"></span>
+                                </a>
+                            </p>
                         </div>
                     </div>
                 </div>

@@ -26,7 +26,9 @@ namespace CarBook.WebApi.Controllers
             var includes = getBlogsQueryDto.Includes?.Split(',').ToList();
             var query = new GetBlogsQuery()
             {
-                Includes = includes ?? []
+                Includes = includes ?? [],
+                Limit = getBlogsQueryDto.Limit,
+                DescendingOrder = getBlogsQueryDto.DescendingOrder
             };
             var blogs = await _mediator.Send(query);
             var blogsDto = blogs.Select(b => new GetBlogsDto()
@@ -46,56 +48,6 @@ namespace CarBook.WebApi.Controllers
             });
 
             return Ok(blogsDto);
-        }
-
-        [HttpGet("Last3Blogs")]
-        public async Task<IActionResult> GetLast3Blogs()
-        {
-            var blogs = await _mediator.Send(new GetLast3BlogsWithAuthorAndCategoryQuery());
-
-            return Ok(blogs);
-        }
-
-        [HttpGet("WithAuthorAndCategory")]
-        public async Task<IActionResult> GetAllWithAuthorAndCategory()
-        {
-            var blogs = await _mediator.Send(new GetBlogsWithAuthorAndCategoryQuery());
-            var blogsDto = blogs.Select(b => new GetBlogsWithAuthorAndCategoryDto()
-            {
-                Id = b.Id,
-                Title = b.Title,
-                Content = b.Content,
-                Description = b.Description,
-                CoverImageUrl = b.CoverImageUrl,
-                CreatedDate = b.CreatedDate,
-                BlogAuthorId = b.BlogAuthorId,
-                BlogAuthorName = b.BlogAuthorName,
-                BlogCategoryId = b.BlogCategoryId,
-                BlogCategoryName = b.BlogCategoryName
-            });
-
-            return Ok(blogsDto);
-        }
-
-        [HttpGet("WithAuthor/{id}")]
-        public async Task<IActionResult> GetByIdWithAuthor(int id)
-        {
-            var blog = await _mediator.Send(new GetBlogByIdWithAuthorQuery() { Id = id });
-            var blogDto = new GetBlogByIdWithAuthorDto()
-            {
-                Id = blog.Id,
-                Title = blog.Title,
-                Content = blog.Content,
-                Description = blog.Description,
-                CoverImageUrl = blog.CoverImageUrl,
-                CreatedDate = blog.CreatedDate,
-                BlogAuthorId = blog.BlogAuthorId,
-                BlogAuthorName = blog.BlogAuthorName,
-                BlogAuthorDescription = blog.BlogAuthorDescription,
-                BlogAuthorImageUrl = blog.BlogAuthorImageUrl
-            };
-
-            return Ok(blogDto);
         }
 
         [HttpGet("{id}")]
@@ -143,6 +95,19 @@ namespace CarBook.WebApi.Controllers
             });
 
             return Ok(blogCommentsDto);
+        }
+
+        [HttpGet("{id}/comments/count")]
+        public async Task<IActionResult> GetBlogCommentCountById(int id)
+        {
+            var result =
+                await _mediator.Send(new GetBlogCommentCountByIdQuery() { Id = id });
+            var resultDto = new GetBlogCommentCountByIdDto()
+            {
+                BlogCommentCount = result.BlogCommentCount
+            };
+
+            return Ok(resultDto);
         }
 
         [HttpPost]
