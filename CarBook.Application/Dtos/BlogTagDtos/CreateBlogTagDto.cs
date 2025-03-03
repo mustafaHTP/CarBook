@@ -1,4 +1,4 @@
-﻿namespace CarBook.WebApi.Controllers
+﻿namespace CarBook.Application.Dtos.BlogTagDtos
 {
     public class CreateBlogTagDto
     {

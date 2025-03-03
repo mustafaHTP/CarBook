@@ -21,16 +21,26 @@ namespace CarBook.WebApi.Controllers
         public async Task<IActionResult> GetAll()
         {
             var blogTags = await _mediator.Send(new GetBlogTagsQuery());
+            var blogTagsDto = blogTags.Select(x => new GetBlogTagsDto()
+            {
+                Id = x.Id,
+                Name = x.Name
+            });
 
-            return Ok(blogTags);
+            return Ok(blogTagsDto);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var blogTag = await _mediator.Send(new GetBlogTagByIdQuery() { Id = id });
+            var blogTagDto = new GetBlogTagByIdDto()
+            {
+                Id = blogTag.Id,
+                Name = blogTag.Name
+            };
 
-            return Ok(blogTag);
+            return Ok(blogTagDto);
         }
 
         [HttpGet("last/{count}")]
