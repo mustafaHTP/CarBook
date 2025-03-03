@@ -81,6 +81,19 @@ namespace CarBook.WebApi.Controllers
             return Ok(blogDto);
         }
 
+        [HttpGet("{id}/tags")]
+        public async Task<IActionResult> GetAllBlogTagsById(int id)
+        {
+            var blogTags = await _mediator.Send(new GetBlogTagsByIdQuery() { Id = id });
+            var blogTagsDto = blogTags.Select(bt => new GetBlogTagsByIdDto()
+            {
+                Id = bt.Id,
+                Name = bt.Name
+            });
+
+            return Ok(blogTagsDto);
+        }
+
         [HttpGet("{id}/comments")]
         public async Task<IActionResult> GetAllBlogCommentsById(int id)
         {

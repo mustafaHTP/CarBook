@@ -5,6 +5,7 @@ using CarBook.Application.Dtos.BlogCommentDtos;
 using CarBook.Application.Dtos.BlogDtos;
 using CarBook.Application.Dtos.BrandDtos;
 using CarBook.Application.Dtos.CarDtos;
+using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
 using CarBook.WebApp.Areas.Admin.Models.BlogModels;
 using CarBook.WebApp.Areas.Admin.Models.BrandModels;
@@ -22,41 +23,35 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
     public class BlogController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IApiService _apiService;
 
-        public BlogController(IHttpClientFactory httpClientFactory)
+        public BlogController(IHttpClientFactory httpClientFactory, IApiService apiService)
         {
             _httpClientFactory = httpClientFactory;
+            _apiService = apiService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:7116/api/Blogs?Includes=author,category");
+            var result = await _apiService.GetAsync<IEnumerable<GetBlogsDto>>("https://localhost:7116/api/Blogs?Includes=author,category");
 
-            if (response.IsSuccessStatusCode)
-            {
-                var jsonData = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<IEnumerable<GetBlogsDto>>(jsonData);
-
-                return View(result);
-            }
-
-            return View();
+            return View(result);
         }
 
-        public async Task<IActionResult> GetCommentsByBlogId(int id)
+        public async Task<IActionResult> GetBlogCommentsById(int id)
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:7116/api/Blogs/{id}/comments");
-            if (response.IsSuccessStatusCode)
-            {
-                var jsonData = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<IEnumerable<GetBlogCommentsByBlogIdDto>>(jsonData);
+            var result = await _apiService.GetAsync<IEnumerable<GetBlogCommentsByBlogIdDto>>($"https://localhost:7116/api/Blogs/{id}/comments");
 
-                return View(result);
-            }
+            return View(result);
+        }
 
-            return View();
+        public async Task<IActionResult> GetBlogTagsById(int id)
+        {
+            ViewData["BlogId"] = id;
+
+            var result = await _apiService.GetAsync<IEnumerable<GetBlogTagsByIdDto>>($"https://localhost:7116/api/Blogs/{id}/tags");
+
+            return View(result);
         }
 
         public async Task<IActionResult> Create()

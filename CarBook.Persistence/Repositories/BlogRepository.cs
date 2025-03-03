@@ -55,6 +55,14 @@ namespace CarBook.Persistence.Repositories
             return [.. _context.Blogs.Include(b => b.BlogAuthor).Include(b => b.BlogCategory)];
         }
 
+        public IEnumerable<BlogTag> GetBlogTagsById(int id)
+        {
+            return _context.BlogTagClouds
+                .Include(bt => bt.BlogTag)
+                .Where(bt => bt.BlogId == id)
+                .Select(bt => bt.BlogTag);
+        }
+
         public Blog? GetById(int id, IEnumerable<string> includes)
         {
             var blogs = _context.Blogs.AsQueryable();
