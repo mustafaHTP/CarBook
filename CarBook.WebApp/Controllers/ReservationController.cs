@@ -85,17 +85,17 @@ namespace CarBook.WebApp.Controllers
         private async Task<IEnumerable<SelectListItem>?> GetCarListAsync()
         {
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:7116/api/Cars/GetAllWithBrand");
+            var response = await client.GetAsync("https://localhost:7116/api/Cars");
             IEnumerable<SelectListItem>? carList = null;
             if (response.IsSuccessStatusCode)
             {
                 var carsJson = await response.Content.ReadAsStringAsync();
-                var cars = JsonConvert.DeserializeObject<List<GetCarsWithBrandDto>>(carsJson);
+                var cars = JsonConvert.DeserializeObject<IEnumerable<GetCarsDto>>(carsJson);
 
                 carList = cars?.Select(c => new SelectListItem
                 {
                     Value = c.Id.ToString(),
-                    Text = $"{c.Model.Brand.Name} {c.Model.Name}"
+                    Text = $"{c.BrandName} {c.ModelName}"
                 }).ToList();
             }
 

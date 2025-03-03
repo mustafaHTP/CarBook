@@ -27,6 +27,8 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddHttpClient();
+
 //Add db context
 builder.Services.AddScoped<ApplicationDbContext>();
 
@@ -35,6 +37,7 @@ builder.Services.AddRepositories();
 
 //Add Services
 builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<IApiService, ApiService>();
 
 //Add application services
 builder.Services.AddApplicationService();

@@ -2,6 +2,7 @@
 using CarBook.Application.Features.AboutFeatures.Commands;
 using CarBook.Application.Features.AboutFeatures.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarBook.WebApi.Controllers
@@ -48,6 +49,7 @@ namespace CarBook.WebApi.Controllers
             return Ok(aboutDto);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Create(CreateAboutDto createAboutDto)
         {
@@ -62,6 +64,7 @@ namespace CarBook.WebApi.Controllers
             return Ok("About has been created");
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -71,7 +74,7 @@ namespace CarBook.WebApi.Controllers
             return Ok("About has been deleted");
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateAboutDto updateAboutDto)
         {

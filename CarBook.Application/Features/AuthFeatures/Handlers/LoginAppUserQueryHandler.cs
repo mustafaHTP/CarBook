@@ -38,6 +38,8 @@ namespace CarBook.Application.Features.AuthFeatures.Handlers
             {
                 var tokenRequestDto = new TokenRequestDto
                 {
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
                     Email = user.Email,
                     AppUserId = user.Id,
                     AppUserRole = user.AppUserRole

@@ -10,5 +10,7 @@ namespace CarBook.Application.Interfaces
     public interface IJwtService
     {
         string GenerateJwtToken(TokenRequestDto tokenRequestDto);
+        string? GetClaimValue(string token, string claimType);
+        DateTime? GetTokenExpirationDate(string token);
     }
 }

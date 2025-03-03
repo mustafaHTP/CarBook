@@ -1,11 +1,13 @@
 ﻿using CarBook.Application.Dtos.FooterAddressDtos;
 using CarBook.WebApp.Areas.Admin.Models.FooterAddressModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
 
 namespace CarBook.WebApp.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class FooterAddressController : Controller
     {

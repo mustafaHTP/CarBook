@@ -20,13 +20,9 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] GetCarsQueryDto getCarsQueryDto)
+        public async Task<IActionResult> GetAll()
         {
-            var query = new GetCarsQuery
-            {
-                IncludeBrand = getCarsQueryDto.IncludeBrand,
-                IncludeModel = getCarsQueryDto.IncludeModel
-            };
+            var query = new GetCarsQuery();
             var cars = await _mediator.Send(query);
             var carsDto = cars.Select(c => new GetCarsDto()
             {
@@ -165,81 +161,12 @@ namespace CarBook.WebApi.Controllers
             return Ok(carReviewsDto);
         }
 
-        [HttpGet("GetAllWithModel")]
-        public async Task<IActionResult> GetAllWithModel()
-        {
-            var cars = await _mediator.Send(new GetCarsWithModelQuery());
-            var carsDto = cars.Select(c => new GetCarsWithModelDto()
-            {
-                Id = c.Id,
-                ModelId = c.ModelId,
-                Model = c.Model,
-                BigImageUrl = c.BigImageUrl,
-                CoverImageUrl = c.CoverImageUrl,
-                FuelType = c.FuelType,
-                Km = c.Km,
-                Luggage = c.Luggage,
-                SeatCount = c.SeatCount,
-                TransmissionType = c.TransmissionType,
-            });
-
-            return Ok(carsDto);
-        }
-
-        [HttpGet("GetAllWithBrand")]
-        public async Task<IActionResult> GetAllWithBrand()
-        {
-            var cars = await _mediator.Send(new GetCarsWithBrandQuery());
-            var carsDto = cars.Select(c => new GetCarsWithBrandDto()
-            {
-                Id = c.Id,
-                ModelId = c.ModelId,
-                Model = c.Model,
-                BrandId = c.BrandId,
-                Brand = c.Brand,
-                BigImageUrl = c.BigImageUrl,
-                CoverImageUrl = c.CoverImageUrl,
-                FuelType = c.FuelType,
-                Km = c.Km,
-                Luggage = c.Luggage,
-                SeatCount = c.SeatCount,
-                TransmissionType = c.TransmissionType,
-            });
-
-            return Ok(carsDto);
-        }
-
-        [HttpGet("GetLast5CarsWithBrand")]
-        public async Task<IActionResult> GetLast5CarsWithBrand()
-        {
-            var cars = await _mediator.Send(new GetLast5CarsWithBrandQuery());
-            var carsDto = cars.Select(c => new GetLast5CarsWithBrandDto()
-            {
-                Id = c.Id,
-                ModelId = c.ModelId,
-                Model = c.Model,
-                BrandId = c.BrandId,
-                Brand = c.Brand,
-                BigImageUrl = c.BigImageUrl,
-                CoverImageUrl = c.CoverImageUrl,
-                FuelType = c.FuelType,
-                Km = c.Km,
-                Luggage = c.Luggage,
-                SeatCount = c.SeatCount,
-                TransmissionType = c.TransmissionType,
-            });
-
-            return Ok(carsDto);
-        }
-
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById([FromRoute] int id, [FromQuery] GetCarByIdQueryDto getCarByIdQueryDto)
+        public async Task<IActionResult> GetById(int id)
         {
             var query = new GetCarByIdQuery()
             {
-                Id = id,
-                IncludeModel = getCarByIdQueryDto.IncludeModel,
-                IncludeBrand = getCarByIdQueryDto.IncludeBrand
+                Id = id
             };
 
             var car = await _mediator.Send(query);

@@ -1,5 +1,6 @@
 ﻿using CarBook.Application.Dtos.BlogCommentDtos;
 using CarBook.Application.Dtos.BlogDtos;
+using CarBook.Application.Interfaces;
 using CarBook.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -10,42 +11,28 @@ namespace CarBook.WebApp.Controllers
     public class BlogController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IApiService _apiService;
 
-        public BlogController(IHttpClientFactory httpClientFactory)
+        public BlogController(IHttpClientFactory httpClientFactory, IApiService apiService)
         {
             _httpClientFactory = httpClientFactory;
+            _apiService = apiService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var client = _httpClientFactory.CreateClient();
-            var result = await client.GetAsync("https://localhost:7116/api/Blogs/WithAuthorAndCategory");
-            if (result.IsSuccessStatusCode)
-            {
-                var jsonData = await result.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<List<GetBlogsWithAuthorAndCategoryDto>>(jsonData);
+            var blogs = await _apiService.Get<List<GetBlogsWithAuthorAndCategoryDto>>("https://localhost:7116/api/Blogs/WithAuthorAndCategory");
 
-                return View(values);
-            }
-
-            return View();
+            return View(blogs);
         }
 
         public async Task<IActionResult> GetById(int id)
         {
             ViewData["BlogId"] = id;
 
-            var client = _httpClientFactory.CreateClient();
-            var result = await client.GetAsync($"https://localhost:7116/api/Blogs/WithAuthor/{id}");
-            if (result.IsSuccessStatusCode)
-            {
-                var jsonData = await result.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<GetBlogByIdWithAuthorDto>(jsonData);
+            var blog = await _apiService.Get<GetBlogByIdWithAuthorDto>($"https://localhost:7116/api/Blogs/WithAuthor/{id}");
 
-                return View(values);
-            }
-
-            return View();
+            return View(blog);
         }
 
         [HttpPost]

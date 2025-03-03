@@ -8,11 +8,11 @@ namespace CarBook.Application.Interfaces
         IEnumerable<CarReservationPricing> GetCarRentalPricingsByCarId(int carId);
         IEnumerable<CarDescription> GetCarDescriptionsByCarId(int carId);
         IEnumerable<CarFeature> GetCarFeaturesByCarId(int carId);
-        Car? GetById(int id, bool includeModel, bool includeBrand);
+        Car? GetById(int id);
         List<Car> GetCarsWithReservationPricings();
         List<Car> GetLast5CarsWithBrand();
         List<Car> GetAllCarsWithModel();
         List<Car> GetAllCarsWithBrand();
-        IEnumerable<Car> GetAll(bool includeModel, bool includeBrand);
+        IEnumerable<Car> GetAll();
     }
 }

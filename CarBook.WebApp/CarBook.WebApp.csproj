@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.13" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
   </ItemGroup>
 
@@ -42,6 +43,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CarBook.Application\CarBook.Application.csproj" />
+    <ProjectReference Include="..\CarBook.Persistence\CarBook.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

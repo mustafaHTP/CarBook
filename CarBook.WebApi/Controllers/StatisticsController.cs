@@ -2,11 +2,13 @@
 using CarBook.Application.Dtos.StatisticsDtos;
 using CarBook.Application.Features.StatisticsFeatures.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarBook.WebApi.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class StatisticsController : ControllerBase

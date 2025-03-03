@@ -4,12 +4,14 @@ using CarBook.Application.Dtos.FeatureDtos;
 using CarBook.WebApp.Areas.Admin.Models.CarModels;
 using CarBook.WebApp.Areas.Admin.Models.FeatureModels;
 using CarBook.WebApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
 
 namespace CarBook.WebApp.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class FeatureController : Controller
     {
@@ -132,7 +134,7 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
                 getCarFeaturesViewModel.CarFeatures = result ?? [];
             }
 
-            var carResponse = await client.GetAsync($"https://localhost:7116/api/Cars/{carId}?IncludeModel=true&IncludeBrand=true");
+            var carResponse = await client.GetAsync($"https://localhost:7116/api/Cars/{carId}");
             if (carResponse.IsSuccessStatusCode)
             {
                 var jsonData = await carResponse.Content.ReadAsStringAsync();

@@ -2,6 +2,7 @@
 using CarBook.Application.Features.LocationFeatures.Commands;
 using CarBook.Application.Features.LocationFeatures.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarBook.WebApi.Controllers

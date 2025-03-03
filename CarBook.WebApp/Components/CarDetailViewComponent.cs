@@ -1,4 +1,5 @@
 ﻿using CarBook.Application.Dtos.CarDtos;
+using CarBook.Application.Interfaces;
 using CarBook.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -7,26 +8,18 @@ namespace CarBook.WebApp.Components
 {
     public class CarDetailViewComponent : ViewComponent
     {
-        private IHttpClientFactory _httpClientFactory;
+        private readonly IApiService _apiService;
 
-        public CarDetailViewComponent(IHttpClientFactory httpClientFactory)
+        public CarDetailViewComponent(IApiService apiService)
         {
-            _httpClientFactory = httpClientFactory;
+            _apiService = apiService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync(int carId)
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:7116/api/Cars/{carId}?IncludeModel=true&IncludeBrand=true");
-            if (response.IsSuccessStatusCode)
-            {
-                var jsonData = await response.Content.ReadAsStringAsync();
-                var value = JsonConvert.DeserializeObject<GetCarByIdDto>(jsonData);
+            var car = await _apiService.Get<GetCarByIdDto>($"https://localhost:7116/api/Cars/{carId}");
 
-                return View(value);
-            }
-
-            return View();
+            return View(car);
         }
     }
 }

@@ -28,6 +28,8 @@ namespace CarBook.Persistence.Services
             {
                 new Claim(JwtRegisteredClaimNames.Sub, tokenRequestDto.AppUserId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, tokenRequestDto.Email),
+                new Claim(JwtRegisteredClaimNames.GivenName, tokenRequestDto.FirstName),
+                new Claim(JwtRegisteredClaimNames.FamilyName, tokenRequestDto.LastName),
                 new Claim(ClaimTypes.Role, tokenRequestDto.AppUserRole.ToString())
             };
 
@@ -43,6 +45,29 @@ namespace CarBook.Persistence.Services
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        public string? GetClaimValue(string token, string claimType)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var securityToken = tokenHandler.ReadToken(token) as JwtSecurityToken;
+
+            return securityToken?.Claims.First(claim => claim.Type == claimType).Value;
+        }
+
+        public DateTime? GetTokenExpirationDate(string token)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var jwtToken = tokenHandler.ReadJwtToken(token);
+
+            var expClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Exp)?.Value;
+
+            if (expClaim != null && long.TryParse(expClaim, out long expUnixTime))
+            {
+                return DateTimeOffset.FromUnixTimeSeconds(expUnixTime).UtcDateTime;
+            }
+
+            return null;
         }
     }
 }

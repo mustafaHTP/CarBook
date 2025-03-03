@@ -4,6 +4,7 @@ using CarBook.Application.Features.ModelFeatures.Commands;
 using CarBook.Application.Features.ModelFeatures.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Validations;
 
 namespace CarBook.WebApi.Controllers
 {
@@ -27,11 +28,7 @@ namespace CarBook.WebApi.Controllers
                 Id = m.Id,
                 Name = m.Name,
                 BrandId = m.BrandId,
-                Brand = new BrandWithNameDto()
-                {
-                    Id = m.Brand?.Id,
-                    Name = m.Brand?.Name
-                },
+                BrandName = m.Brand.Name,
                 Cars = m.Cars
             });
 
@@ -47,25 +44,40 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateModelCommand createModelCommand)
+        public async Task<IActionResult> Create(CreateModelDto createModelDto)
         {
-            await _mediator.Send(createModelCommand);
+            var command = new CreateModelCommand
+            {
+                BrandId = createModelDto.BrandId,
+                Name = createModelDto.Name
+            };
+
+            await _mediator.Send(command);
 
             return Ok("Model has been created");
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update(UpdateModelCommand updateModelCommand)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateModelDto updateModelDto)
         {
-            await _mediator.Send(updateModelCommand);
+            var command = new UpdateModelCommand
+            {
+                Id = id,
+                Name = updateModelDto.Name,
+                BrandId = updateModelDto.BrandId
+            };
+
+            await _mediator.Send(command);
 
             return Ok("Model has been updated");
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete(DeleteModelCommand deleteModelCommand)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            await _mediator.Send(deleteModelCommand);
+            var command = new DeleteModelCommand() { Id = id };
+
+            await _mediator.Send(command);
 
             return Ok("Model has been deleted");
         }

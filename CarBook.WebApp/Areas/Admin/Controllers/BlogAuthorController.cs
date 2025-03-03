@@ -2,12 +2,14 @@
 using CarBook.Application.Dtos.BlogAuthorDtos;
 using CarBook.WebApp.Areas.Admin.Models.BannerModels;
 using CarBook.WebApp.Areas.Admin.Models.BlogAuthorModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
 
 namespace CarBook.WebApp.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class BlogAuthorController : Controller
     {

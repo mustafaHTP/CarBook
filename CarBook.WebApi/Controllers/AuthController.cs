@@ -20,7 +20,7 @@ namespace CarBook.WebApi.Controllers
 
         [HttpPost]
         [Route("register")]
-        public async Task<IActionResult> Register(RegisterAppUserDto registerAppUserDto)
+        public async Task<IActionResult> Register([FromBody] RegisterAppUserDto registerAppUserDto)
         {
             var command = new CreateAppUserCommand
             {
@@ -38,7 +38,7 @@ namespace CarBook.WebApi.Controllers
 
         [HttpPost]
         [Route("login")]
-        public async Task<IActionResult> LoginAsync(LoginAppUserDto loginAppUserDto)
+        public async Task<IActionResult> LoginAsync([FromBody] LoginAppUserDto loginAppUserDto)
         {
             var query = new LoginAppUserQuery
             {
@@ -47,8 +47,19 @@ namespace CarBook.WebApi.Controllers
             };
 
             var result = await _mediator.Send(query);
+            if (result.IsAuthenticated)
+            {
+                var resultDto = new LoginAppUserResultDto
+                {
+                    Token = result.Token ?? string.Empty
+                };
 
-            return Ok(result);
+                return Ok(resultDto);
+            }
+            else
+            {
+                return Unauthorized("Invalid Credentials");
+            }
         }
     }
 }

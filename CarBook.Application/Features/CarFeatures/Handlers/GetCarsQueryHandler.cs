@@ -16,9 +16,7 @@ namespace CarBook.Application.Features.CarFeatures.Handlers
 
         public async Task<List<GetCarsQueryResult>> Handle(GetCarsQuery request, CancellationToken cancellationToken)
         {
-            var cars = _repository.GetAll(
-                 includeModel: request.IncludeModel, 
-                 includeBrand: request.IncludeBrand);
+            var cars = _repository.GetAll();
             var result = cars.Select(c => new GetCarsQueryResult()
             {
                 Id = c.Id,

@@ -1,7 +1,9 @@
 ﻿using CarBook.Application.Dtos.CarDtos;
 using CarBook.Application.Dtos.ModelDtos;
+using CarBook.Application.Interfaces;
 using CarBook.Domain.Enums;
 using CarBook.WebApp.Areas.Admin.Models.CarModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
@@ -9,30 +11,25 @@ using System.Text;
 
 namespace CarBook.WebApp.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class CarController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IApiService _apiService;
 
-        public CarController(IHttpClientFactory httpClientFactory)
+        public CarController(IHttpClientFactory httpClientFactory, IApiService apiService)
         {
             _httpClientFactory = httpClientFactory;
+            _apiService = apiService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:7116/api/Cars/GetAllWithBrand");
+            var cars =
+                await _apiService.Get<IEnumerable<GetCarsDto>>("https://localhost:7116/api/Cars");
 
-            if (response.IsSuccessStatusCode)
-            {
-                var jsonData = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<List<GetCarsWithBrandDto>>(jsonData);
-
-                return View(result);
-            }
-
-            return View();
+            return View(cars);
         }
 
         public async Task<IActionResult> Create()
@@ -74,9 +71,8 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
 
         public async Task<IActionResult> Update(int id)
         {
-            // Get the car by id
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:7116/api/Cars/{id}?IncludeModel=false&IncludeBrand=false");
+            var response = await client.GetAsync($"https://localhost:7116/api/Cars/{id}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -158,19 +154,19 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
         {
             var client = _httpClientFactory.CreateClient();
             var url = "https://localhost:7116/api/Models";
-            var queryParams = "IncludeBrand=true&IncludeCars=true";
+            var queryParams = "IncludeCars=true";
             var response = await client.GetAsync($"{url}?{queryParams}");
 
             IEnumerable<SelectListItem>? modelsSelectList = null;
             if (response.IsSuccessStatusCode)
             {
                 var jsonData = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<List<GetModelsDto>>(jsonData);
+                var result = JsonConvert.DeserializeObject<IEnumerable<GetModelsDto>>(jsonData);
 
                 // Create a SelectList from the models
                 modelsSelectList = result?.Select(m => new SelectListItem()
                 {
-                    Text = $"{m.Brand?.Name} {m.Name}",
+                    Text = $"{m.BrandName} {m.Name}",
                     Value = m.Id.ToString(),
                 });
             }

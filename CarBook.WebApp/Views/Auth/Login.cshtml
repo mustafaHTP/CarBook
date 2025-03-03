@@ -1,8 +1,8 @@
 ﻿@{
     Layout = "_AuthLayout";
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Login";
 }
-@model CarBook.WebApp.Models.AuthModels.RegisterAppUserViewModel
+@model CarBook.WebApp.Models.AuthModels.LoginAppUserViewModel
 
 <div>
     <div class="container">
@@ -11,7 +11,7 @@
                 <div class="d-flex align-items-center min-vh-100">
                     <div class="w-100 d-block bg-white shadow-lg rounded my-5">
                         <div class="row">
-                            <div class="col-lg-5 d-none d-lg-block bg-custom-register rounded-left">
+                            <div class="col-lg-5 d-none d-lg-block bg-custom-login rounded-left">
                             </div>
                             <div class="col-lg-7">
                                 <div class="p-5">
@@ -23,34 +23,23 @@
                                             </b>
                                         </a>
                                     </div>
-                                    <h1 class="h5 mb-1">Create an Account!</h1>
-                                    <p class="text-muted mb-4">Don't have an account? Create your own account, it takes less than a minute</p>
-                                    <form asp-area="" asp-controller="Auth" asp-action="Register" method="post" class="user">
-                                        <div class="form-group row">
-                                            <div class="col-sm-6 mb-3 mb-sm-0">
-                                                <input asp-for="FirstName" type="text" class="form-control form-control-user" placeholder="First Name">
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <input asp-for="LastName" type="text" class="form-control form-control-user" placeholder="Last Name">
-                                            </div>
-                                        </div>
+                                    <h1 class="h5 mb-1">Welcome Back!</h1>
+                                    <p class="text-muted mb-4">
+                                        Enter your email address and password to access admin panel.
+                                    </p>
+                                    <form asp-area="" asp-controller="Auth" asp-action="Login" method="post" class="user">
                                         <div class="form-group">
                                             <input asp-for="Email" type="email" class="form-control form-control-user" placeholder="Email Address">
                                         </div>
-                                        <div class="form-group row">
-                                            <div class="col-sm-6 mb-3 mb-sm-0">
-                                                <input asp-for="Password" type="password" class="form-control form-control-user" placeholder="Password">
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <input type="password" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Repeat Password">
-                                            </div>
+                                        <div class="form-group">
+                                            <input asp-for="Password" type="password" class="form-control form-control-user" placeholder="Password">
                                         </div>
                                         <button type="submit" class="btn btn-success btn-block waves-effect waves-light">
-                                            Register Account
+                                            Log In
                                         </button>
 
                                         <div class="text-center mt-4">
-                                            <h5 class="text-muted font-size-16">Sign up using</h5>
+                                            <h5 class="text-muted font-size-16">Sign in using</h5>
 
                                             <ul class="list-inline mt-3 mb-0">
                                                 <li class="list-inline-item">
@@ -72,7 +61,8 @@
 
                                     <div class="row mt-4">
                                         <div class="col-12 text-center">
-                                            <p class="text-muted mb-0">Already have account?  <a href="pages-login.html" class="text-muted font-weight-medium ml-1"><b>Sign In</b></a></p>
+                                            <p class="text-muted mb-2"><a href="pages-recoverpw.html" class="text-muted font-weight-medium ml-1">Forgot your password?</a></p>
+                                            <p class="text-muted mb-0">Don't have an account? <a href="pages-register.html" class="text-muted font-weight-medium ml-1"><b>Sign Up</b></a></p>
                                         </div> <!-- end col -->
                                     </div>
                                     <!-- end row -->

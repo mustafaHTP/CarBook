@@ -6,9 +6,9 @@ namespace CarBook.Application.Dtos.CarDtos
     {
         public int Id { get; set; }
         public int ModelId { get; set; }
-        public string? ModelName { get; set; }
+        public string ModelName { get; set; } = null!;
         public int BrandId { get; set; }
-        public string? BrandName { get; set; }
+        public string BrandName { get; set; } = null!;
         public int Km { get; set; }
         public byte SeatCount { get; set; }
         public byte Luggage { get; set; }

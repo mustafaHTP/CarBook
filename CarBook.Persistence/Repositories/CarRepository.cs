@@ -31,20 +31,13 @@ namespace CarBook.Persistence.Repositories
             return [.. _context.Cars.Include(c => c.Model).ThenInclude(m => m.Brand).Include(c => c.CarReservationPricings).ThenInclude(cr => cr.PricingPlan)];
         }
 
-        public Car? GetById(int id, bool includeModel, bool includeBrand)
+        public Car? GetById(int id)
         {
-            var cars = _context.Cars.AsQueryable();
+            var cars = _context.Cars
+                .Include(c => c.Model)
+                .ThenInclude(m => m.Brand);
 
-            if (includeBrand)
-            {
-                cars = cars.Include(c => c.Model).ThenInclude(m => m.Brand);
-            }
-            else if (includeModel)
-            {
-                cars = cars.Include(c => c.Model);
-            }
-
-            return cars.FirstOrDefault(c => c.Id == id);
+            return cars.SingleOrDefault(c => c.Id == id);
         }
 
         public IEnumerable<CarFeature> GetCarFeaturesByCarId(int carId)
@@ -52,23 +45,11 @@ namespace CarBook.Persistence.Repositories
             return _context.CarFeatures.Where(cf => cf.CarId == carId).Include(cf => cf.Feature);
         }
 
-        public IEnumerable<Car> GetAll(bool includeModel, bool includeBrand)
+        public IEnumerable<Car> GetAll()
         {
-            var cars = _context.Set<Car>().AsQueryable();
-
-            if (includeBrand)
-            {
-                cars = cars
-                    .Include(c => c.Model)
-                    .ThenInclude(m => m.Brand);
-            }
-            else if (includeModel)
-            {
-                cars = cars
-                    .Include(c => c.Model);
-            }
-
-            return cars;
+            return _context.Cars
+                .Include(c => c.Model)
+                .ThenInclude(m => m.Brand);
         }
 
         public IEnumerable<CarDescription> GetCarDescriptionsByCarId(int carId)
