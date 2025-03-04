@@ -1,5 +1,6 @@
 ﻿using CarBook.Application.Dtos.CarDtos;
 using CarBook.Application.Dtos.CarReviewDtos;
+using CarBook.Application.Dtos.PricingPlanDtos;
 using CarBook.Application.Features.CarFeatures.Commands;
 using CarBook.Application.Features.CarFeatures.Queries;
 using CarBook.Application.Features.CarReviewFeatures.Queries;
@@ -51,7 +52,7 @@ namespace CarBook.WebApi.Controllers
                 CarId = carId
             };
 
-            var carFeatures =  await _mediator.Send(query);
+            var carFeatures = await _mediator.Send(query);
             var carFeaturesDto = carFeatures.Select(cf => new GetCarFeaturesByCarIdDto
             {
                 CarFeatureId = cf.CarFeatureId,
@@ -65,38 +66,36 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpGet("RentalPricings")]
-        public async Task<IActionResult> GetAllRentalPricings([FromQuery] GetCarRentalPricingsQueryDto getCarRentalPricingsQueryDto)
+        public async Task<IActionResult> GetAllRentalPricings()
         {
-            var query = new GetCarRentalPricingsQuery
+            var query = new GetCarRentalPricingsQuery();
+            var carsWithRentalPricings = await _mediator.Send(query);
+            var carsWithRentalPricingsDto = carsWithRentalPricings.Select(c => new GetCarsWithRentalPricingsDto
             {
-                IncludeCar = getCarRentalPricingsQueryDto.IncludeCar
-            };
-            var carRentalPricings = await _mediator.Send(query);
-            var carRentalPricingsDto = carRentalPricings.Select(crp => new GetCarRentalPricingsDto
-            {
-                Id = crp.CarId,
                 Car = new CarLiteDto
                 {
-                    Id = crp.Car.Id,
-                    ModelId = crp.Car.ModelId,
-                    ModelName = crp.Car.Model.Name,
-                    BrandId = crp.Car.Model.BrandId,
-                    BrandName = crp.Car.Model.Brand.Name,
-                    BigImageUrl = crp.Car.BigImageUrl,
-                    FuelType = crp.Car.FuelType,
-                    Km = crp.Car.Km,
-                    Luggage = crp.Car.Luggage,
-                    SeatCount = crp.Car.SeatCount,
-                    TransmissionType = crp.Car.TransmissionType,
-                    CoverImageUrl = crp.Car.CoverImageUrl,
+                    Id = c.Id,
+                    ModelId = c.ModelId,
+                    ModelName = c.Model?.Name,
+                    BrandId = c.Model?.BrandId ?? 0,
+                    BrandName = c.Model?.Brand?.Name,
+                    Km = c.Km,
+                    SeatCount = c.SeatCount,
+                    Luggage = c.Luggage,
+                    TransmissionType = c.TransmissionType,
+                    FuelType = c.FuelType,
+                    CoverImageUrl = c.CoverImageUrl,
+                    BigImageUrl = c.BigImageUrl
                 },
-                CarId = crp.CarId,
-                PricingPlanId = crp.PricingPlanId,
-                PricingPlanName = crp.PricingPlan.Name,
-                Price = crp.Price
+                RentalPricings = c.CarReservationPricings.Select(crp => new PricingPlanWithPriceDto
+                {
+                    Id = crp.CarId,
+                    Name = crp.PricingPlan.Name,
+                    Price = crp.Price
+                })
             });
 
-            return Ok(carRentalPricingsDto);
+            return Ok(carsWithRentalPricingsDto);
         }
 
         [HttpGet("{carId}/RentalPricings")]

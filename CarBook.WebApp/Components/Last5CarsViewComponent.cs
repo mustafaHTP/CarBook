@@ -1,4 +1,6 @@
-﻿using CarBook.Application.Dtos.CarReservationPricingDtos;
+﻿using CarBook.Application.Dtos.CarDtos;
+using CarBook.Application.Dtos.CarReservationPricingDtos;
+using CarBook.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -6,27 +8,18 @@ namespace CarBook.WebApp.Components
 {
     public class Last5CarsViewComponent : ViewComponent
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private IApiService _apiService;
 
-        public Last5CarsViewComponent(IHttpClientFactory httpClientFactory)
+        public Last5CarsViewComponent(IApiService apiService)
         {
-            _httpClientFactory = httpClientFactory;
+            _apiService = apiService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:7116/api/CarReservationPricings/GetAllWithDayPricingPlan");
+            var carsWithRentalPricings = await _apiService.GetAsync<IEnumerable<GetCarsWithRentalPricingsDto>>("https://localhost:7116/api/Cars/RentalPricings");
 
-            if (response.IsSuccessStatusCode)
-            {
-                var jsonData = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<List<GetCarReservationPricingsWithDayPricingPlanDto>>(jsonData);
-
-                return View(result);
-            }
-
-            return View();
+            return View(carsWithRentalPricings);
         }
     }
 }

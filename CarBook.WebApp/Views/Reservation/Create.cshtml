@@ -40,7 +40,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label asp-for="CustomerFirstName">Your name</label>
+                                <label asp-for="CustomerFirstName" value="@Context.User.Claims.">Your name</label>
                                 <input asp-for="CustomerFirstName" class="form-control">
                             </div>
 
@@ -52,16 +52,6 @@
                             <div class="form-group">
                                 <label asp-for="CustomerEmail">Your Email</label>
                                 <input asp-for="CustomerEmail" type="email" class="form-control">
-                            </div>
-
-                            <div class="form-group">
-                                <label asp-for="CustomerDriverLicenseYear">Driver License year</label>
-                                <input asp-for="CustomerDriverLicenseYear" class="form-control">
-                            </div>
-
-                            <div class="form-group">
-                                <label asp-for="Description">Description</label>
-                                <textarea asp-for="Description" class="form-control" rows="3" placeholder="Enter a additional info here..."></textarea>
                             </div>
 
                             <button type="submit" class="btn btn-primary waves-effect waves-light">Submit</button>

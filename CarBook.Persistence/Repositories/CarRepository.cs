@@ -62,20 +62,13 @@ namespace CarBook.Persistence.Repositories
             return _context.CarReservationPricings.Where(cr => cr.CarId == carId).Include(cr => cr.PricingPlan);
         }
 
-        public IEnumerable<CarReservationPricing> GetAllRentalPricings(bool includeCar)
+        public IEnumerable<Car> GetAllWithRentalPricings()
         {
-            var rentalPricings = _context
-                .CarReservationPricings
-                .Include(cr => cr.PricingPlan)
-                .AsQueryable();
-
-            if (includeCar)
-            {
-                rentalPricings = rentalPricings
-                    .Include(cr => cr.Car)
-                    .ThenInclude(c => c.Model)
-                    .ThenInclude(m => m.Brand);
-            }
+            var rentalPricings = _context.Cars
+                .Include(c => c.Model)
+                .ThenInclude(m => m.Brand)
+                .Include(c => c.CarReservationPricings)
+                .ThenInclude(cr => cr.PricingPlan);
 
             return rentalPricings;
         }

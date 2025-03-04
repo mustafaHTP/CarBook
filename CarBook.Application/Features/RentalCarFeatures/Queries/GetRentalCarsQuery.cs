@@ -10,6 +10,6 @@ namespace CarBook.Application.Features.RentalCarFeatures.Queries
 {
     public class GetRentalCarsQuery : IRequest<IEnumerable<GetRentalCarsQueryResult>>
     {
-        public int? LocationId { get; set; }
+        public int? PickUpLocationId { get; set; }
     }
 }

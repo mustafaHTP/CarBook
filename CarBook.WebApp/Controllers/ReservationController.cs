@@ -3,6 +3,7 @@ using CarBook.Application.Dtos.LocationDtos;
 using CarBook.Application.Dtos.ReservationDtos;
 using CarBook.Domain.Entities;
 using CarBook.WebApp.Models.ReservationModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
@@ -37,9 +38,6 @@ namespace CarBook.WebApp.Controllers
                 CustomerFirstName = viewModel.CustomerFirstName,
                 CustomerLastName = viewModel.CustomerLastName,
                 CustomerEmail = viewModel.CustomerEmail,
-                CustomerAge = viewModel.CustomerAge,
-                CustomerDriverLicenseYear = viewModel.CustomerDriverLicenseYear,
-                Description = viewModel.Description,
                 PickUpLocationId = viewModel.PickUpLocationId,
                 DropOffLocationId = viewModel.DropOffLocationId
             };

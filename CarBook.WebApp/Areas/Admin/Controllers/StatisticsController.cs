@@ -17,8 +17,6 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            HttpContext.User.Claims.ToList().ForEach(c => System.Console.WriteLine($"{c.Type}: {c.Value}"));
-
             return View();
         }
     }

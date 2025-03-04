@@ -27,9 +27,6 @@ namespace CarBook.Application.Features.ReservationFeatures.Handlers
                 CustomerFirstName = request.CustomerName,
                 CustomerLastName = request.CustomerLastName,
                 CustomerEmail = request.CustomerEmail,
-                CustomerAge = request.CustomerAge,
-                CustomerDriverLicenseYear = request.CustomerDriverLicenseYear,
-                Description = request.Description,
                 PickUpLocationId = request.PickUpLocationId,
                 DropOffLocationId = request.DropOffLocationId
             };

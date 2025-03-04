@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GetCarRentalPricingsDto>
+﻿@model IEnumerable<GetCarsWithRentalPricingsDto>
 
 <div class="card">
     <div class="card-body">
@@ -16,16 +16,16 @@
                         <th class="border-top-0">Model</th>
                         <th class="border-top-0">Hourly Price</th>
                         <th class="border-top-0">Daily Price</th>
-                        <th class="border-top-0">Monthly Price</th>
+                        <th class="border-top-0">Weekly Price</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var group in Model.GroupBy(rp => rp.CarId))
+                    @foreach (var item in Model)
                     {
                         <tr>
-                            <td class="text-truncate">@group.First().Car.BrandName</td>
-                            <td class="text-truncate">@group.First().Car.ModelName</td>
-                            @foreach (var rp in group)
+                            <td class="text-truncate">@item.Car.BrandName</td>
+                            <td class="text-truncate">@item.Car.ModelName</td>
+                            @foreach (var rp in item.RentalPricings ?? [])
                             {
                                 <td class="text-truncate">@rp.Price</td>
                             }

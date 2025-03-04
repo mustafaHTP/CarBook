@@ -20,7 +20,7 @@ namespace CarBook.WebApp.Areas.Admin.Components
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var rentalPricings =
-                await GetApiResponse<IEnumerable<GetCarRentalPricingsDto>>("https://localhost:7116/api/Cars/RentalPricings?IncludeCar=true");
+                await GetApiResponse<IEnumerable<GetCarsWithRentalPricingsDto>>("https://localhost:7116/api/Cars/RentalPricings");
 
             return View(rentalPricings);
         }

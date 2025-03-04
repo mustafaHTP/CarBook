@@ -10,6 +10,6 @@ namespace CarBook.Application.Interfaces
 {
     public interface IRentalCarRepository : IRepository<RentalCar>
     {
-        Task<IEnumerable<RentalCar>> GetAllByFilterAsync(Expression<Func<RentalCar, bool>> filter);
+        Task<IEnumerable<RentalCar>> GetAllByFilterAsync(int? pickUpLocationId);
     }
 }

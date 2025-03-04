@@ -13,5 +13,6 @@ namespace CarBook.Domain.Entities
         public int CarId { get; set; }
         public Car Car { get; set; } = null!;
         public bool IsAvailable { get; set; }
+        public List<Reservation>? Reservations { get; set; }
     }
 }

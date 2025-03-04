@@ -2,6 +2,9 @@
 {
     public class RentalCarFilterViewModel
     {
-        public int? LocationId { get; set; }
+        public int? PickUpLocationId { get; set; }
+        public int? DropOffLocationId { get; set; }
+        public DateOnly PickUpDate { get; set; }
+        public DateOnly DropOffDate { get; set; }
     }
 }

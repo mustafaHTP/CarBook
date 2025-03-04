@@ -10,6 +10,5 @@ namespace CarBook.Application.Features.CarFeatures.Queries
 {
     public class GetCarRentalPricingsQuery : IRequest<IEnumerable<GetCarRentalPricingsQueryResult>>
     {
-        public bool IncludeCar { get; set; }
     }
 }

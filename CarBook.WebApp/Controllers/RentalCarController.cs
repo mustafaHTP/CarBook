@@ -14,11 +14,11 @@ namespace CarBook.WebApp.Controllers
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<IActionResult> Index([FromQuery] RentalCarFilterViewModel rentalCarFilterViewModel)
+        public async Task<IActionResult> Index(RentalCarFilterDto rentalCarFilterDto)
         {
             var client = _httpClientFactory.CreateClient();
             var apiEndpoint = "https://localhost:7116/api/RentalCars";
-            var query = rentalCarFilterViewModel.LocationId.HasValue ? $"LocationId={rentalCarFilterViewModel.LocationId}" : "";
+            var query = $"PickUpLocationId={rentalCarFilterDto.PickUpLocationId}";
             var url = $"{apiEndpoint}?{query}";
 
             var response = await client.GetAsync(url);

@@ -18,10 +18,14 @@ namespace CarBook.WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet()]
+        [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] GetRentalCarsQueryDto getRentalCarsQueryDto)
         {
-            var rentalCars = await _mediator.Send(new GetRentalCarsQuery { LocationId = getRentalCarsQueryDto.LocationId });
+            var rentalCars = await _mediator.Send(
+                new GetRentalCarsQuery
+                {
+                    PickUpLocationId = getRentalCarsQueryDto.PickUpLocationId,
+                });
             var rentalCarDtos = rentalCars.Select(rc => new GetRentalCarsDto()
             {
                 Id = rc.Id,
@@ -32,7 +36,7 @@ namespace CarBook.WebApi.Controllers
                 IsAvailable = rc.IsAvailable,
             });
 
-            return Ok(rentalCarDtos);
+            return Ok(rentalCars);
         }
     }
 }

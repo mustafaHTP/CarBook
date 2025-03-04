@@ -10,6 +10,7 @@
     <PackageReference Include="FluentValidation" Version="11.11.0" />
     <PackageReference Include="MediatR" Version="12.4.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
+    <PackageReference Include="SharpGrip.FluentValidation.AutoValidation.Mvc" Version="1.5.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +22,7 @@
     <Folder Include="Features\CarFeatureFeatures\Results\" />
     <Folder Include="Features\ReservationFeatures\Results\" />
     <Folder Include="Features\ReservationFeatures\Queries\" />
+    <Folder Include="Filters\" />
   </ItemGroup>
 
 </Project>

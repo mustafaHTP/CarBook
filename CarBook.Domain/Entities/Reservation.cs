@@ -11,16 +11,12 @@ namespace CarBook.Domain.Entities
     {
         public int CarId { get; set; }
         public Car Car { get; set; } = null!;
-        public string CustomerFirstName { get; set; } = string.Empty;
-        public string CustomerLastName { get; set; } = string.Empty;
-        public string CustomerEmail { get; set; } = string.Empty;
-        public int CustomerAge { get; set; }
-        public int CustomerDriverLicenseYear { get; set; }
-        public string? Description { get; set; }
+        public string CustomerFirstName { get; set; } = null!;
+        public string CustomerLastName { get; set; } = null!;
+        public string CustomerEmail { get; set; } = null!;
         public int PickUpLocationId { get; set; }
         public Location PickUpLocation { get; set; } = null!;
         public int DropOffLocationId { get; set; }
         public Location DropOffLocation { get; set; } = null!;
-        public ReservationStatus ReservationStatus { get; set; }
     }
 }

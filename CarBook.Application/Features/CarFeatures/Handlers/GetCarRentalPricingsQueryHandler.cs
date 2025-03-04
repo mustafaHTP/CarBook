@@ -21,15 +21,20 @@ namespace CarBook.Application.Features.CarFeatures.Handlers
 
         public async Task<IEnumerable<GetCarRentalPricingsQueryResult>> Handle(GetCarRentalPricingsQuery request, CancellationToken cancellationToken)
         {
-            var rentalPricings = _repository.GetAllRentalPricings(request.IncludeCar);
+            var rentalPricings = _repository.GetAllWithRentalPricings();
             var result = rentalPricings.Select(rp => new GetCarRentalPricingsQueryResult
             {
                 Id = rp.Id,
-                CarId = rp.CarId,
-                Car = rp.Car,
-                PricingPlanId = rp.PricingPlanId,
-                PricingPlan = rp.PricingPlan,
-                Price = rp.Price
+                Model = rp.Model,
+                ModelId = rp.ModelId,
+                Km = rp.Km,
+                SeatCount = rp.SeatCount,
+                Luggage = rp.Luggage,
+                TransmissionType = rp.TransmissionType,
+                FuelType = rp.FuelType,
+                CoverImageUrl = rp.CoverImageUrl,
+                BigImageUrl = rp.BigImageUrl,
+                CarReservationPricings = rp.CarReservationPricings
             });
 
             return await Task.FromResult(result);

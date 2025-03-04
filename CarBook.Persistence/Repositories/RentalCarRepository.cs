@@ -17,15 +17,16 @@ namespace CarBook.Persistence.Repositories
         {
         }
 
-        public async Task<IEnumerable<RentalCar>> GetAllByFilterAsync(Expression<Func<RentalCar, bool>> filter)
+        public Task<IEnumerable<RentalCar>> GetAllByFilterAsync(int? pickUpLocationId)
         {
-            return await _context
-                .RentalCars
-                .Include(rc => rc.Location)
+            var rentalCars = _context.RentalCars
                 .Include(rc => rc.Car)
-                .ThenInclude(c => c.Model)
-                .ThenInclude(m => m.Brand)
-                .Where(filter).ToListAsync();
+                .ThenInclude(rc => rc.Model)
+                .ThenInclude(rc => rc.Brand)
+                .Include(rc => rc.Location)
+                .Where(rc => rc.LocationId == pickUpLocationId);
+
+            return Task.FromResult(rentalCars.AsEnumerable());
         }
     }
 }

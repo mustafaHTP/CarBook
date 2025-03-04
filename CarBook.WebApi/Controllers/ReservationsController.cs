@@ -26,9 +26,6 @@ namespace CarBook.WebApi.Controllers
                 CustomerName = createReservationDto.CustomerFirstName,
                 CustomerLastName = createReservationDto.CustomerLastName,
                 CustomerEmail = createReservationDto.CustomerEmail,
-                CustomerAge = createReservationDto.CustomerAge,
-                CustomerDriverLicenseYear = createReservationDto.CustomerDriverLicenseYear,
-                Description = createReservationDto.Description,
                 PickUpLocationId = createReservationDto.PickUpLocationId,
                 DropOffLocationId = createReservationDto.DropOffLocationId
             };

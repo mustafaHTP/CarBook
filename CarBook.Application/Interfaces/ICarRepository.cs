@@ -4,7 +4,7 @@ namespace CarBook.Application.Interfaces
 {
     public interface ICarRepository : IRepository<Car>
     {
-        IEnumerable<CarReservationPricing> GetAllRentalPricings(bool includeCar);
+        public IEnumerable<Car> GetAllWithRentalPricings();
         IEnumerable<CarReservationPricing> GetCarRentalPricingsByCarId(int carId);
         IEnumerable<CarDescription> GetCarDescriptionsByCarId(int carId);
         IEnumerable<CarFeature> GetCarFeaturesByCarId(int carId);
