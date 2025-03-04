@@ -1,9 +1,9 @@
-﻿using CarBook.Application.Features.BlogFeatures.Commands;
+﻿using CarBook.Application.Features.BlogCategoryFeatures.Commands;
 using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
 using MediatR;
 
-namespace CarBook.Application.Features.BlogFeatures.Handlers
+namespace CarBook.Application.Features.BlogCategoryFeatures.Handlers
 {
     public class CreateBlogCategoryCommandHandler : IRequestHandler<CreateBlogCategoryCommand>
     {

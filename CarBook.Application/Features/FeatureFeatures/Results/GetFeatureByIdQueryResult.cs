@@ -1,4 +1,4 @@
-﻿namespace CarBook.Application.Features.CarFeatureFeatures.Results
+﻿namespace CarBook.Application.Features.FeatureFeatures.Results
 {
     public class GetFeatureByIdQueryResult
     {

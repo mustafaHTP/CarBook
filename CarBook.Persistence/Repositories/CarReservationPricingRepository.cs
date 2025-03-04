@@ -14,7 +14,7 @@ namespace CarBook.Persistence.Repositories
         public IEnumerable<CarReservationPricing> GetAll(IEnumerable<string>? rentalPeriods)
         {
             var carReservationPricings = _context.CarReservationPricings.AsQueryable();
-            if(rentalPeriods is not null)
+            if (rentalPeriods is not null)
             {
                 // Get pricing plan ids for the given rental periods
                 var pricingPlanIds = _context

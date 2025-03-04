@@ -1,6 +1,5 @@
 ﻿using CarBook.Application.Dtos.BlogCategoryDtos;
-using CarBook.Application.Features.BlogFeatures.Commands;
-using CarBook.Application.Features.BlogFeatures.Queries;
+using CarBook.Application.Features.BlogCategoryFeatures.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,6 +1,4 @@
-﻿using CarBook.Domain.Entities;
-
-namespace CarBook.WebApp.Models
+﻿namespace CarBook.WebApp.Models
 {
     public class CreateBlogCommentViewModel
     {

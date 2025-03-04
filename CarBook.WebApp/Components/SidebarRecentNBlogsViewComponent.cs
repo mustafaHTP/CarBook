@@ -1,7 +1,6 @@
 ﻿using CarBook.Application.Dtos.BlogDtos;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 
 namespace CarBook.WebApp.Components
 {

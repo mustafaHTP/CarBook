@@ -1,8 +1,5 @@
-﻿using CarBook.Application.Dtos.BlogCategoryDtos;
-using CarBook.Application.Dtos.BlogTagDtos;
+﻿using CarBook.Application.Dtos.BlogTagDtos;
 using CarBook.Application.Interfaces.Services;
-using CarBook.WebApp.Areas.Admin.Models.BlogCategoryModels;
-using CarBook.WebApp.Areas.Admin.Models.BlogModels;
 using CarBook.WebApp.Areas.Admin.Models.BlogTagModels;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;

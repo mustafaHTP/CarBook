@@ -17,7 +17,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery]GetCarReservationPricingsQueryDto queryDto)
+        public async Task<IActionResult> GetAll([FromQuery] GetCarReservationPricingsQueryDto queryDto)
         {
             var query = new GetCarReservationPricingsQuery()
             {

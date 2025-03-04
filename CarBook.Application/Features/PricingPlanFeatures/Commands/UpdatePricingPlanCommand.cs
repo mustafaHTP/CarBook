@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace CarBook.Application.Features.ReservationPricingFeatures.Commands
+namespace CarBook.Application.Features.PricingPlanFeatures.Commands
 {
     public class UpdatePricingPlanCommand : IRequest
     {

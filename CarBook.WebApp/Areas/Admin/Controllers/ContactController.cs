@@ -1,5 +1,4 @@
-﻿using CarBook.Application.Dtos.BlogDtos;
-using CarBook.Application.Dtos.ContactDtos;
+﻿using CarBook.Application.Dtos.ContactDtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;

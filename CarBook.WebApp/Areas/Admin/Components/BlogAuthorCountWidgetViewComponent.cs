@@ -1,5 +1,4 @@
 ﻿using CarBook.Application.Dtos.StatisticsDtos;
-using CarBook.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 

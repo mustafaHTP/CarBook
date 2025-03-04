@@ -1,13 +1,5 @@
-﻿using CarBook.Application.Dtos.BlogAuthorDtos;
-using CarBook.Application.Interfaces.Services;
-using Microsoft.Identity.Client;
+﻿using CarBook.Application.Interfaces.Services;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CarBook.Persistence.Services
 {

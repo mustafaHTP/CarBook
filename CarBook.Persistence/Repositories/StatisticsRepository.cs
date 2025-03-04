@@ -3,12 +3,7 @@ using CarBook.Domain.Entities;
 using CarBook.Domain.Enums;
 using CarBook.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CarBook.Persistence.Repositories
 {
@@ -28,8 +23,8 @@ namespace CarBook.Persistence.Repositories
             // If no rental periods are provided, calculate the average price of all car reservation pricings
             if (!rentalPeriods.Any())
             {
-                return carReservationPricings.Any() 
-                    ? carReservationPricings.Average(crp => crp.Price) 
+                return carReservationPricings.Any()
+                    ? carReservationPricings.Average(crp => crp.Price)
                     : 0m;
             }
 

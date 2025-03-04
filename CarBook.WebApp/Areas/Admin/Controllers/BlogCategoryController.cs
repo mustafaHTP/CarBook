@@ -1,7 +1,4 @@
-﻿using CarBook.Application.Dtos.BlogAuthorDtos;
-using CarBook.Application.Dtos.BlogCategoryDtos;
-using CarBook.Application.Dtos.BlogDtos;
-using CarBook.WebApp.Areas.Admin.Models.BlogAuthorModels;
+﻿using CarBook.Application.Dtos.BlogCategoryDtos;
 using CarBook.WebApp.Areas.Admin.Models.BlogCategoryModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

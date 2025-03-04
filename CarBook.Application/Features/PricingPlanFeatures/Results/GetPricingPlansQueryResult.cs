@@ -1,4 +1,4 @@
-﻿namespace CarBook.Application.Features.ReservationPricingFeatures.Results
+﻿namespace CarBook.Application.Features.PricingPlanFeatures.Results
 {
     public class GetPricingPlansQueryResult
     {

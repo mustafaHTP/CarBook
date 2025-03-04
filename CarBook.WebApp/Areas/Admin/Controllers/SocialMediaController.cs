@@ -1,7 +1,4 @@
-﻿using CarBook.Application.Dtos.FooterAddressDtos;
-using CarBook.Application.Dtos.ServiceDtos;
-using CarBook.Application.Dtos.SocialMediaDtos;
-using CarBook.WebApp.Areas.Admin.Models.FooterAddressModels;
+﻿using CarBook.Application.Dtos.SocialMediaDtos;
 using CarBook.WebApp.Areas.Admin.Models.SocialMediaModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

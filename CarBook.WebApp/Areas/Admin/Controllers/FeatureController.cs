@@ -1,7 +1,6 @@
 ﻿using CarBook.Application.Dtos.CarDtos;
 using CarBook.Application.Dtos.CarFeatureDtos;
 using CarBook.Application.Dtos.FeatureDtos;
-using CarBook.WebApp.Areas.Admin.Models.CarModels;
 using CarBook.WebApp.Areas.Admin.Models.FeatureModels;
 using CarBook.WebApp.Models;
 using Microsoft.AspNetCore.Authorization;

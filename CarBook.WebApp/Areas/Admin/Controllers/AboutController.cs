@@ -1,7 +1,5 @@
 ﻿using CarBook.Application.Dtos.AboutDtos;
-using CarBook.Application.Dtos.FeatureDtos;
 using CarBook.WebApp.Areas.Admin.Models.AboutModels;
-using CarBook.WebApp.Areas.Admin.Models.FeatureModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;

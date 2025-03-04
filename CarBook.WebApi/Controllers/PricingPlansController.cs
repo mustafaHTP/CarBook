@@ -1,6 +1,4 @@
 ﻿using CarBook.Application.Dtos.PricingPlanDtos;
-using CarBook.Application.Features.ReservationPricingFeatures.Commands;
-using CarBook.Application.Features.ReservationPricingFeatures.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

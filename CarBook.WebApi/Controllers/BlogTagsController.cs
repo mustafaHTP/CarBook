@@ -70,7 +70,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update([FromRoute]int id, [FromBody]UpdateBlogTagDto updateBlogTagDto)
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateBlogTagDto updateBlogTagDto)
         {
             var command = new UpdateBlogTagCommand
             {

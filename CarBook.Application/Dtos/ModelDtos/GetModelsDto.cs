@@ -1,5 +1,4 @@
-﻿using CarBook.Application.Dtos.BrandDtos;
-using CarBook.Domain.Entities;
+﻿using CarBook.Domain.Entities;
 
 namespace CarBook.Application.Dtos.ModelDtos
 {

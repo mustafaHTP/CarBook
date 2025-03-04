@@ -1,5 +1,4 @@
-﻿using CarBook.Domain.Entities;
-using CarBook.WebApp.Areas.Admin.Models.RentalPricingModels;
+﻿using CarBook.WebApp.Areas.Admin.Models.RentalPricingModels;
 
 namespace CarBook.WebApp.Areas.Admin.Models.CarModels
 {

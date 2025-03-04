@@ -1,10 +1,10 @@
-﻿using CarBook.Application.Features.ReservationPricingFeatures.Queries;
-using CarBook.Application.Features.ReservationPricingFeatures.Results;
+﻿using CarBook.Application.Features.PricingPlanFeatures.Queries;
+using CarBook.Application.Features.PricingPlanFeatures.Results;
 using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
 using MediatR;
 
-namespace CarBook.Application.Features.ReservationPricingFeatures.Handlers
+namespace CarBook.Application.Features.PricingPlanFeatures.Handlers
 {
     public class GetPricingPlanByIdQueryHandler : IRequestHandler<GetPricingPlanByIdQuery, GetPricingPlanByIdQueryResult>
     {

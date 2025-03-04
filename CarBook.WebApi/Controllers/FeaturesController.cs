@@ -21,10 +21,10 @@ namespace CarBook.WebApi.Controllers
         public async Task<IActionResult> GetAll()
         {
             var features = await _mediator.Send(new GetAllFeaturesQuery());
-            var featuresDto = features.Select(f => new GetFeaturesDto() 
-            { 
-                Id = f.Id, 
-                Name = f.Name 
+            var featuresDto = features.Select(f => new GetFeaturesDto()
+            {
+                Id = f.Id,
+                Name = f.Name
             });
 
             return Ok(featuresDto);
@@ -46,9 +46,9 @@ namespace CarBook.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateFeatureDto createFeatureDto)
         {
-            var createFeatureCommand = new CreateFeatureCommand() 
-            { 
-                Name = createFeatureDto.Name 
+            var createFeatureCommand = new CreateFeatureCommand()
+            {
+                Name = createFeatureDto.Name
             };
 
             await _mediator.Send(createFeatureCommand);

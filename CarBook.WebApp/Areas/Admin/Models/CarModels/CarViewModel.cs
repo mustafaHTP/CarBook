@@ -1,5 +1,4 @@
-﻿using CarBook.Domain.Entities;
-using CarBook.Domain.Enums;
+﻿using CarBook.Domain.Enums;
 
 namespace CarBook.WebApp.Areas.Admin.Models.CarModels
 {

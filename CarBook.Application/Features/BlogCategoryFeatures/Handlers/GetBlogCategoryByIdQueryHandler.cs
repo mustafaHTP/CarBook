@@ -1,10 +1,10 @@
-﻿using CarBook.Application.Features.BlogFeatures.Queries;
-using CarBook.Application.Features.BlogFeatures.Results;
+﻿using CarBook.Application.Features.BlogCategoryFeatures.Queries;
+using CarBook.Application.Features.BlogCategoryFeatures.Results;
 using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
 using MediatR;
 
-namespace CarBook.Application.Features.BlogFeatures.Handlers
+namespace CarBook.Application.Features.BlogCategoryFeatures.Handlers
 {
     public class GetBlogCategoryByIdQueryHandler : IRequestHandler<GetBlogCategoryByIdQuery, GetBlogCategoryByIdQueryResult>
     {

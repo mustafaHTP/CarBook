@@ -2,7 +2,6 @@
 using CarBook.Application.Interfaces.Services;
 using CarBook.WebApp.Models.AuthModels;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -23,18 +22,18 @@ namespace CarBook.WebApp.Controllers
             _jwtService = jwtService;
         }
 
-        public async Task<IActionResult> Register()
+        public IActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterAppUserViewModel registerAppUserViewModel)
+        public IActionResult Register(RegisterAppUserViewModel registerAppUserViewModel)
         {
             return RedirectToAction("Index", "Home", new { area = "" });
         }
 
-        public async Task<IActionResult> Login()
+        public IActionResult Login()
         {
             return View();
         }

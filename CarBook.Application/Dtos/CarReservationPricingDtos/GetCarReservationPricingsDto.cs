@@ -1,5 +1,4 @@
-﻿using CarBook.Domain.Entities;
-using CarBook.Domain.Enums;
+﻿using CarBook.Domain.Enums;
 
 namespace CarBook.Application.Dtos.CarReservationPricingDtos
 {
@@ -18,7 +17,7 @@ namespace CarBook.Application.Dtos.CarReservationPricingDtos
         public FuelType FuelType { get; set; }
         public string CoverImageUrl { get; set; } = string.Empty;
         public string BigImageUrl { get; set; } = string.Empty;
-        public int PricingPlanId { get; set; } 
+        public int PricingPlanId { get; set; }
         public string PricingPlanName { get; set; } = string.Empty;
         public decimal Price { get; set; }
     }

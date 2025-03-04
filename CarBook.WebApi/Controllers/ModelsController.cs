@@ -1,10 +1,8 @@
-﻿using CarBook.Application.Dtos.BrandDtos;
-using CarBook.Application.Dtos.ModelDtos;
+﻿using CarBook.Application.Dtos.ModelDtos;
 using CarBook.Application.Features.ModelFeatures.Commands;
 using CarBook.Application.Features.ModelFeatures.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.OpenApi.Validations;
 
 namespace CarBook.WebApi.Controllers
 {

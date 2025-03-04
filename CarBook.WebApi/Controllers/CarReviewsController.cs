@@ -1,10 +1,7 @@
-﻿using CarBook.Application.Dtos.CarDtos;
-using CarBook.Application.Dtos.CarReviewDtos;
+﻿using CarBook.Application.Dtos.CarReviewDtos;
 using CarBook.Application.Features.CarReviewFeatures.Commands;
 using CarBook.Application.Features.CarReviewFeatures.Queries;
-using FluentValidation;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarBook.WebApi.Controllers

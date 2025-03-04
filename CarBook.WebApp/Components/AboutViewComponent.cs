@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
-namespace CarBook.WebApp.ViewComponents
+namespace CarBook.WebApp.Components
 {
     public class AboutViewComponent : ViewComponent
     {

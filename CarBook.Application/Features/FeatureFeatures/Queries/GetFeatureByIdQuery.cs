@@ -1,4 +1,4 @@
-﻿using CarBook.Application.Features.CarFeatureFeatures.Results;
+﻿using CarBook.Application.Features.FeatureFeatures.Results;
 using MediatR;
 
 namespace CarBook.Application.Features.FeatureFeatures.Queries

@@ -2,7 +2,6 @@
 using CarBook.Application.Features.AuthFeatures.Commands;
 using CarBook.Application.Features.AuthFeatures.Queries;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarBook.WebApi.Controllers

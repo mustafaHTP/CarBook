@@ -1,6 +1,4 @@
-﻿using CarBook.Domain.Entities;
-
-namespace CarBook.WebApp.Areas.Admin.Models.BlogModels
+﻿namespace CarBook.WebApp.Areas.Admin.Models.BlogModels
 {
     public class CreateBlogViewModel
     {

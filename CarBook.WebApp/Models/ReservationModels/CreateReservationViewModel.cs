@@ -1,6 +1,4 @@
-﻿using CarBook.Domain.Entities;
-
-namespace CarBook.WebApp.Models.ReservationModels
+﻿namespace CarBook.WebApp.Models.ReservationModels
 {
     public class CreateReservationViewModel
     {

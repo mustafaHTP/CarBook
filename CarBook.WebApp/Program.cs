@@ -1,12 +1,8 @@
 using CarBook.Application.Interfaces.Services;
 using CarBook.Application.Validators;
-using CarBook.Persistence.Middlewares;
 using CarBook.Persistence.Services;
 using FluentValidation;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
-using SharpGrip.FluentValidation.AutoValidation.Mvc.Interceptors;
 using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);

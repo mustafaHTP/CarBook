@@ -1,7 +1,6 @@
 ﻿using CarBook.Application.Features.BlogAuthorFeatures.Queries;
 using CarBook.Application.Features.BlogAuthorFeatures.Results;
 using CarBook.Application.Interfaces.Repositories;
-using CarBook.Domain.Entities;
 using MediatR;
 
 namespace CarBook.Application.Features.BlogAuthorFeatures.Handlers

@@ -5,11 +5,6 @@ using CarBook.Application.Interfaces.Repositories;
 using CarBook.Application.Interfaces.Services;
 using CarBook.Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CarBook.Application.Features.AuthFeatures.Handlers
 {
@@ -35,7 +30,7 @@ namespace CarBook.Application.Features.AuthFeatures.Handlers
                 IsAuthenticated = user != null
             };
             //2.Generate JWT Token
-            if(user is not null)
+            if (user is not null)
             {
                 var tokenRequestDto = new TokenRequestDto
                 {

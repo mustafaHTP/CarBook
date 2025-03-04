@@ -1,9 +1,9 @@
-﻿using CarBook.Application.Features.ReservationPricingFeatures.Commands;
+﻿using CarBook.Application.Features.PricingPlanFeatures.Commands;
 using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
 using MediatR;
 
-namespace CarBook.Application.Features.ReservationPricingFeatures.Handlers
+namespace CarBook.Application.Features.PricingPlanFeatures.Handlers
 {
     public class UpdatePricingPlanCommandHandler : IRequestHandler<UpdatePricingPlanCommand>
     {

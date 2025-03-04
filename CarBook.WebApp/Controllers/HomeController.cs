@@ -1,4 +1,3 @@
-using CarBook.Application.Dtos.RentalCarDtos;
 using CarBook.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;

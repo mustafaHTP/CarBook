@@ -1,4 +1,4 @@
-﻿namespace CarBook.Application.Features.BlogFeatures.Results
+﻿namespace CarBook.Application.Features.BlogCategoryFeatures.Results
 {
     public class GetBlogCategoriesQueryResult
     {

@@ -1,10 +1,8 @@
 using CarBook.Application.Interfaces.Services;
 using CarBook.Application.Services;
 using CarBook.Application.Validators;
-using CarBook.Application.Validators.CarReviewValidators;
 using CarBook.Persistence.Context;
 using CarBook.Persistence.Extensions;
-using CarBook.Persistence.Repositories;
 using CarBook.Persistence.Services;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

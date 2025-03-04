@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace CarBook.Application.Features.BlogFeatures.Commands
+namespace CarBook.Application.Features.BlogCategoryFeatures.Commands
 {
     public class CreateBlogCategoryCommand : IRequest
     {
