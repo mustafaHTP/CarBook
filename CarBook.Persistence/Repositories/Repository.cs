@@ -1,5 +1,4 @@
-﻿
-using CarBook.Application.Interfaces;
+﻿using CarBook.Application.Interfaces.Repositories;
 using CarBook.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;

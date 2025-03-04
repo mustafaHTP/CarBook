@@ -1,6 +1,6 @@
 ﻿using CarBook.Application.Features.TestimonialFeatures.Queries;
 using CarBook.Application.Features.TestimonialFeatures.Results;
-using CarBook.Application.Interfaces;
+using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
 using MediatR;
 

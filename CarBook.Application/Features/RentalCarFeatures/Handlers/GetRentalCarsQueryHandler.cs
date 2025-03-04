@@ -1,6 +1,6 @@
 ﻿using CarBook.Application.Features.RentalCarFeatures.Queries;
 using CarBook.Application.Features.RentalCarFeatures.Results;
-using CarBook.Application.Interfaces;
+using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
 using MediatR;
 using System;

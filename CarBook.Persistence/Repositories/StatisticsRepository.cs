@@ -1,4 +1,4 @@
-﻿using CarBook.Application.Interfaces;
+﻿using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
 using CarBook.Domain.Enums;
 using CarBook.Persistence.Context;

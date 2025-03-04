@@ -1,6 +1,6 @@
 ﻿using CarBook.Application.Features.ModelFeatures.Queries;
 using CarBook.Application.Features.ModelFeatures.Results;
-using CarBook.Application.Interfaces;
+using CarBook.Application.Interfaces.Repositories;
 using MediatR;
 
 namespace CarBook.Application.Features.ModelFeatures.Handlers

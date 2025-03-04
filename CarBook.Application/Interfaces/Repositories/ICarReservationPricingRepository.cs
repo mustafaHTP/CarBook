@@ -1,6 +1,6 @@
 ﻿using CarBook.Domain.Entities;
 
-namespace CarBook.Application.Interfaces
+namespace CarBook.Application.Interfaces.Repositories
 {
     public interface ICarReservationPricingRepository : IRepository<CarReservationPricing>
     {

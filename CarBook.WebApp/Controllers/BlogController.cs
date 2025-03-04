@@ -1,6 +1,6 @@
 ﻿using CarBook.Application.Dtos.BlogCommentDtos;
 using CarBook.Application.Dtos.BlogDtos;
-using CarBook.Application.Interfaces;
+using CarBook.Application.Interfaces.Services;
 using CarBook.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;

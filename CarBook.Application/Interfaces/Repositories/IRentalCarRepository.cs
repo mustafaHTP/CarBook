@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarBook.Application.Interfaces
+namespace CarBook.Application.Interfaces.Repositories
 {
     public interface IRentalCarRepository : IRepository<RentalCar>
     {

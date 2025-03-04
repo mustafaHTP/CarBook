@@ -1,6 +1,6 @@
 ﻿using CarBook.Application.Dtos.CarDtos;
 using CarBook.Application.Dtos.ModelDtos;
-using CarBook.Application.Interfaces;
+using CarBook.Application.Interfaces.Services;
 using CarBook.Domain.Enums;
 using CarBook.WebApp.Areas.Admin.Models.CarModels;
 using Microsoft.AspNetCore.Authorization;

@@ -1,6 +1,6 @@
 ﻿using CarBook.Application.Features.StatisticsFeatures.Queries;
 using CarBook.Application.Features.StatisticsFeatures.Results;
-using CarBook.Application.Interfaces;
+using CarBook.Application.Interfaces.Repositories;
 using MediatR;
 using MediatR.Pipeline;
 using System;

@@ -1,6 +1,6 @@
 ﻿using CarBook.Application.Features.BlogTagFeatures.Queries;
 using CarBook.Application.Features.BlogTagFeatures.Results;
-using CarBook.Application.Interfaces;
+using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
 using MediatR;
 

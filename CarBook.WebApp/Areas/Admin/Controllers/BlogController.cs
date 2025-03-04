@@ -5,7 +5,7 @@ using CarBook.Application.Dtos.BlogCommentDtos;
 using CarBook.Application.Dtos.BlogDtos;
 using CarBook.Application.Dtos.BrandDtos;
 using CarBook.Application.Dtos.CarDtos;
-using CarBook.Application.Interfaces;
+using CarBook.Application.Interfaces.Services;
 using CarBook.Domain.Entities;
 using CarBook.WebApp.Areas.Admin.Models.BlogModels;
 using CarBook.WebApp.Areas.Admin.Models.BrandModels;

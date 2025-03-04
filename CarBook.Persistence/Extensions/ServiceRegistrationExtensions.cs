@@ -1,4 +1,4 @@
-﻿using CarBook.Application.Interfaces;
+﻿using CarBook.Application.Interfaces.Repositories;
 using CarBook.Persistence.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using System;

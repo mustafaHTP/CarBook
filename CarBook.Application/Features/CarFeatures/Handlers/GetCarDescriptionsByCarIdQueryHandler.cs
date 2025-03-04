@@ -1,6 +1,6 @@
 ﻿using CarBook.Application.Features.CarFeatures.Queries;
 using CarBook.Application.Features.CarFeatures.Results;
-using CarBook.Application.Interfaces;
+using CarBook.Application.Interfaces.Repositories;
 using MediatR;
 using System;
 using System.Collections.Generic;

@@ -1,7 +1,8 @@
 ﻿using CarBook.Application.Dtos.JwtDtos;
 using CarBook.Application.Features.AuthFeatures.Queries;
 using CarBook.Application.Features.AuthFeatures.Results;
-using CarBook.Application.Interfaces;
+using CarBook.Application.Interfaces.Repositories;
+using CarBook.Application.Interfaces.Services;
 using CarBook.Domain.Entities;
 using MediatR;
 using System;

@@ -1,6 +1,6 @@
 ﻿using CarBook.Application.Dtos.CarDtos;
 using CarBook.Application.Dtos.CarReservationPricingDtos;
-using CarBook.Application.Interfaces;
+using CarBook.Application.Interfaces.Services;
 using CarBook.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarBook.Application.Interfaces
+namespace CarBook.Application.Interfaces.Repositories
 {
     public interface IBlogAuthorRepository : IRepository<BlogAuthor>
     {

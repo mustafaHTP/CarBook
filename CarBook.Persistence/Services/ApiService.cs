@@ -1,5 +1,5 @@
 ﻿using CarBook.Application.Dtos.BlogAuthorDtos;
-using CarBook.Application.Interfaces;
+using CarBook.Application.Interfaces.Services;
 using Microsoft.Identity.Client;
 using Newtonsoft.Json;
 using System;

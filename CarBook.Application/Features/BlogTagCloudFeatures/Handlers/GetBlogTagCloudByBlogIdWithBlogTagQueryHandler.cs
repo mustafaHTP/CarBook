@@ -1,6 +1,6 @@
 ﻿using CarBook.Application.Features.BlogTagCloudFeatures.Queries;
 using CarBook.Application.Features.BlogTagCloudFeatures.Results;
-using CarBook.Application.Interfaces;
+using CarBook.Application.Interfaces.Repositories;
 using MediatR;
 
 namespace CarBook.Application.Features.BlogTagCloudFeatures.Handlers

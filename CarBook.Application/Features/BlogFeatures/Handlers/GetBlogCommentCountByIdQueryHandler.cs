@@ -1,7 +1,7 @@
 ﻿using CarBook.Application.Features.BlogCommentFeatures.Results;
 using CarBook.Application.Features.BlogFeatures.Queries;
 using CarBook.Application.Features.BlogFeatures.Results;
-using CarBook.Application.Interfaces;
+using CarBook.Application.Interfaces.Repositories;
 using MediatR;
 using System;
 using System.Collections.Generic;

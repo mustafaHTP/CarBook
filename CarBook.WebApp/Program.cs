@@ -1,4 +1,4 @@
-using CarBook.Application.Interfaces;
+using CarBook.Application.Interfaces.Services;
 using CarBook.Application.Validators;
 using CarBook.Persistence.Middlewares;
 using CarBook.Persistence.Services;

@@ -1,5 +1,5 @@
 ﻿using CarBook.Application.Dtos.AuthDtos;
-using CarBook.Application.Interfaces;
+using CarBook.Application.Interfaces.Services;
 using CarBook.WebApp.Models.AuthModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;

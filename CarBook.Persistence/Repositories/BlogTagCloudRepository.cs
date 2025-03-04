@@ -1,4 +1,4 @@
-﻿using CarBook.Application.Interfaces;
+﻿using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
 using CarBook.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
