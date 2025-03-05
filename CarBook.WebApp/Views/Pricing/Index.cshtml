@@ -5,7 +5,18 @@
     <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
             <div class="col-md-9 ftco-animate pb-5">
-                <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Pricing <i class="ion-ios-arrow-forward"></i></span></p>
+                <p class="breadcrumbs">
+                    <span class="mr-2">
+                        <a asp-area="" asp-controller="Home" asp-action="Index">
+                            Home
+                            <i class="ion-ios-arrow-forward"></i>
+                        </a>
+                    </span>
+                    <span>
+                        Pricing
+                        <i class="ion-ios-arrow-forward"></i>
+                    </span>
+                </p>
                 <h1 class="mb-3 bread">Pricing</h1>
             </div>
         </div>
@@ -46,7 +57,11 @@
                                     </td>
 
                                     <td class="price">
-                                        <p class="btn-custom"><a href="#">Rent a car</a></p>
+                                        <p class="btn-custom">
+                                            <a asp-area="" asp-controller="Car" asp-action="GetById" asp-route-id="@item.Car.Id">
+                                                Detail
+                                            </a>
+                                        </p>
                                         <div class="price-rate">
                                             <h3>
                                                 <span class="num">
@@ -61,7 +76,11 @@
                                     </td>
 
                                     <td class="price">
-                                        <p class="btn-custom"><a href="#">Rent a car</a></p>
+                                        <p class="btn-custom">
+                                            <a asp-area="" asp-controller="Car" asp-action="GetById" asp-route-id="@item.Car.Id">
+                                                Detail
+                                            </a>
+                                        </p>
                                         <div class="price-rate">
                                             <h3>
                                                 <span class="num"><small class="currency">$</small> @(item.RentalPricings?.FirstOrDefault(rp => rp.Name.Equals("day"))?.Price ?? 0)</span>
@@ -71,7 +90,11 @@
                                     </td>
 
                                     <td class="price">
-                                        <p class="btn-custom"><a href="#">Rent a car</a></p>
+                                        <p class="btn-custom">
+                                            <a asp-area="" asp-controller="Car" asp-action="GetById" asp-route-id="@item.Car.Id">
+                                                Detail
+                                            </a>
+                                        </p>
                                         <div class="price-rate">
                                             <h3>
                                                 <span class="num"><small class="currency">$</small> @(item.RentalPricings?.FirstOrDefault(rp => rp.Name.Equals("week"))?.Price ?? 0)</span>
