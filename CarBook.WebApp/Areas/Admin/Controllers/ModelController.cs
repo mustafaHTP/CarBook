@@ -25,9 +25,13 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var models = await _apiService.GetAsync<IEnumerable<GetModelsDto>>("https://localhost:7116/api/Models");
+            var response = await _apiService.GetAsync<IEnumerable<GetModelsDto>>("https://localhost:7116/api/Models");
+            if (response.IsSuccessful)
+            {
+                return View(response.Result);
+            }
 
-            return View(models);
+            return View();
         }
 
         public async Task<IActionResult> Create()
@@ -121,12 +125,12 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
         private async Task<IEnumerable<SelectListItem>?> GetBrandList()
         {
             var url = "https://localhost:7116/api/Brands";
-            var models = await _apiService.GetAsync<IEnumerable<GetBrandsDto>>(url);
+            var response = await _apiService.GetAsync<IEnumerable<GetBrandsDto>>(url);
 
             IEnumerable<SelectListItem>? brandSelectList = null;
 
             // Create a SelectList from the models
-            brandSelectList = models?.Select(m => new SelectListItem()
+            brandSelectList = response.Result?.Select(m => new SelectListItem()
             {
                 Text = $"{m.Name}",
                 Value = m.Id.ToString(),

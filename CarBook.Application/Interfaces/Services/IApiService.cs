@@ -2,6 +2,6 @@
 {
     public interface IApiService
     {
-        Task<T?> GetAsync<T>(string url) where T : class;
+        Task<ApiResponse<T>> GetAsync<T>(string url) where T : class;
     }
 }

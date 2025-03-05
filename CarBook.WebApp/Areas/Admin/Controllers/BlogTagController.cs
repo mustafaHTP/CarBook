@@ -21,9 +21,13 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var blogTags = await _apiService.GetAsync<IEnumerable<GetBlogTagsDto>>("https://localhost:7116/api/BlogTags");
+            var response = await _apiService.GetAsync<IEnumerable<GetBlogTagsDto>>("https://localhost:7116/api/BlogTags");
+            if (response.IsSuccessful)
+            {
+                return View(response.Result);
+            }
 
-            return View(blogTags);
+            return View();
         }
 
         public IActionResult Create()

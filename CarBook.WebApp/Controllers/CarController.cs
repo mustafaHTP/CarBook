@@ -15,9 +15,13 @@ namespace CarBook.WebApp.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var cars = await _apiService.GetAsync<IEnumerable<GetCarsDto>>("https://localhost:7116/api/Cars");
+            var response = await _apiService.GetAsync<IEnumerable<GetCarsDto>>("https://localhost:7116/api/Cars");
+            if (response.IsSuccessful)
+            {
+                return View(response.Result);
+            }
 
-            return View(cars);
+            return View();
         }
 
         public IActionResult GetById(int id)

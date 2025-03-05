@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Interfaces.Services;
+﻿using CarBook.Application;
+using CarBook.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
@@ -16,26 +17,27 @@ namespace CarBook.Persistence.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<T?> GetAsync<T>(string url) where T : class
+        public async Task<ApiResponse<T>> GetAsync<T>(string url) where T : class
         {
             var client = _httpClientFactory.CreateClient();
             var accessToken = GetAccessToken();
 
-            if (accessToken is not null)
+            if (!string.IsNullOrEmpty(accessToken))
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
             }
 
             var response = await client.GetAsync(url);
-
-            var result = default(T);
-            if (response.IsSuccessStatusCode)
+            if (!response.IsSuccessStatusCode)
             {
-                var jsonData = await response.Content.ReadAsStringAsync();
-                result = JsonConvert.DeserializeObject<T>(jsonData);
+                return ApiResponse<T>.CreateResponse(true, $"Failed to get data. Status code: {response.StatusCode}", null);
             }
 
-            return result;
+            T? result;
+            var jsonData = await response.Content.ReadAsStringAsync();
+            result = JsonConvert.DeserializeObject<T>(jsonData);
+
+            return ApiResponse<T>.CreateResponse(true, "Data retrieved successfully", result);
         }
 
         private string? GetAccessToken()

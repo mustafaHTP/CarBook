@@ -15,9 +15,13 @@ namespace CarBook.WebApp.Components
 
         public async Task<IViewComponentResult> InvokeAsync(int carId)
         {
-            var car = await _apiService.GetAsync<GetCarByIdDto>($"https://localhost:7116/api/Cars/{carId}");
+            var response = await _apiService.GetAsync<GetCarByIdDto>($"https://localhost:7116/api/Cars/{carId}");
+            if (response.IsSuccessful)
+            {
+                return View(response.Result);
+            }
 
-            return View(car);
+            return View();
         }
     }
 }

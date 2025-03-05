@@ -27,25 +27,37 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var result = await _apiService.GetAsync<IEnumerable<GetBlogsDto>>("https://localhost:7116/api/Blogs?Includes=author,category");
+            var response = await _apiService.GetAsync<IEnumerable<GetBlogsDto>>("https://localhost:7116/api/Blogs?Includes=author,category");
+            if (response.IsSuccessful)
+            {
+                return View(response.Result);
+            }
 
-            return View(result);
+            return View();
         }
 
         public async Task<IActionResult> GetBlogCommentsById(int id)
         {
-            var result = await _apiService.GetAsync<IEnumerable<GetBlogCommentsByBlogIdDto>>($"https://localhost:7116/api/Blogs/{id}/comments");
+            var response = await _apiService.GetAsync<IEnumerable<GetBlogCommentsByBlogIdDto>>($"https://localhost:7116/api/Blogs/{id}/comments");
+            if (response.IsSuccessful)
+            {
+                return View(response.Result);
+            }
 
-            return View(result);
+            return View();
         }
 
         public async Task<IActionResult> GetBlogTagsById(int id)
         {
             ViewData["BlogId"] = id;
 
-            var result = await _apiService.GetAsync<IEnumerable<GetBlogTagsByIdDto>>($"https://localhost:7116/api/Blogs/{id}/tags");
+            var response = await _apiService.GetAsync<IEnumerable<GetBlogTagsByIdDto>>($"https://localhost:7116/api/Blogs/{id}/tags");
+            if (response.IsSuccessful)
+            {
+                return View(response.Result);
+            }
 
-            return View(result);
+            return View();
         }
 
         public async Task<IActionResult> Create()

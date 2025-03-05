@@ -1,4 +1,9 @@
-﻿@model List<GetAboutsDto>
+﻿@model IEnumerable<GetAboutsDto>
+
+@{
+    int rowNumber = 1;
+}
+
 
 <div class="container-fluid">
     <div class="row">
@@ -35,25 +40,25 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @for (int i = 0; i < Model.Count; ++i)
+                                    @foreach (var item in Model)
                                     {
                                         <tr>
-                                            <th scope="row">@(i + 1)</th>
-                                            <td>@Model[i].Title</td>
-                                            <td>@Model[i].Description</td>
+                                            <th scope="row">@(rowNumber++)</th>
+                                            <td>@item.Title</td>
+                                            <td>@item.Description</td>
                                             <td>
-                                                @Model[i].ImageUrl
-                                                <a target="_blank" href="~/@Model[i].ImageUrl" class="btn btn-primary btn-rounded text-white">
+                                                @item.ImageUrl
+                                                <a target="_blank" href="~/@item.ImageUrl" class="btn btn-primary btn-rounded text-white">
                                                     <i class="fas fa-image"></i>
                                                     View Image
                                                 </a>
                                             </td>
                                             <td>
-                                                <a asp-area="Admin" asp-controller="About" asp-action="Update" asp-route-id="@Model[i].Id" class="btn btn-warning text-white">
+                                                <a asp-area="Admin" asp-controller="About" asp-action="Update" asp-route-id="@item.Id" class="btn btn-warning text-white">
                                                     <i class="bi bi-pencil-fill"></i>
                                                     Edit
                                                 </a>
-                                                <a asp-area="Admin" asp-controller="About" asp-action="Delete" asp-route-id="@Model[i].Id" class="btn btn-danger text-white">
+                                                <a asp-area="Admin" asp-controller="About" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger text-white">
                                                     <i class="bi bi-trash3-fill"></i>
                                                     Remove
                                                 </a>

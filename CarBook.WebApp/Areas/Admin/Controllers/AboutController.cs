@@ -1,4 +1,5 @@
 ﻿using CarBook.Application.Dtos.AboutDtos;
+using CarBook.Application.Interfaces.Services;
 using CarBook.WebApp.Areas.Admin.Models.AboutModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,27 +14,21 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
     public class AboutController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IApiService _apiService;
 
-        public AboutController(IHttpClientFactory httpClientFactory)
+        public AboutController(IHttpClientFactory httpClientFactory, IApiService apiService)
         {
             _httpClientFactory = httpClientFactory;
+            _apiService = apiService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var claims = HttpContext.User.Claims.ToList();
-            var token = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "AccessToken")?.Value?.ToString();
-
-            var client = _httpClientFactory.CreateClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            var response = await client.GetAsync($"https://localhost:7116/api/Abouts");
-
-            if (response.IsSuccessStatusCode)
+            var response =
+                await _apiService.GetAsync<IEnumerable<GetAboutsDto>>("https://localhost:7116/api/Abouts");
+            if (response.IsSuccessful)
             {
-                var jsonData = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<List<GetAboutsDto>>(jsonData);
-
-                return View(result);
+                return View(response.Result);
             }
 
             return View();

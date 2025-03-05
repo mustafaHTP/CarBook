@@ -21,18 +21,26 @@ namespace CarBook.WebApp.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var blogs = await _apiService.GetAsync<IEnumerable<GetBlogsDto>>("https://localhost:7116/api/Blogs?Includes=author,category");
+            var response = await _apiService.GetAsync<IEnumerable<GetBlogsDto>>("https://localhost:7116/api/Blogs?Includes=author,category");
+            if (response.IsSuccessful)
+            {
+                return View(response.Result);
+            }
 
-            return View(blogs);
+            return View();
         }
 
         public async Task<IActionResult> GetById(int id)
         {
             ViewData["BlogId"] = id;
 
-            var blog = await _apiService.GetAsync<GetBlogByIdDto>($"https://localhost:7116/api/Blogs/{id}?Includes=author");
+            var response = await _apiService.GetAsync<GetBlogByIdDto>($"https://localhost:7116/api/Blogs/{id}?Includes=author");
+            if (response.IsSuccessful)
+            {
+                return View(response.Result);
+            }
 
-            return View(blog);
+            return View();
         }
 
         [HttpPost]
