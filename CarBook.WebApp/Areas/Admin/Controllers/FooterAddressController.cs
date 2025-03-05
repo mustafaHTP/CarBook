@@ -1,4 +1,5 @@
 ﻿using CarBook.Application.Dtos.FooterAddressDtos;
+using CarBook.Application.Interfaces.Services;
 using CarBook.WebApp.Areas.Admin.Models.FooterAddressModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,24 +12,19 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
     [Area("Admin")]
     public class FooterAddressController : Controller
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IApiService _apiService;
 
-        public FooterAddressController(IHttpClientFactory httpClientFactory)
+        public FooterAddressController(IApiService apiService)
         {
-            _httpClientFactory = httpClientFactory;
+            _apiService = apiService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:7116/api/FooterAddresses");
-
-            if (response.IsSuccessStatusCode)
+            var response = await _apiService.GetAsync<IEnumerable<GetFooterAddressesDto>>("https://localhost:7116/api/FooterAddresses");
+            if (response.IsSuccessful)
             {
-                var jsonData = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<IEnumerable<GetFooterAddressesDto>>(jsonData);
-
-                return View(result);
+                return View(response.Result);
             }
 
             return View();
@@ -50,11 +46,11 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
                 Phone = createFooterAddressViewModel.Phone
             };
 
-            var client = _httpClientFactory.CreateClient();
             var json = JsonConvert.SerializeObject(createFooterAddressDto);
-            var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("https://localhost:7116/api/FooterAddresses", data);
-            if (response.IsSuccessStatusCode)
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await _apiService.PostAsync("https://localhost:7116/api/FooterAddresses", content);
+            if (response.IsSuccessful)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -64,21 +60,16 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
 
         public async Task<IActionResult> Update(int id)
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:7116/api/FooterAddresses/{id}");
-
-            if (response.IsSuccessStatusCode)
+            var response = await _apiService.GetAsync<GetFooterAddressByIdDto>($"https://localhost:7116/api/FooterAddresses/{id}");
+            if (response.IsSuccessful && response.Result is not null)
             {
-                var jsonData = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<GetFooterAddressByIdDto>(jsonData);
-
                 var updateFooterAddressViewModel = new UpdateFooterAddressViewModel()
                 {
-                    Id = result.Id,
-                    Description = result.Description,
-                    Address = result.Address,
-                    Email = result.Email,
-                    Phone = result.Phone
+                    Id = response.Result.Id,
+                    Description = response.Result.Description,
+                    Address = response.Result.Address,
+                    Email = response.Result.Email,
+                    Phone = response.Result.Phone
                 };
 
                 return View(updateFooterAddressViewModel);
@@ -98,12 +89,11 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
                 Phone = updateFooterAddressViewModel.Phone
             };
 
-            var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(updateFooterAddressDto);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var response = await client.PutAsync($"https://localhost:7116/api/FooterAddresses/{updateFooterAddressViewModel.Id}", content);
 
-            if (response.IsSuccessStatusCode)
+            var response = await _apiService.PutAsync($"https://localhost:7116/api/FooterAddresses/{updateFooterAddressViewModel.Id}", content);
+            if (response.IsSuccessful)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -113,10 +103,9 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.DeleteAsync($"https://localhost:7116/api/FooterAddresses/{id}");
-
-            if (response.IsSuccessStatusCode)
+            var response =
+                await _apiService.DeleteAsync($"https://localhost:7116/api/FooterAddresses/{id}");
+            if (response.IsSuccessful)
             {
                 return RedirectToAction(nameof(Index));
             }

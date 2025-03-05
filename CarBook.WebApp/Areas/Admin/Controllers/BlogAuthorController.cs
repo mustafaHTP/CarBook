@@ -1,7 +1,9 @@
 ﻿using CarBook.Application.Dtos.BlogAuthorDtos;
+using CarBook.Application.Interfaces.Services;
 using CarBook.WebApp.Areas.Admin.Models.BlogAuthorModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System.Text;
 
@@ -11,24 +13,19 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
     [Area("Admin")]
     public class BlogAuthorController : Controller
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IApiService _apiService;
 
-        public BlogAuthorController(IHttpClientFactory httpClientFactory)
+        public BlogAuthorController(IHttpClientFactory httpClientFactory, IApiService apiService)
         {
-            _httpClientFactory = httpClientFactory;
+            _apiService = apiService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:7116/api/BlogAuthors");
-
-            if (response.IsSuccessStatusCode)
+            var response = await _apiService.GetAsync<IEnumerable<GetBlogAuthorsDto>>("https://localhost:7116/api/BlogAuthors");
+            if (response.IsSuccessful)
             {
-                var jsonData = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<List<GetBlogAuthorsDto>>(jsonData);
-
-                return View(result);
+                return View(response.Result);
             }
 
             return View();
@@ -49,11 +46,11 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
                 ImageUrl = createBlogAuthorViewModel.ImageUrl
             };
 
-            var client = _httpClientFactory.CreateClient();
             var json = JsonConvert.SerializeObject(createBlogAuthorDto);
-            var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("https://localhost:7116/api/BlogAuthors", data);
-            if (response.IsSuccessStatusCode)
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await _apiService.PostAsync("https://localhost:7116/api/BlogAuthors", content);
+            if (response.IsSuccessful)
             {
                 return RedirectToAction("Index");
             }
@@ -63,20 +60,16 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
 
         public async Task<IActionResult> Update(int id)
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:7116/api/BlogAuthors/{id}");
+            var response = await _apiService.GetAsync<GetBlogAuthorByIdDto>($"https://localhost:7116/api/BlogAuthors/{id}");
 
-            if (response.IsSuccessStatusCode)
+            if (response.IsSuccessful && response.Result is not null)
             {
-                var jsonData = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<GetBlogAuthorByIdDto>(jsonData);
-
                 var updateBlogAuthorViewModel = new UpdateBlogAuthorViewModel()
                 {
-                    Id = result.Id,
-                    Name = result.Name,
-                    Description = result.Description,
-                    ImageUrl = result.ImageUrl
+                    Id = response.Result.Id,
+                    Name = response.Result.Name,
+                    Description = response.Result.Description,
+                    ImageUrl = response.Result.ImageUrl
                 };
 
                 return View(updateBlogAuthorViewModel);
@@ -95,12 +88,11 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
                 ImageUrl = updateBlogAuthorViewModel.ImageUrl
             };
 
-            var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(updateBlogAuthorDto);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var response = await client.PutAsync($"https://localhost:7116/api/BlogAuthors/{updateBlogAuthorViewModel.Id}", content);
 
-            if (response.IsSuccessStatusCode)
+            var response = await _apiService.PutAsync($"https://localhost:7116/api/BlogAuthors/{updateBlogAuthorViewModel.Id}", content);
+            if (response.IsSuccessful)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -110,10 +102,9 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.DeleteAsync($"https://localhost:7116/api/BlogAuthors/{id}");
-
-            if (response.IsSuccessStatusCode)
+            var response =
+                await _apiService.DeleteAsync($"https://localhost:7116/api/BlogAuthors/{id}");
+            if (response.IsSuccessful)
             {
                 return RedirectToAction(nameof(Index));
             }

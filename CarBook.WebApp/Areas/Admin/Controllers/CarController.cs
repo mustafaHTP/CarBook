@@ -6,6 +6,7 @@ using CarBook.WebApp.Areas.Admin.Models.CarModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System.Text;
 
@@ -15,12 +16,10 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
     [Area("Admin")]
     public class CarController : Controller
     {
-        private readonly IHttpClientFactory _httpClientFactory;
         private readonly IApiService _apiService;
 
-        public CarController(IHttpClientFactory httpClientFactory, IApiService apiService)
+        public CarController(IApiService apiService)
         {
-            _httpClientFactory = httpClientFactory;
             _apiService = apiService;
         }
 
@@ -60,12 +59,11 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
                 BigImageUrl = createCarViewModel.BigImageUrl
             };
 
-            var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(createCarDto);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("https://localhost:7116/api/Cars", content);
 
-            if (response.IsSuccessStatusCode)
+            var response = await _apiService.PostAsync("https://localhost:7116/api/Cars", content);
+            if (response.IsSuccessful)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -75,29 +73,24 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
 
         public async Task<IActionResult> Update(int id)
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:7116/api/Cars/{id}");
-
-            if (response.IsSuccessStatusCode)
+            var response = await _apiService.GetAsync<GetCarByIdDto>($"https://localhost:7116/api/Cars/{id}");
+            if (response.IsSuccessful && response.Result is not null)
             {
                 ViewBag.Models = await GetModelList();
                 ViewBag.TransmissionTypes = GetTransmissionTypeList();
                 ViewBag.FuelTypes = GetFuelTypeList();
 
-                var jsonData = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<GetCarByIdDto>(jsonData);
-
                 var updateCarViewModel = new UpdateCarViewModel()
                 {
-                    Id = result.Id,
-                    ModelId = result.ModelId,
-                    Km = result.Km,
-                    SeatCount = result.SeatCount,
-                    Luggage = result.Luggage,
-                    TransmissionType = result.TransmissionType,
-                    FuelType = result.FuelType,
-                    CoverImageUrl = result.CoverImageUrl,
-                    BigImageUrl = result.BigImageUrl
+                    Id = response.Result.Id,
+                    ModelId = response.Result.ModelId,
+                    Km = response.Result.Km,
+                    SeatCount = response.Result.SeatCount,
+                    Luggage = response.Result.Luggage,
+                    TransmissionType = response.Result.TransmissionType,
+                    FuelType = response.Result.FuelType,
+                    CoverImageUrl = response.Result.CoverImageUrl,
+                    BigImageUrl = response.Result.BigImageUrl
                 };
 
                 return View(updateCarViewModel);
@@ -122,12 +115,11 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
                 BigImageUrl = updateCarViewModel.BigImageUrl
             };
 
-            var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(updateCarDto);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var response = await client.PutAsync("https://localhost:7116/api/Cars", content);
 
-            if (response.IsSuccessStatusCode)
+            var response = await _apiService.PutAsync("https://localhost:7116/api/Cars", content);
+            if (response.IsSuccessful)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -143,10 +135,8 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.DeleteAsync($"https://localhost:7116/api/Cars/{id}");
-
-            if (response.IsSuccessStatusCode)
+            var response = await _apiService.DeleteAsync($"https://localhost:7116/api/Cars/{id}");
+            if (response.IsSuccessful)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -156,12 +146,9 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
 
         private async Task<IEnumerable<SelectListItem>?> GetModelList()
         {
-            var url = "https://localhost:7116/api/Models";
-            var response = await _apiService.GetAsync<IEnumerable<GetModelsDto>>(url);
+            var response = await _apiService.GetAsync<IEnumerable<GetModelsDto>>("https://localhost:7116/api/Models");
 
             IEnumerable<SelectListItem>? modelsSelectList = null;
-
-            // Create a SelectList from the models
             modelsSelectList = response.Result?.Select(m => new SelectListItem()
             {
                 Text = $"{m.BrandName} {m.Name}",

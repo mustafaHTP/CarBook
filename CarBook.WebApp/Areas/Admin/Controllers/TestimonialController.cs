@@ -1,4 +1,5 @@
 ﻿using CarBook.Application.Dtos.TestimonialDtos;
+using CarBook.Application.Interfaces.Services;
 using CarBook.WebApp.Areas.Admin.Models.TestimonialModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,24 +12,19 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
     [Area("Admin")]
     public class TestimonialController : Controller
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IApiService _apiService;
 
-        public TestimonialController(IHttpClientFactory httpClientFactory)
+        public TestimonialController(IApiService apiService)
         {
-            _httpClientFactory = httpClientFactory;
+            _apiService = apiService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:7116/api/Testimonials");
-
-            if (response.IsSuccessStatusCode)
+            var response = await _apiService.GetAsync<IEnumerable<GetTestimonialsDto>>("https://localhost:7116/api/Testimonials");
+            if (response.IsSuccessful)
             {
-                var jsonData = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<IEnumerable<GetTestimonialsDto>>(jsonData);
-
-                return View(result);
+                return View(response.Result);
             }
 
             return View();
@@ -50,11 +46,11 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
                 ImageUrl = createTestimonialViewModel.ImageUrl
             };
 
-            var client = _httpClientFactory.CreateClient();
             var json = JsonConvert.SerializeObject(createTestimonialDto);
-            var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("https://localhost:7116/api/Testimonials", data);
-            if (response.IsSuccessStatusCode)
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await _apiService.PostAsync("https://localhost:7116/api/Testimonials", content);
+            if (response.IsSuccessful)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -64,21 +60,16 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
 
         public async Task<IActionResult> Update(int id)
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:7116/api/Testimonials/{id}");
-
-            if (response.IsSuccessStatusCode)
+            var response = await _apiService.GetAsync<GetTestimonialByIdDto>($"https://localhost:7116/api/Testimonials/{id}");
+            if (response.IsSuccessful && response.Result is not null)
             {
-                var jsonData = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<GetTestimonialByIdDto>(jsonData);
-
                 var updateTestimonialViewModel = new UpdateTestimonialViewModel()
                 {
-                    Id = result.Id,
-                    Name = result.Name,
-                    Comment = result.Comment,
-                    ImageUrl = result.ImageUrl,
-                    Title = result.Title
+                    Id = response.Result.Id,
+                    Name = response.Result.Name,
+                    Comment = response.Result.Comment,
+                    ImageUrl = response.Result.ImageUrl,
+                    Title = response.Result.Title
                 };
 
                 return View(updateTestimonialViewModel);
@@ -98,12 +89,11 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
                 ImageUrl = updateTestimonialViewModel.ImageUrl
             };
 
-            var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(updateTestimonialDto);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var response = await client.PutAsync($"https://localhost:7116/api/Testimonials/{updateTestimonialViewModel.Id}", content);
 
-            if (response.IsSuccessStatusCode)
+            var response = await _apiService.PutAsync($"https://localhost:7116/api/Testimonials/{updateTestimonialViewModel.Id}", content);
+            if (response.IsSuccessful)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -113,10 +103,8 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.DeleteAsync($"https://localhost:7116/api/Testimonials/{id}");
-
-            if (response.IsSuccessStatusCode)
+            var response = await _apiService.DeleteAsync($"https://localhost:7116/api/Testimonials/{id}");
+            if (response.IsSuccessful)
             {
                 return RedirectToAction(nameof(Index));
             }

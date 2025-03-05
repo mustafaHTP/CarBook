@@ -1,32 +1,30 @@
 ﻿using CarBook.Application.Dtos.RentalCarDtos;
+using CarBook.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace CarBook.WebApp.Controllers
 {
     public class RentalCarController : Controller
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IApiService _apiService;
 
-        public RentalCarController(IHttpClientFactory httpClientFactory)
+        public RentalCarController(IApiService apiService)
         {
-            _httpClientFactory = httpClientFactory;
+            _apiService = apiService;
         }
 
         public async Task<IActionResult> Index(RentalCarFilterDto rentalCarFilterDto)
         {
-            var client = _httpClientFactory.CreateClient();
-            var apiEndpoint = "https://localhost:7116/api/RentalCars";
+            var baseUrl = "https://localhost:7116/api/RentalCars";
             var query = $"PickUpLocationId={rentalCarFilterDto.PickUpLocationId}";
-            var url = $"{apiEndpoint}?{query}";
+            var url = $"{baseUrl}?{query}";
 
-            var response = await client.GetAsync(url);
-            if (response.IsSuccessStatusCode)
+            var response = await _apiService.GetAsync<IEnumerable<GetRentalCarsDto>>(url);
+            if (response.IsSuccessful)
             {
-                var jsonData = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<IEnumerable<GetRentalCarsDto>>(jsonData);
-
-                return View(result);
+                return View(response.Result);
             }
 
             return View();

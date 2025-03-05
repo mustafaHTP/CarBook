@@ -14,12 +14,10 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
     [Area("Admin")]
     public class ModelController : Controller
     {
-        private readonly IHttpClientFactory _httpClientFactory;
         private readonly IApiService _apiService;
 
-        public ModelController(IHttpClientFactory httpClientFactory, IApiService apiService)
+        public ModelController(IApiService apiService)
         {
-            _httpClientFactory = httpClientFactory;
             _apiService = apiService;
         }
 
@@ -50,11 +48,11 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
                 BrandId = createModelViewModel.BrandId
             };
 
-            var client = _httpClientFactory.CreateClient();
             var json = JsonConvert.SerializeObject(createModelDto);
-            var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("https://localhost:7116/api/Models", data);
-            if (response.IsSuccessStatusCode)
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await _apiService.PostAsync("https://localhost:7116/api/Models", content);
+            if (response.IsSuccessful)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -64,19 +62,14 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
 
         public async Task<IActionResult> Update(int id)
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:7116/api/Models/{id}");
-
-            if (response.IsSuccessStatusCode)
+            var response = await _apiService.GetAsync<GetModelByIdDto>($"https://localhost:7116/api/Models/{id}");
+            if (response.IsSuccessful && response.Result is not null)
             {
-                var jsonData = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<GetModelByIdDto>(jsonData);
-
                 var updateModelViewModel = new UpdateModelViewModel()
                 {
-                    Id = result.Id,
-                    Name = result.Name,
-                    BrandId = result.BrandId
+                    Id = response.Result.Id,
+                    Name = response.Result.Name,
+                    BrandId = response.Result.BrandId
                 };
 
                 ViewBag.BrandList = await GetBrandList();
@@ -96,12 +89,11 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
                 Name = updateModelViewModel.Name
             };
 
-            var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(updateModelDto);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var response = await client.PutAsync($"https://localhost:7116/api/Models/{updateModelViewModel.Id}", content);
 
-            if (response.IsSuccessStatusCode)
+            var response = await _apiService.PutAsync($"https://localhost:7116/api/Models/{updateModelViewModel.Id}", content);
+            if (response.IsSuccessful)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -111,10 +103,8 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.DeleteAsync($"https://localhost:7116/api/Models/{id}");
-
-            if (response.IsSuccessStatusCode)
+            var response = await _apiService.DeleteAsync($"https://localhost:7116/api/Models/{id}");
+            if (response.IsSuccessful)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -124,12 +114,9 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
 
         private async Task<IEnumerable<SelectListItem>?> GetBrandList()
         {
-            var url = "https://localhost:7116/api/Brands";
-            var response = await _apiService.GetAsync<IEnumerable<GetBrandsDto>>(url);
-
+            var response =
+                await _apiService.GetAsync<IEnumerable<GetBrandsDto>>("https://localhost:7116/api/Brands");
             IEnumerable<SelectListItem>? brandSelectList = null;
-
-            // Create a SelectList from the models
             brandSelectList = response.Result?.Select(m => new SelectListItem()
             {
                 Text = $"{m.Name}",

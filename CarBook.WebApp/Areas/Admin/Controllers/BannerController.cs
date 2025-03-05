@@ -1,4 +1,5 @@
 ﻿using CarBook.Application.Dtos.BannerDtos;
+using CarBook.Application.Interfaces.Services;
 using CarBook.WebApp.Areas.Admin.Models.BannerModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,24 +12,20 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
     [Area("Admin")]
     public class BannerController : Controller
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IApiService _apiService;
 
-        public BannerController(IHttpClientFactory httpClientFactory)
+        public BannerController(IApiService apiService)
         {
-            _httpClientFactory = httpClientFactory;
+            _apiService = apiService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:7116/api/Banners");
+            var response = await _apiService.GetAsync<IEnumerable<GetBannersDto>>("https://localhost:7116/api/Banners");
 
-            if (response.IsSuccessStatusCode)
+            if (response.IsSuccessful)
             {
-                var jsonData = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<List<GetBannersDto>>(jsonData);
-
-                return View(result);
+                return View(response.Result);
             }
 
             return View();
@@ -50,11 +47,11 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
                 VideoUrl = createBannerViewModel.VideoUrl
             };
 
-            var client = _httpClientFactory.CreateClient();
             var json = JsonConvert.SerializeObject(createBannerDto);
-            var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("https://localhost:7116/api/Banners", data);
-            if (response.IsSuccessStatusCode)
+            var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _apiService.PostAsync("https://localhost:7116/api/Banners", stringContent);
+
+            if (response.IsSuccessful)
             {
                 return RedirectToAction("Index");
             }
@@ -64,21 +61,17 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
 
         public async Task<IActionResult> Update(int id)
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:7116/api/Banners/{id}");
+            var response = await _apiService.GetAsync<GetBannerByIdDto>($"https://localhost:7116/api/Banners/{id}");
 
-            if (response.IsSuccessStatusCode)
+            if (response.IsSuccessful && response.Result is not null)
             {
-                var jsonData = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<GetBannerByIdDto>(jsonData);
-
                 var updateBannerViewModel = new UpdateBannerViewModel()
                 {
-                    Id = result.Id,
-                    Title = result.Title,
-                    Description = result.Description,
-                    VideoDescription = result.VideoDescription,
-                    VideoUrl = result.VideoUrl
+                    Id = response.Result.Id,
+                    Title = response.Result.Title,
+                    Description = response.Result.Description,
+                    VideoDescription = response.Result.VideoDescription,
+                    VideoUrl = response.Result.VideoUrl
                 };
 
                 return View(updateBannerViewModel);
@@ -98,12 +91,12 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
                 VideoUrl = updateBannerViewModel.VideoUrl
             };
 
-            var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(updateBannerDto);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var response = await client.PutAsync($"https://localhost:7116/api/Banners/{updateBannerViewModel.Id}", content);
 
-            if (response.IsSuccessStatusCode)
+            var response = await _apiService.PutAsync($"https://localhost:7116/api/Banners/{updateBannerViewModel.Id}", content);
+
+            if (response.IsSuccessful)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -113,10 +106,9 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.DeleteAsync($"https://localhost:7116/api/Banners/{id}");
+            var response = await _apiService.DeleteAsync($"https://localhost:7116/api/Banners/{id}");
 
-            if (response.IsSuccessStatusCode)
+            if (response.IsSuccessful)
             {
                 return RedirectToAction(nameof(Index));
             }

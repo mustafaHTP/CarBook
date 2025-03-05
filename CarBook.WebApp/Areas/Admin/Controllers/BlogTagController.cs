@@ -11,12 +11,10 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
     public class BlogTagController : Controller
     {
         private readonly IApiService _apiService;
-        private readonly IHttpClientFactory _httpClientFactory;
 
-        public BlogTagController(IApiService apiService, IHttpClientFactory httpClientFactory)
+        public BlogTagController(IApiService apiService)
         {
             _apiService = apiService;
-            _httpClientFactory = httpClientFactory;
         }
 
         public async Task<IActionResult> Index()
@@ -43,11 +41,11 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
                 Name = createBlogTagViewModel.Name,
             };
 
-            var client = _httpClientFactory.CreateClient();
             var json = JsonConvert.SerializeObject(createBlogTagDto);
-            var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("https://localhost:7116/api/BlogTags", data);
-            if (response.IsSuccessStatusCode)
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await _apiService.PostAsync("https://localhost:7116/api/BlogTags", content);
+            if (response.IsSuccessful)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -57,18 +55,13 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
 
         public async Task<IActionResult> Update(int id)
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:7116/api/BlogTags/{id}");
-
-            if (response.IsSuccessStatusCode)
+            var response = await _apiService.GetAsync<GetBlogTagByIdDto>($"https://localhost:7116/api/BlogTags/{id}");
+            if (response.IsSuccessful && response.Result is not null)
             {
-                var jsonData = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<GetBlogTagByIdDto>(jsonData);
-
                 var updateBlogTagViewModel = new UpdateBlogTagViewModel()
                 {
-                    Id = result.Id,
-                    Name = result.Name,
+                    Id = response.Result.Id,
+                    Name = response.Result.Name,
                 };
 
                 return View(updateBlogTagViewModel);
@@ -85,12 +78,11 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
                 Name = updateBlogTagViewModel.Name,
             };
 
-            var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(updateBlogTagDto);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var response = await client.PutAsync($"https://localhost:7116/api/BlogTags/{updateBlogTagViewModel.Id}", content);
 
-            if (response.IsSuccessStatusCode)
+            var response = await _apiService.PutAsync($"https://localhost:7116/api/BlogTags/{updateBlogTagViewModel.Id}", content);
+            if (response.IsSuccessful)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -100,10 +92,8 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.DeleteAsync($"https://localhost:7116/api/BlogTags/{id}");
-
-            if (response.IsSuccessStatusCode)
+            var response = await _apiService.DeleteAsync($"https://localhost:7116/api/BlogTags/{id}");
+            if (response.IsSuccessful)
             {
                 return RedirectToAction(nameof(Index));
             }

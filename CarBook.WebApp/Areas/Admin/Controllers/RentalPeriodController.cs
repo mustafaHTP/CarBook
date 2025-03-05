@@ -1,4 +1,5 @@
 ﻿using CarBook.Application.Dtos.PricingPlanDtos;
+using CarBook.Application.Interfaces.Services;
 using CarBook.WebApp.Areas.Admin.Models.PricingPlanModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,24 +12,19 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
     [Area("Admin")]
     public class RentalPeriodController : Controller
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IApiService _apiService;
 
-        public RentalPeriodController(IHttpClientFactory httpClientFactory)
+        public RentalPeriodController(IApiService apiService)
         {
-            _httpClientFactory = httpClientFactory;
+            _apiService = apiService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:7116/api/RentalPeriods");
-
-            if (response.IsSuccessStatusCode)
+            var response = await _apiService.GetAsync<IEnumerable<GetRentalPeriodsDto>>("https://localhost:7116/api/RentalPeriods");
+            if (response.IsSuccessful)
             {
-                var jsonData = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<IEnumerable<GetRentalPeriodsDto>>(jsonData);
-
-                return View(result);
+                return View(response.Result);
             }
 
             return View();
@@ -47,11 +43,11 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
                 Name = createPricingPlanViewModel.Name
             };
 
-            var client = _httpClientFactory.CreateClient();
             var json = JsonConvert.SerializeObject(createPricingPlanDto);
-            var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("https://localhost:7116/api/RentalPeriods", data);
-            if (response.IsSuccessStatusCode)
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await _apiService.PostAsync("https://localhost:7116/api/RentalPeriods", content);
+            if (response.IsSuccessful)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -61,18 +57,14 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
 
         public async Task<IActionResult> Update(int id)
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:7116/api/RentalPeriods/{id}");
-
-            if (response.IsSuccessStatusCode)
+            var response =
+                await _apiService.GetAsync<GetRentalPeriodByIdDto>($"https://localhost:7116/api/RentalPeriods/{id}");
+            if (response.IsSuccessful && response.Result is not null)
             {
-                var jsonData = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<GetRentalPeriodByIdDto>(jsonData);
-
                 var updatePricingPlanViewModel = new UpdatePricingPlanViewModel()
                 {
-                    Id = result.Id,
-                    Name = result.Name
+                    Id = response.Result.Id,
+                    Name = response.Result.Name
                 };
 
                 return View(updatePricingPlanViewModel);
@@ -89,12 +81,11 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
                 Name = updatePricingPlanViewModel.Name
             };
 
-            var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(updatePricingPlanDto);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var response = await client.PutAsync($"https://localhost:7116/api/RentalPeriods/{updatePricingPlanViewModel.Id}", content);
 
-            if (response.IsSuccessStatusCode)
+            var response = await _apiService.PutAsync($"https://localhost:7116/api/RentalPeriods/{updatePricingPlanViewModel.Id}", content);
+            if (response.IsSuccessful)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -104,10 +95,8 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.DeleteAsync($"https://localhost:7116/api/RentalPeriods/{id}");
-
-            if (response.IsSuccessStatusCode)
+            var response = await _apiService.DeleteAsync($"https://localhost:7116/api/RentalPeriods/{id}");
+            if (response.IsSuccessful)
             {
                 return RedirectToAction(nameof(Index));
             }

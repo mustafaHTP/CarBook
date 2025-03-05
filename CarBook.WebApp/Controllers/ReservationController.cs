@@ -1,21 +1,23 @@
 ﻿using CarBook.Application.Dtos.CarDtos;
 using CarBook.Application.Dtos.LocationDtos;
 using CarBook.Application.Dtos.ReservationDtos;
+using CarBook.Application.Interfaces.Services;
 using CarBook.WebApp.Models.ReservationModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Text;
 
 namespace CarBook.WebApp.Controllers
 {
     public class ReservationController : Controller
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IApiService _apiService;
 
-        public ReservationController(IHttpClientFactory httpClientFactory)
+        public ReservationController(IApiService apiService)
         {
-            _httpClientFactory = httpClientFactory;
+            _apiService = apiService;
         }
 
         public async Task<IActionResult> CreateAsync()
@@ -29,7 +31,6 @@ namespace CarBook.WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAsync(CreateReservationViewModel viewModel)
         {
-            var client = _httpClientFactory.CreateClient();
             var reservationDto = new CreateReservationDto
             {
                 CarId = viewModel.CarId,
@@ -44,10 +45,10 @@ namespace CarBook.WebApp.Controllers
                 JsonConvert.SerializeObject(reservationDto),
                 Encoding.UTF8,
                 "application/json");
-            var response = await client.PostAsync(
-                "https://localhost:7116/api/Reservations",
-                stringContent);
-            if (response.IsSuccessStatusCode)
+
+            var response = await _apiService.PostAsync("https://localhost:7116/api/Reservations", stringContent);
+
+            if (response.IsSuccessful)
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -60,15 +61,12 @@ namespace CarBook.WebApp.Controllers
 
         private async Task<IEnumerable<SelectListItem>?> GetLocationListAsync()
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:7116/api/Locations");
-            IEnumerable<SelectListItem>? locationList = null;
-            if (response.IsSuccessStatusCode)
-            {
-                var locationsJson = await response.Content.ReadAsStringAsync();
-                var locations = JsonConvert.DeserializeObject<List<GetLocationsDto>>(locationsJson);
+            var response = await _apiService.GetAsync<IEnumerable<GetLocationsDto>>("https://localhost:7116/api/Locations");
 
-                locationList = locations?.Select(l => new SelectListItem
+            IEnumerable<SelectListItem>? locationList = null;
+            if (response.IsSuccessful)
+            {
+                locationList = response.Result?.Select(l => new SelectListItem
                 {
                     Value = l.Id.ToString(),
                     Text = l.Name
@@ -80,15 +78,12 @@ namespace CarBook.WebApp.Controllers
 
         private async Task<IEnumerable<SelectListItem>?> GetCarListAsync()
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:7116/api/Cars");
-            IEnumerable<SelectListItem>? carList = null;
-            if (response.IsSuccessStatusCode)
-            {
-                var carsJson = await response.Content.ReadAsStringAsync();
-                var cars = JsonConvert.DeserializeObject<IEnumerable<GetCarsDto>>(carsJson);
+            var response = await _apiService.GetAsync<IEnumerable<GetCarsDto>>("https://localhost:7116/api/Cars");
 
-                carList = cars?.Select(c => new SelectListItem
+            IEnumerable<SelectListItem>? carList = null;
+            if (response.IsSuccessful)
+            {
+                carList = response.Result?.Select(c => new SelectListItem
                 {
                     Value = c.Id.ToString(),
                     Text = $"{c.BrandName} {c.ModelName}"

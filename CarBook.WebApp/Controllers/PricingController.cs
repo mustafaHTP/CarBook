@@ -1,28 +1,26 @@
 ﻿using CarBook.Application.Dtos.CarDtos;
+using CarBook.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace CarBook.WebApp.Controllers
 {
     public class PricingController : Controller
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IApiService _apiService;
 
-        public PricingController(IHttpClientFactory httpClientFactory)
+        public PricingController(IApiService apiService)
         {
-            _httpClientFactory = httpClientFactory;
+            _apiService = apiService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:7116/api/Cars/RentalPricings");
-            if (response.IsSuccessStatusCode)
+            var response = await _apiService.GetAsync<IEnumerable<GetCarsWithRentalPricingsDto>>("https://localhost:7116/api/Cars/RentalPricings");
+            if (response.IsSuccessful)
             {
-                var content = await response.Content.ReadAsStringAsync();
-                var carReservationPricings = JsonConvert.DeserializeObject<IEnumerable<GetCarsWithRentalPricingsDto>>(content);
-
-                return View(carReservationPricings);
+                return View(response.Result);
             }
 
             return View();

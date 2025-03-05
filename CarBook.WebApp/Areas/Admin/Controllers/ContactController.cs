@@ -1,4 +1,5 @@
 ﻿using CarBook.Application.Dtos.ContactDtos;
+using CarBook.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -9,23 +10,20 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
     [Area("Admin")]
     public class ContactController : Controller
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IApiService _apiService;
 
-        public ContactController(IHttpClientFactory httpClientFactory)
+        public ContactController(IApiService apiService)
         {
-            _httpClientFactory = httpClientFactory;
+            _apiService = apiService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var client = _httpClientFactory.CreateClient();
-            var result = await client.GetAsync("https://localhost:7116/api/Contacts");
-            if (result.IsSuccessStatusCode)
+            var response =
+                await _apiService.GetAsync<IEnumerable<GetContactsDto>>("https://localhost:7116/api/Contacts");
+            if (response.IsSuccessful)
             {
-                var jsonData = await result.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<IEnumerable<GetContactsDto>>(jsonData);
-
-                return View(values);
+                return View(response.Result);
             }
 
             return View();

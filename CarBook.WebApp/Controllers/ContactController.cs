@@ -1,4 +1,5 @@
 ﻿using CarBook.Application.Dtos.ContactDtos;
+using CarBook.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
@@ -7,11 +8,11 @@ namespace CarBook.WebApp.Controllers
 {
     public class ContactController : Controller
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IApiService _apiService;
 
-        public ContactController(IHttpClientFactory httpClientFactory)
+        public ContactController(IApiService apiService)
         {
-            _httpClientFactory = httpClientFactory;
+            _apiService = apiService;
         }
 
         public IActionResult Index()
@@ -30,8 +31,7 @@ namespace CarBook.WebApp.Controllers
             //Create a StringContent object with the JSON string
             var stringContent = new StringContent(createContactJson, Encoding.UTF8, "application/json");
 
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.PostAsync("https://localhost:7116/api/Contacts", stringContent);
+            var response = await _apiService.PostAsync("https://localhost:7116/api/Contacts", stringContent);
 
             return RedirectToAction(nameof(Index));
         }

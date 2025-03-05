@@ -1,4 +1,8 @@
-﻿@model List<GetBlogCategoriesDto>
+﻿@model IEnumerable<GetBlogCategoriesDto>
+@{ 
+    int rowNumber = 1;
+}
+
 
 <div class="container-fluid">
     <div class="row">
@@ -33,18 +37,18 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @for (int i = 0; i < Model.Count; ++i)
+                                    @foreach (var item in Model)
                                     {
                                         <tr>
-                                            <td scope="row">@(i + 1)</td>
-                                            <td>@Model[i].Name</td>
+                                            <td scope="row">@(rowNumber++)</td>
+                                            <td>@item.Name</td>
                                             <td>
-                                                <a asp-area="Admin" asp-controller="BlogCategory" asp-action="Update" asp-route-id="@Model[i].Id" class="btn btn-warning text-white">
+                                                <a asp-area="Admin" asp-controller="BlogCategory" asp-action="Update" asp-route-id="@item.Id" class="btn btn-warning text-white">
                                                     <i class="bi bi-pencil-fill"></i>
                                                     Edit
                                                 </a>
 
-                                                <a asp-area="Admin" asp-controller="BlogCategory" asp-action="Delete" asp-route-id="@Model[i].Id" class="btn btn-danger text-white">
+                                                <a asp-area="Admin" asp-controller="BlogCategory" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger text-white">
                                                     <i class="bi bi-trash3-fill"></i>
                                                     Remove
                                                 </a>

@@ -58,8 +58,8 @@ namespace CarBook.WebApp.Controllers
                 JsonConvert.SerializeObject(createBlogCommentDto),
                 Encoding.UTF8,
                 "application/json");
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.PostAsync("https://localhost:7116/api/BlogComments", stringContent);
+
+            var response = await _apiService.PostAsync("https://localhost:7116/api/BlogComments", stringContent);
 
             return RedirectToAction(nameof(GetById), new { id = createBlogCommentViewModel.BlogId });
         }

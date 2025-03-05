@@ -16,12 +16,10 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
     [Area("Admin")]
     public class BlogController : Controller
     {
-        private readonly IHttpClientFactory _httpClientFactory;
         private readonly IApiService _apiService;
 
-        public BlogController(IHttpClientFactory httpClientFactory, IApiService apiService)
+        public BlogController(IApiService apiService)
         {
-            _httpClientFactory = httpClientFactory;
             _apiService = apiService;
         }
 
@@ -82,11 +80,11 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
 
             };
 
-            var client = _httpClientFactory.CreateClient();
             var json = JsonConvert.SerializeObject(createBlogDto);
-            var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("https://localhost:7116/api/Blogs", data);
-            if (response.IsSuccessStatusCode)
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await _apiService.PostAsync("https://localhost:7116/api/Blogs", content);
+            if (response.IsSuccessful)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -96,27 +94,22 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
 
         public async Task<IActionResult> Update(int id)
         {
-            // Get the blog by id
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:7116/api/Blogs/{id}?Includes=author,category");
+            var response = await _apiService.GetAsync<GetBlogByIdDto>($"https://localhost:7116/api/Blogs/{id}?Includes=author,category");
 
-            if (response.IsSuccessStatusCode)
+            if (response.IsSuccessful && response.Result is not null)
             {
                 ViewBag.BlogCategorySelectList = await GetBlogCategorySelectList();
                 ViewBag.BlogAuthorSelectList = await GetBlogAuthorSelectList();
 
-                var jsonData = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<GetBlogByIdDto>(jsonData);
-
                 var updateBlogViewModel = new UpdateBlogViewModel()
                 {
-                    Id = result.Id,
-                    Title = result.Title,
-                    Description = result.Description,
-                    Content = result.Content,
-                    CoverImageUrl = result.CoverImageUrl,
-                    BlogAuthorId = result.BlogAuthorId,
-                    BlogCategoryId = result.BlogCategoryId
+                    Id = response.Result.Id,
+                    Title = response.Result.Title,
+                    Description = response.Result.Description,
+                    Content = response.Result.Content,
+                    CoverImageUrl = response.Result.CoverImageUrl,
+                    BlogAuthorId = response.Result.BlogAuthorId,
+                    BlogCategoryId = response.Result.BlogCategoryId
                 };
 
                 return View(updateBlogViewModel);
@@ -138,12 +131,12 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
                 BlogCategoryId = updateBlogViewModel.BlogCategoryId
             };
 
-            var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(updateBlogDto);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var response = await client.PutAsync($"https://localhost:7116/api/Blogs/{updateBlogViewModel.Id}", content);
 
-            if (response.IsSuccessStatusCode)
+            var response = await _apiService.PutAsync($"https://localhost:7116/api/Blogs/{updateBlogViewModel.Id}", content);
+
+            if (response.IsSuccessful)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -158,10 +151,8 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.DeleteAsync($"https://localhost:7116/api/Blogs/{id}");
-
-            if (response.IsSuccessStatusCode)
+            var response = await _apiService.DeleteAsync($"https://localhost:7116/api/Blogs/{id}");
+            if (response.IsSuccessful)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -171,16 +162,12 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
 
         private async Task<IEnumerable<SelectListItem>?> GetBlogCategorySelectList()
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:7116/api/BlogCategories");
+            var response = await _apiService.GetAsync<IEnumerable<GetBlogCategoriesDto>>("https://localhost:7116/api/BlogCategories");
 
             IEnumerable<SelectListItem>? blogCategorySelectList = null;
-            if (response.IsSuccessStatusCode)
+            if (response.IsSuccessful)
             {
-                var jsonData = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<IEnumerable<GetBlogCategoriesDto>>(jsonData);
-
-                blogCategorySelectList = result?.Select(bc => new SelectListItem()
+                blogCategorySelectList = response.Result?.Select(bc => new SelectListItem()
                 {
                     Value = bc.Id.ToString(),
                     Text = bc.Name
@@ -192,16 +179,12 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
 
         private async Task<IEnumerable<SelectListItem>?> GetBlogAuthorSelectList()
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:7116/api/BlogAuthors");
+            var response = await _apiService.GetAsync<IEnumerable<GetBlogAuthorsDto>>("https://localhost:7116/api/BlogAuthors");
 
             IEnumerable<SelectListItem>? blogAuthorSelectList = null;
-            if (response.IsSuccessStatusCode)
+            if (response.IsSuccessful)
             {
-                var jsonData = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<IEnumerable<GetBlogAuthorsDto>>(jsonData);
-
-                blogAuthorSelectList = result?.Select(bc => new SelectListItem()
+                blogAuthorSelectList = response.Result?.Select(bc => new SelectListItem()
                 {
                     Value = bc.Id.ToString(),
                     Text = bc.Name

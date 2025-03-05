@@ -13,12 +13,10 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
     [Area("Admin")]
     public class AboutController : Controller
     {
-        private readonly IHttpClientFactory _httpClientFactory;
         private readonly IApiService _apiService;
 
-        public AboutController(IHttpClientFactory httpClientFactory, IApiService apiService)
+        public AboutController(IApiService apiService)
         {
-            _httpClientFactory = httpClientFactory;
             _apiService = apiService;
         }
 
@@ -49,11 +47,12 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
                 ImageUrl = createAboutViewModel.ImageUrl
             };
 
-            var client = _httpClientFactory.CreateClient();
             var json = JsonConvert.SerializeObject(createAboutDto);
-            var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("https://localhost:7116/api/Abouts", data);
-            if (response.IsSuccessStatusCode)
+            var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await _apiService.PostAsync("https://localhost:7116/api/Abouts", stringContent);
+
+            if (response.IsSuccessful)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -63,20 +62,16 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
 
         public async Task<IActionResult> Update(int id)
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:7116/api/Abouts/{id}");
+            var response = await _apiService.GetAsync<GetAboutByIdDto>($"https://localhost:7116/api/Abouts/{id}");
 
-            if (response.IsSuccessStatusCode)
+            if (response.IsSuccessful && response.Result is not null)
             {
-                var jsonData = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<GetAboutByIdDto>(jsonData);
-
                 var updateAboutViewModel = new UpdateAboutViewModel()
                 {
-                    Id = result.Id,
-                    Title = result.Title,
-                    Description = result.Description,
-                    ImageUrl = result.ImageUrl
+                    Id = response.Result.Id,
+                    Title = response.Result.Title,
+                    Description = response.Result.Description,
+                    ImageUrl = response.Result.ImageUrl
                 };
 
                 return View(updateAboutViewModel);
@@ -95,12 +90,12 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
                 ImageUrl = updateAboutViewModel.ImageUrl
             };
 
-            var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(updateAboutDto);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var response = await client.PutAsync($"https://localhost:7116/api/Abouts/{updateAboutViewModel.Id}", content);
 
-            if (response.IsSuccessStatusCode)
+            var response = await _apiService.PutAsync($"https://localhost:7116/api/Abouts/{updateAboutViewModel.Id}", content);
+
+            if (response.IsSuccessful)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -110,10 +105,9 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.DeleteAsync($"https://localhost:7116/api/Abouts/{id}");
+            var response = await _apiService.DeleteAsync($"https://localhost:7116/api/Abouts/{id}");
 
-            if (response.IsSuccessStatusCode)
+            if (response.IsSuccessful)
             {
                 return RedirectToAction(nameof(Index));
             }
