@@ -12,6 +12,7 @@ builder.Services.AddControllersWithViews();
 
 // Add http client
 builder.Services.AddHttpClient();
+builder.Services.AddHttpContextAccessor();
 
 // Add authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

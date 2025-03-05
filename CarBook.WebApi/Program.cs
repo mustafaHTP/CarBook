@@ -26,6 +26,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddHttpClient();
+builder.Services.AddHttpContextAccessor();
 
 //Add db context
 builder.Services.AddScoped<ApplicationDbContext>();
