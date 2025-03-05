@@ -27,7 +27,7 @@ namespace CarBook.Persistence.Context
         public DbSet<FooterAddress> FooterAddresses { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<Model> Models { get; set; }
-        public DbSet<PricingPlan> PricingPlans { get; set; }
+        public DbSet<RentalPeriod> RentalPeriods { get; set; }
         public DbSet<RentalCar> RentalCars { get; set; }
         public DbSet<RentalRecord> RentalRecords { get; set; }
         public DbSet<Reservation> Reservations { get; set; }

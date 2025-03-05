@@ -8,11 +8,11 @@ namespace CarBook.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PricingPlansController : ControllerBase
+    public class RentalPeriodsController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public PricingPlansController(IMediator mediator)
+        public RentalPeriodsController(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -20,8 +20,8 @@ namespace CarBook.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var pricingPlans = await _mediator.Send(new GetPricingPlansQuery());
-            var pricingPlanDtos = pricingPlans.Select(pricingPlan => new GetPricingPlansDto
+            var pricingPlans = await _mediator.Send(new GetRentalPeriodsQuery());
+            var pricingPlanDtos = pricingPlans.Select(pricingPlan => new GetRentalPeriodsDto
             {
                 Id = pricingPlan.Id,
                 Name = pricingPlan.Name
@@ -33,8 +33,8 @@ namespace CarBook.WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var pricingPlan = await _mediator.Send(new GetPricingPlanByIdQuery() { Id = id });
-            var pricingPlanDto = new GetPricingPlanByIdDto
+            var pricingPlan = await _mediator.Send(new GetRentalPeriodByIdQuery() { Id = id });
+            var pricingPlanDto = new GetRentalPeriodByIdDto
             {
                 Id = pricingPlan.Id,
                 Name = pricingPlan.Name
@@ -44,9 +44,9 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreatePricingPlanDto createPricingPlanDto)
+        public async Task<IActionResult> Create(CreateRentalPeriodDto createPricingPlanDto)
         {
-            var command = new CreatePricingPlanCommand
+            var command = new CreateRentaPeriodCommand
             {
                 Name = createPricingPlanDto.Name
             };
@@ -56,9 +56,9 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdatePricingPlanDto updatePricingPlanDto)
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateRentalPeriodDto updatePricingPlanDto)
         {
-            var command = new UpdatePricingPlanCommand
+            var command = new UpdateRentaPeriodCommand
             {
                 Id = id,
                 Name = updatePricingPlanDto.Name
@@ -71,7 +71,7 @@ namespace CarBook.WebApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var command = new DeletePricingPlanCommand
+            var command = new DeleteRentaPeriodCommand
             {
                 Id = id
             };

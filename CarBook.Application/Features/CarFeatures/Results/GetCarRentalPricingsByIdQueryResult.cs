@@ -8,7 +8,7 @@ namespace CarBook.Application.Features.CarFeatures.Results
         public int CarId { get; set; }
         public Car Car { get; set; }
         public int PricingPlanId { get; set; }
-        public PricingPlan PricingPlan { get; set; }
+        public RentalPeriod PricingPlan { get; set; }
         public decimal Price { get; set; }
     }
 }

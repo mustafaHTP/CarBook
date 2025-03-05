@@ -6,20 +6,20 @@ using MediatR;
 
 namespace CarBook.Application.Features.PricingPlanFeatures.Handlers
 {
-    public class GetPricingPlansQueryHandler : IRequestHandler<GetPricingPlansQuery, List<GetPricingPlansQueryResult>>
+    public class GetPricingPlansQueryHandler : IRequestHandler<GetRentalPeriodsQuery, List<GetRentalPeriodsQueryResult>>
     {
-        private readonly IRepository<PricingPlan> _repository;
+        private readonly IRepository<RentalPeriod> _repository;
 
-        public GetPricingPlansQueryHandler(IRepository<PricingPlan> repository)
+        public GetPricingPlansQueryHandler(IRepository<RentalPeriod> repository)
         {
             _repository = repository;
         }
 
-        public async Task<List<GetPricingPlansQueryResult>> Handle(GetPricingPlansQuery request, CancellationToken cancellationToken)
+        public async Task<List<GetRentalPeriodsQueryResult>> Handle(GetRentalPeriodsQuery request, CancellationToken cancellationToken)
         {
             var reservationPricings = await _repository.GetAllAsync();
 
-            return reservationPricings.Select(r => new GetPricingPlansQueryResult()
+            return reservationPricings.Select(r => new GetRentalPeriodsQueryResult()
             {
                 Id = r.Id,
                 Name = r.Name,

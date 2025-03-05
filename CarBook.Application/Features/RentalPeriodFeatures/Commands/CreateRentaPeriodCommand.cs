@@ -2,7 +2,7 @@
 
 namespace CarBook.Application.Features.PricingPlanFeatures.Commands
 {
-    public class CreatePricingPlanCommand : IRequest
+    public class CreateRentaPeriodCommand : IRequest
     {
         public string Name { get; set; }
     }

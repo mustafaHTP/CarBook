@@ -29,14 +29,14 @@ namespace CarBook.Persistence.Repositories
             }
 
             // Generate a dictionary of rental periods and their corresponding IDs
-            var rentalPeriodIds = _context.PricingPlans
+            var rentalPeriodIds = _context.RentalPeriods
                 .Where(pp => rentalPeriods.Contains(pp.Name.ToLower()))
                 .Select(pp => pp.Id)
                 .ToList();
 
             // Filter car reservation pricings by rental periods
             var filteredCarReservationPricings = carReservationPricings
-                .Where(crp => rentalPeriodIds.Contains(crp.PricingPlanId));
+                .Where(crp => rentalPeriodIds.Contains(crp.RentalPeriodId));
 
             return filteredCarReservationPricings.Any()
                 ? filteredCarReservationPricings.Average(crp => crp.Price)

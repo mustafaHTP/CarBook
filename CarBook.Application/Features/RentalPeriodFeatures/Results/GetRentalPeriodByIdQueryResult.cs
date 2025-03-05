@@ -1,6 +1,6 @@
 ﻿namespace CarBook.Application.Features.PricingPlanFeatures.Results
 {
-    public class GetPricingPlansQueryResult
+    public class GetRentalPeriodByIdQueryResult
     {
         public int Id { get; set; }
         public string Name { get; set; }

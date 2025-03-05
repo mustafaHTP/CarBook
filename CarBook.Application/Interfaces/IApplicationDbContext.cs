@@ -18,7 +18,7 @@ namespace CarBook.Application.Interfaces
         DbSet<FooterAddress> FooterAddresses { get; set; }
         DbSet<Location> Locations { get; set; }
         DbSet<Model> Models { get; set; }
-        DbSet<PricingPlan> PricingPlans { get; set; }
+        DbSet<RentalPeriod> RentalPeriods { get; set; }
         DbSet<Service> Services { get; set; }
         DbSet<SocialMedia> SocialMedias { get; set; }
         DbSet<Testimonial> Testimonials { get; set; }

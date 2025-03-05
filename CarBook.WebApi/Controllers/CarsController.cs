@@ -87,10 +87,10 @@ namespace CarBook.WebApi.Controllers
                     CoverImageUrl = c.CoverImageUrl,
                     BigImageUrl = c.BigImageUrl
                 },
-                RentalPricings = c.CarReservationPricings.Select(crp => new PricingPlanWithPriceDto
+                RentalPricings = c.CarReservationPricings.Select(crp => new RentalPeriodWithPriceDto
                 {
                     Id = crp.CarId,
-                    Name = crp.PricingPlan.Name,
+                    Name = crp.RentalPeriod.Name,
                     Price = crp.Price
                 })
             });

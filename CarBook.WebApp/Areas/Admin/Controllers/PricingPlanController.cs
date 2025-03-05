@@ -21,12 +21,12 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:7116/api/PricingPlans");
+            var response = await client.GetAsync($"https://localhost:7116/api/RentalPeriods");
 
             if (response.IsSuccessStatusCode)
             {
                 var jsonData = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<IEnumerable<GetPricingPlansDto>>(jsonData);
+                var result = JsonConvert.DeserializeObject<IEnumerable<GetRentalPeriodsDto>>(jsonData);
 
                 return View(result);
             }
@@ -42,7 +42,7 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreatePricingPlanViewModel createPricingPlanViewModel)
         {
-            var createPricingPlanDto = new CreatePricingPlanDto
+            var createPricingPlanDto = new CreateRentalPeriodDto
             {
                 Name = createPricingPlanViewModel.Name
             };
@@ -50,7 +50,7 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
             var client = _httpClientFactory.CreateClient();
             var json = JsonConvert.SerializeObject(createPricingPlanDto);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("https://localhost:7116/api/PricingPlans", data);
+            var response = await client.PostAsync("https://localhost:7116/api/RentalPeriods", data);
             if (response.IsSuccessStatusCode)
             {
                 return RedirectToAction(nameof(Index));
@@ -62,12 +62,12 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
         public async Task<IActionResult> Update(int id)
         {
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:7116/api/PricingPlans/{id}");
+            var response = await client.GetAsync($"https://localhost:7116/api/RentalPeriods/{id}");
 
             if (response.IsSuccessStatusCode)
             {
                 var jsonData = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<GetPricingPlanByIdDto>(jsonData);
+                var result = JsonConvert.DeserializeObject<GetRentalPeriodByIdDto>(jsonData);
 
                 var updatePricingPlanViewModel = new UpdatePricingPlanViewModel()
                 {
@@ -84,7 +84,7 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(UpdatePricingPlanViewModel updatePricingPlanViewModel)
         {
-            UpdatePricingPlanDto updatePricingPlanDto = new()
+            UpdateRentalPeriodDto updatePricingPlanDto = new()
             {
                 Name = updatePricingPlanViewModel.Name
             };
@@ -92,7 +92,7 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(updatePricingPlanDto);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var response = await client.PutAsync($"https://localhost:7116/api/PricingPlans/{updatePricingPlanViewModel.Id}", content);
+            var response = await client.PutAsync($"https://localhost:7116/api/RentalPeriods/{updatePricingPlanViewModel.Id}", content);
 
             if (response.IsSuccessStatusCode)
             {
@@ -105,7 +105,7 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var client = _httpClientFactory.CreateClient();
-            var response = await client.DeleteAsync($"https://localhost:7116/api/PricingPlans/{id}");
+            var response = await client.DeleteAsync($"https://localhost:7116/api/RentalPeriods/{id}");
 
             if (response.IsSuccessStatusCode)
             {

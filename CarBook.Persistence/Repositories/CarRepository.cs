@@ -28,7 +28,7 @@ namespace CarBook.Persistence.Repositories
 
         public List<Car> GetCarsWithReservationPricings()
         {
-            return [.. _context.Cars.Include(c => c.Model).ThenInclude(m => m.Brand).Include(c => c.CarReservationPricings).ThenInclude(cr => cr.PricingPlan)];
+            return [.. _context.Cars.Include(c => c.Model).ThenInclude(m => m.Brand).Include(c => c.CarReservationPricings).ThenInclude(cr => cr.RentalPeriod)];
         }
 
         public Car? GetById(int id)
@@ -59,7 +59,7 @@ namespace CarBook.Persistence.Repositories
 
         public IEnumerable<CarReservationPricing> GetCarRentalPricingsByCarId(int carId)
         {
-            return _context.CarReservationPricings.Where(cr => cr.CarId == carId).Include(cr => cr.PricingPlan);
+            return _context.CarReservationPricings.Where(cr => cr.CarId == carId).Include(cr => cr.RentalPeriod);
         }
 
         public IEnumerable<Car> GetAllWithRentalPricings()
@@ -68,7 +68,7 @@ namespace CarBook.Persistence.Repositories
                 .Include(c => c.Model)
                 .ThenInclude(m => m.Brand)
                 .Include(c => c.CarReservationPricings)
-                .ThenInclude(cr => cr.PricingPlan);
+                .ThenInclude(cr => cr.RentalPeriod);
 
             return rentalPricings;
         }

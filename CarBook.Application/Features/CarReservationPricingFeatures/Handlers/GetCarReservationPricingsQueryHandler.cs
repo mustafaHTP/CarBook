@@ -24,8 +24,8 @@ namespace CarBook.Application.Features.CarReservationPricingFeatures.Handlers
                 Id = crp.Id,
                 CarId = crp.CarId,
                 Car = crp.Car,
-                PricingPlanId = crp.PricingPlanId,
-                PricingPlan = crp.PricingPlan,
+                PricingPlanId = crp.RentalPeriodId,
+                PricingPlan = crp.RentalPeriod,
                 Price = crp.Price
             }).ToList();
 

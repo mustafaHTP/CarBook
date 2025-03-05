@@ -22,8 +22,8 @@ namespace CarBook.Application.Features.CarFeatures.Handlers
                 CarId = crp.CarId,
                 Car = crp.Car,
                 Id = crp.Id,
-                PricingPlan = crp.PricingPlan,
-                PricingPlanId = crp.PricingPlanId,
+                PricingPlan = crp.RentalPeriod,
+                PricingPlanId = crp.RentalPeriodId,
                 Price = crp.Price
             });
 

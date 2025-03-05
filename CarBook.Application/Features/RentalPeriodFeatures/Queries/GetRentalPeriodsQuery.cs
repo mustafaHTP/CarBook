@@ -3,7 +3,7 @@ using MediatR;
 
 namespace CarBook.Application.Features.PricingPlanFeatures.Queries
 {
-    public class GetPricingPlansQuery : IRequest<List<GetPricingPlansQueryResult>>
+    public class GetRentalPeriodsQuery : IRequest<List<GetRentalPeriodsQueryResult>>
     {
     }
 }

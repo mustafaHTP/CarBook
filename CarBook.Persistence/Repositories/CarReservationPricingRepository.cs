@@ -18,14 +18,14 @@ namespace CarBook.Persistence.Repositories
             {
                 // Get pricing plan ids for the given rental periods
                 var pricingPlanIds = _context
-                    .PricingPlans
+                    .RentalPeriods
                     .Where(pp => rentalPeriods.Contains(pp.Name.ToLower()))
                     .Select(pp => pp.Id)
                     .AsQueryable();
 
                 // Get car reservation pricings for the given pricing plan ids
                 carReservationPricings = _context.CarReservationPricings
-                    .Where(crp => pricingPlanIds.Contains(crp.PricingPlanId))
+                    .Where(crp => pricingPlanIds.Contains(crp.RentalPeriodId))
                     .AsQueryable();
             }
 
@@ -34,18 +34,18 @@ namespace CarBook.Persistence.Repositories
                 .Include(crp => crp.Car)
                 .ThenInclude(c => c.Model)
                 .ThenInclude(m => m.Brand)
-                .Include(crp => crp.PricingPlan)
+                .Include(crp => crp.RentalPeriod)
                 .ToList();
         }
 
         public List<CarReservationPricing> GetAllWithCarAndDayPricePlan()
         {
             return _context.CarReservationPricings
-                .Include(crp => crp.PricingPlan)
+                .Include(crp => crp.RentalPeriod)
                 .Include(crp => crp.Car)
                 .ThenInclude(c => c.Model)
                 .ThenInclude(m => m.Brand)
-                .Where(crp => crp.PricingPlanId == 2)
+                .Where(crp => crp.RentalPeriodId == 2)
                 .ToList();
         }
 
@@ -56,7 +56,7 @@ namespace CarBook.Persistence.Repositories
         public List<CarReservationPricing> GetAllWithCarAndPricePlan()
         {
             return _context.CarReservationPricings
-                .Include(crp => crp.PricingPlan)
+                .Include(crp => crp.RentalPeriod)
                 .Include(crp => crp.Car)
                 .ThenInclude(c => c.Model)
                 .ThenInclude(m => m.Brand)

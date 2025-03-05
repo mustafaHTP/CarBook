@@ -5,16 +5,16 @@ using MediatR;
 
 namespace CarBook.Application.Features.PricingPlanFeatures.Handlers
 {
-    public class UpdatePricingPlanCommandHandler : IRequestHandler<UpdatePricingPlanCommand>
+    public class UpdateRentalPeriodCommandHandler : IRequestHandler<UpdateRentaPeriodCommand>
     {
-        private readonly IRepository<PricingPlan> _repository;
+        private readonly IRepository<RentalPeriod> _repository;
 
-        public UpdatePricingPlanCommandHandler(IRepository<PricingPlan> repository)
+        public UpdateRentalPeriodCommandHandler(IRepository<RentalPeriod> repository)
         {
             _repository = repository;
         }
 
-        public async Task Handle(UpdatePricingPlanCommand request, CancellationToken cancellationToken)
+        public async Task Handle(UpdateRentaPeriodCommand request, CancellationToken cancellationToken)
         {
             var reservationPricingToBeUpdated = await _repository.GetByIdAsync(request.Id);
 
