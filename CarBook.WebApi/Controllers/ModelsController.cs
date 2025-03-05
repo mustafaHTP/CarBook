@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Dtos.ModelDtos;
+﻿using CarBook.Application.Dtos.CarDtos;
+using CarBook.Application.Dtos.ModelDtos;
 using CarBook.Application.Features.ModelFeatures.Commands;
 using CarBook.Application.Features.ModelFeatures.Queries;
 using MediatR;
@@ -27,7 +28,21 @@ namespace CarBook.WebApi.Controllers
                 Name = m.Name,
                 BrandId = m.BrandId,
                 BrandName = m.Brand.Name,
-                Cars = m.Cars
+                Cars = m.Cars?.Select(c => new CarLiteDto
+                {
+                    Id = c.Id,
+                    BrandId = c.Model.BrandId,
+                    BrandName = c.Model.Brand.Name,
+                    ModelId = c.ModelId,
+                    ModelName = c.Model.Name,
+                    BigImageUrl = c.BigImageUrl,
+                    CoverImageUrl = c.CoverImageUrl,
+                    FuelType = c.FuelType,
+                    Km = c.Km,
+                    Luggage = c.Luggage,
+                    SeatCount = c.SeatCount,
+                    TransmissionType = c.TransmissionType
+                })
             });
 
             return Ok(modelsDto);

@@ -46,23 +46,5 @@ namespace CarBook.WebApi.Controllers
 
             return Ok(carReservationPricingsDto);
         }
-
-        [HttpGet("GetAllWithDayPricingPlan")]
-        public async Task<IActionResult> GetAllWithDayPricingPlan()
-        {
-            var carReservationPricings = await _mediator.Send(new GetCarReservationPricingsWithDayPricingPlanQuery());
-
-            var carReservationPricingsDto = carReservationPricings.Select(crp => new GetCarReservationPricingsWithDayPricingPlanDto()
-            {
-                Id = crp.Id,
-                CarId = crp.CarId,
-                Car = crp.Car,
-                PricingPlanId = crp.PricingPlanId,
-                PricingPlan = crp.PricingPlan,
-                Price = crp.Price
-            });
-
-            return Ok(carReservationPricingsDto);
-        }
     }
 }

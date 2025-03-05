@@ -152,24 +152,17 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
 
         private async Task<IEnumerable<SelectListItem>?> GetModelList()
         {
-            var client = _httpClientFactory.CreateClient();
             var url = "https://localhost:7116/api/Models";
-            var queryParams = "IncludeCars=true";
-            var response = await client.GetAsync($"{url}?{queryParams}");
+            var models = await _apiService.GetAsync<IEnumerable<GetModelsDto>>(url);
 
             IEnumerable<SelectListItem>? modelsSelectList = null;
-            if (response.IsSuccessStatusCode)
-            {
-                var jsonData = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<IEnumerable<GetModelsDto>>(jsonData);
 
-                // Create a SelectList from the models
-                modelsSelectList = result?.Select(m => new SelectListItem()
-                {
-                    Text = $"{m.BrandName} {m.Name}",
-                    Value = m.Id.ToString(),
-                });
-            }
+            // Create a SelectList from the models
+            modelsSelectList = models?.Select(m => new SelectListItem()
+            {
+                Text = $"{m.BrandName} {m.Name}",
+                Value = m.Id.ToString(),
+            });
 
             return await Task.FromResult(modelsSelectList);
         }

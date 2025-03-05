@@ -1,4 +1,5 @@
-﻿using CarBook.Domain.Entities;
+﻿using CarBook.Application.Dtos.CarDtos;
+using CarBook.Domain.Entities;
 
 namespace CarBook.Application.Dtos.ModelDtos
 {
@@ -6,8 +7,8 @@ namespace CarBook.Application.Dtos.ModelDtos
     {
         public int Id { get; set; }
         public int BrandId { get; set; }
-        public string BrandName { get; set; } = null;
+        public string BrandName { get; set; } = null!;
         public string Name { get; set; } = null!;
-        public List<Car>? Cars { get; set; }
+        public IEnumerable<CarLiteDto>? Cars { get; set; }
     }
 }
