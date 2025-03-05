@@ -1,4 +1,5 @@
 ﻿using CarBook.Application.Dtos.StatisticsDtos;
+using CarBook.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -6,11 +7,11 @@ namespace CarBook.WebApp.Areas.Admin.Components
 {
     public class AverageCarRentalPriceWidgetViewComponent : ViewComponent
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IApiService _apiService;
 
-        public AverageCarRentalPriceWidgetViewComponent(IHttpClientFactory httpClientFactory)
+        public AverageCarRentalPriceWidgetViewComponent(IApiService apiService)
         {
-            _httpClientFactory = httpClientFactory;
+            _apiService = apiService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync(params string[] rentalPeriods)
@@ -25,16 +26,13 @@ namespace CarBook.WebApp.Areas.Admin.Components
             var url = string.IsNullOrEmpty(query)
                 ? apiEndpoint
                 : $"{apiEndpoint}?rentalPeriods={query}";
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync(url);
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<GetAverageCarRentalPriceDto>(content);
 
+            var response = await _apiService.GetAsync<GetAverageCarRentalPriceDto>(url);
+            if (response.IsSuccessful)
+            {
                 ViewBag.RentalPeriods = query;
 
-                return View(result);
+                return View(response.Result);
             }
             else
             {

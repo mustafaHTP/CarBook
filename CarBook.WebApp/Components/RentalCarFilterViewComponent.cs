@@ -1,4 +1,5 @@
 ﻿using CarBook.Application.Dtos.LocationDtos;
+using CarBook.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
@@ -7,23 +8,19 @@ namespace CarBook.WebApp.Components
 {
     public class RentalCarFilterViewComponent : ViewComponent
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IApiService _apiService;
 
-        public RentalCarFilterViewComponent(IHttpClientFactory httpClientFactory)
+        public RentalCarFilterViewComponent(IApiService apiService)
         {
-            _httpClientFactory = httpClientFactory;
+            _apiService = apiService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:7116/api/Locations");
-            if (response.IsSuccessStatusCode)
+            var response = await _apiService.GetAsync<IEnumerable<GetLocationsDto>>("https://localhost:7116/api/Locations");
+            if (response.IsSuccessful && response.Result is not null)
             {
-                var jsonData = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<IEnumerable<GetLocationsDto>>(jsonData);
-
-                var locationsSelectList = result?.Select(l => new SelectListItem()
+                var locationsSelectList = response.Result?.Select(l => new SelectListItem()
                 {
                     Text = l.Name,
                     Value = l.Id.ToString(),

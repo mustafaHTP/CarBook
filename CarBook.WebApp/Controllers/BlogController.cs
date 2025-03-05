@@ -10,12 +10,10 @@ namespace CarBook.WebApp.Controllers
 {
     public class BlogController : Controller
     {
-        private readonly IHttpClientFactory _httpClientFactory;
         private readonly IApiService _apiService;
 
-        public BlogController(IHttpClientFactory httpClientFactory, IApiService apiService)
+        public BlogController(IApiService apiService)
         {
-            _httpClientFactory = httpClientFactory;
             _apiService = apiService;
         }
 

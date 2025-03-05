@@ -1,4 +1,5 @@
 ﻿using CarBook.Application.Dtos.CarDtos;
+using CarBook.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -6,29 +7,22 @@ namespace CarBook.WebApp.Areas.Admin.Components
 {
     public class CarRentalPriceListWidgetViewComponent : ViewComponent
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IApiService _apiService;
 
-        public CarRentalPriceListWidgetViewComponent(IHttpClientFactory httpClientFactory)
+        public CarRentalPriceListWidgetViewComponent(IApiService apiService)
         {
-            _httpClientFactory = httpClientFactory;
+            _apiService = apiService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var rentalPricings =
-                await GetApiResponse<IEnumerable<GetCarsWithRentalPricingsDto>>("https://localhost:7116/api/Cars/RentalPricings");
+            var response = await _apiService.GetAsync<IEnumerable<GetCarsWithRentalPricingsDto>>("https://localhost:7116/api/Cars/RentalPricings");
+            if (response.IsSuccessful)
+            {
+                return View(response.Result);
+            }
 
-            return View(rentalPricings);
-        }
-
-        private async Task<T?> GetApiResponse<T>(string url) where T : class
-        {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync(url);
-            var content = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<T>(content);
-
-            return response.IsSuccessStatusCode ? result : null;
+            return View();
         }
     }
 }

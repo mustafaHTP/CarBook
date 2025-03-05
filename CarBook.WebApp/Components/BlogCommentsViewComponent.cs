@@ -6,12 +6,10 @@ namespace CarBook.WebApp.Components
 {
     public class BlogCommentsViewComponent : ViewComponent
     {
-        private readonly IHttpClientFactory _httpClientFactory;
         private readonly IApiService _apiService;
 
-        public BlogCommentsViewComponent(IHttpClientFactory httpClientFactory, IApiService apiService)
+        public BlogCommentsViewComponent(IApiService apiService)
         {
-            _httpClientFactory = httpClientFactory;
             _apiService = apiService;
         }
 

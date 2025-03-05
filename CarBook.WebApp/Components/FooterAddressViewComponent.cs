@@ -1,27 +1,24 @@
 ﻿using CarBook.Application.Dtos.FooterAddressDtos;
+using CarBook.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarBook.WebApp.Components
 {
     public class FooterAddressViewComponent : ViewComponent
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IApiService _apiService;
 
-        public FooterAddressViewComponent(IHttpClientFactory httpClientFactory)
+        public FooterAddressViewComponent(IApiService apiService)
         {
-            _httpClientFactory = httpClientFactory;
+            _apiService = apiService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:7116/api/FooterAddresses");
-
-            if (response.IsSuccessStatusCode)
+            var response = await _apiService.GetAsync<IEnumerable<GetFooterAddressesDto>>("https://localhost:7116/api/FooterAddresses");
+            if (response.IsSuccessful)
             {
-                var footerAddresses = await response.Content.ReadAsAsync<List<GetFooterAddressesDto>>();
-
-                return View(footerAddresses);
+                return View(response.Result);
             }
 
             return View();

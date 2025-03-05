@@ -1,4 +1,5 @@
 ﻿using CarBook.Application.Dtos.BannerDtos;
+using CarBook.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -6,24 +7,20 @@ namespace CarBook.WebApp.Components
 {
     public class BannerViewComponent : ViewComponent
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IApiService _apiService;
 
-        public BannerViewComponent(IHttpClientFactory httpClientFactory)
+        public BannerViewComponent(IApiService apiService)
         {
-            _httpClientFactory = httpClientFactory;
+            _apiService = apiService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:7116/api/Banners");
-
-            if (response.IsSuccessStatusCode)
+            var response =
+                await _apiService.GetAsync<IEnumerable<GetBannersDto>>("https://localhost:7116/api/Banners");
+            if (response.IsSuccessful)
             {
-                var jsonData = await response.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<List<GetBannersDto>>(jsonData);
-
-                return View(values);
+                return View(response.Result);
             }
 
             return View();

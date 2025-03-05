@@ -1,4 +1,5 @@
 ﻿using CarBook.Application.Dtos.BlogDtos;
+using CarBook.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -6,24 +7,20 @@ namespace CarBook.WebApp.Components
 {
     public class BlogCommentCountViewComponent : ViewComponent
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IApiService _apiService;
 
-        public BlogCommentCountViewComponent(IHttpClientFactory httpClientFactory)
+        public BlogCommentCountViewComponent(IApiService apiService)
         {
-            _httpClientFactory = httpClientFactory;
+            _apiService = apiService;
         }
 
         public async Task<string> InvokeAsync(int blogId)
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:7116/api/Blogs/{blogId}/comments/count");
+            var response = await _apiService.GetAsync<GetBlogCommentCountByIdDto>($"https://localhost:7116/api/Blogs/{blogId}/comments/count");
             int blogCommentCount = 0;
-            if (response.IsSuccessStatusCode)
+            if (response.IsSuccessful)
             {
-                var jsonData = await response.Content.ReadAsStringAsync();
-                var value = JsonConvert.DeserializeObject<GetBlogCommentCountByIdDto>(jsonData);
-
-                blogCommentCount = value?.BlogCommentCount ?? 0;
+                blogCommentCount = response.Result?.BlogCommentCount ?? 0;
             }
 
             return blogCommentCount.ToString();

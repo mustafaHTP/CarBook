@@ -1,4 +1,5 @@
 ﻿using CarBook.Application.Dtos.FooterAddressDtos;
+using CarBook.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -6,11 +7,11 @@ namespace CarBook.WebApp.Components
 {
     public class FooterViewComponent : ViewComponent
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IApiService _apiService;
 
-        public FooterViewComponent(IHttpClientFactory httpClientFactory)
+        public FooterViewComponent(IApiService apiService)
         {
-            _httpClientFactory = httpClientFactory;
+            _apiService = apiService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
@@ -22,15 +23,11 @@ namespace CarBook.WebApp.Components
 
         private async Task<GetFooterAddressesDto?> GetFooterAddressAsync()
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:7116/api/FooterAddresses");
+            var response = await _apiService.GetAsync<IEnumerable<GetFooterAddressesDto>>("https://localhost:7116/api/FooterAddresses");
             GetFooterAddressesDto? getFooterAddressDto = null;
-            if (response.IsSuccessStatusCode)
+            if (response.IsSuccessful)
             {
-                var content = await response.Content.ReadAsStringAsync();
-                var addresses = JsonConvert.DeserializeObject<IEnumerable<GetFooterAddressesDto>>(content);
-
-                getFooterAddressDto = addresses?.First();
+                getFooterAddressDto = response.Result?.First();
             }
 
             return getFooterAddressDto;

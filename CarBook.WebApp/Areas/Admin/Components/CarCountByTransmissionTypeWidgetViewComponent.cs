@@ -1,4 +1,5 @@
 ﻿using CarBook.Application.Dtos.StatisticsDtos;
+using CarBook.Application.Interfaces.Services;
 using CarBook.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -7,11 +8,11 @@ namespace CarBook.WebApp.Areas.Admin.Components
 {
     public class CarCountByTransmissionTypeWidgetViewComponent : ViewComponent
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IApiService _apiService;
 
-        public CarCountByTransmissionTypeWidgetViewComponent(IHttpClientFactory httpClientFactory)
+        public CarCountByTransmissionTypeWidgetViewComponent(IApiService apiService)
         {
-            _httpClientFactory = httpClientFactory;
+            _apiService = apiService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync(params TransmissionType[] transmissionTypes)
@@ -26,16 +27,13 @@ namespace CarBook.WebApp.Areas.Admin.Components
             string? query = string.Join(',', transmissionTypeList);
             string apiEndpoint = "https://localhost:7116/api/Statistics/car/countByTransmissionType";
             string url = string.IsNullOrEmpty(query) ? apiEndpoint : $"{apiEndpoint}?TransmissionTypes={query}";
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync(url);
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<GetCarCountByTransmissionTypeDto>(content);
 
+            var response = await _apiService.GetAsync<GetCarCountByTransmissionTypeDto>(url);
+            if (response.IsSuccessful)
+            {
                 ViewBag.TransmissionTypes = query;
 
-                return View(result);
+                return View(response.Result);
             }
             else
             {

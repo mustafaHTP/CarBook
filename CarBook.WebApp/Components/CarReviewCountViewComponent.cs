@@ -1,4 +1,5 @@
 ﻿using CarBook.Application.Dtos.StatisticsDtos;
+using CarBook.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -6,26 +7,21 @@ namespace CarBook.WebApp.Components
 {
     public class CarReviewCountViewComponent : ViewComponent
     {
-        private IHttpClientFactory _httpClientFactory;
+        private readonly IApiService _apiService;
 
-        public CarReviewCountViewComponent(IHttpClientFactory httpClientFactory)
+        public CarReviewCountViewComponent(IApiService apiService)
         {
-            _httpClientFactory = httpClientFactory;
+            _apiService = apiService;
         }
 
         public async Task<string> InvokeAsync(int carId)
         {
-            var client = _httpClientFactory.CreateClient();
             var response =
-                await client.GetAsync($"https://localhost:7116/api/Statistics/car/{carId}/carReviews/count");
-
+                await _apiService.GetAsync<GetCarReviewsCountByCarIdDto>($"https://localhost:7116/api/Statistics/car/{carId}/carReviews/count");
             int carReviewCount = 0;
-            if (response.IsSuccessStatusCode)
+            if (response.IsSuccessful)
             {
-                var jsonData = await response.Content.ReadAsStringAsync();
-                var value = JsonConvert.DeserializeObject<GetCarReviewsCountByCarIdDto>(jsonData);
-
-                carReviewCount = value?.CarReviewCount ?? 0;
+                carReviewCount = response.Result?.CarReviewCount ?? 0;
             }
 
             return carReviewCount.ToString();

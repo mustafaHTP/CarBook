@@ -1,4 +1,5 @@
 ﻿using CarBook.Application.Dtos.StatisticsDtos;
+using CarBook.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -6,23 +7,19 @@ namespace CarBook.WebApp.Areas.Admin.Components
 {
     public class BlogCountWidgetViewComponent : ViewComponent
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IApiService _apiService;
 
-        public BlogCountWidgetViewComponent(IHttpClientFactory httpClientFactory)
+        public BlogCountWidgetViewComponent(IApiService apiService)
         {
-            _httpClientFactory = httpClientFactory;
+            _apiService = apiService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:7116/api/Statistics/blog/count");
-            if (response.IsSuccessStatusCode)
+            var response = await _apiService.GetAsync<GetBlogCountDto>("https://localhost:7116/api/Statistics/blog/count");
+            if (response.IsSuccessful)
             {
-                var content = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<GetBlogCountDto>(content);
-
-                return View(result);
+                return View(response.Result);
             }
             else
             {

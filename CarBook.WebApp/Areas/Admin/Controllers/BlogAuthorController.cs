@@ -15,7 +15,7 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
     {
         private readonly IApiService _apiService;
 
-        public BlogAuthorController(IHttpClientFactory httpClientFactory, IApiService apiService)
+        public BlogAuthorController(IApiService apiService)
         {
             _apiService = apiService;
         }

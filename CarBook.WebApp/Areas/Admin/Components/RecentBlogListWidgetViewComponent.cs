@@ -1,4 +1,5 @@
 ﻿using CarBook.Application.Dtos.BlogDtos;
+using CarBook.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -6,23 +7,19 @@ namespace CarBook.WebApp.Areas.Admin.Components
 {
     public class RecentBlogListWidgetViewComponent : ViewComponent
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IApiService _apiService;
 
-        public RecentBlogListWidgetViewComponent(IHttpClientFactory httpClientFactory)
+        public RecentBlogListWidgetViewComponent(IApiService apiService)
         {
-            _httpClientFactory = httpClientFactory;
+            _apiService = apiService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:7116/api/Blogs?Includes=author");
-            if (response.IsSuccessStatusCode)
+            var response = await _apiService.GetAsync<IEnumerable<GetBlogsDto>>("https://localhost:7116/api/Blogs?Includes=author");
+            if (response.IsSuccessful)
             {
-                var content = await response.Content.ReadAsStringAsync();
-                var blogs = JsonConvert.DeserializeObject<IEnumerable<GetBlogsDto>>(content);
-
-                return View(blogs);
+                return View(response.Result);
             }
 
             return View();
