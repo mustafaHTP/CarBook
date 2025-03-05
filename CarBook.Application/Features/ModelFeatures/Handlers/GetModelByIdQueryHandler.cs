@@ -8,24 +8,25 @@ namespace CarBook.Application.Features.ModelFeatures.Handlers
 {
     public class GetModelByIdQueryHandler : IRequestHandler<GetModelByIdQuery, GetModelByIdQueryResult>
     {
-        private readonly IRepository<Model> _repository;
+        private readonly IModelRepository _repository;
 
-        public GetModelByIdQueryHandler(IRepository<Model> repository)
+        public GetModelByIdQueryHandler(IModelRepository repository)
         {
             _repository = repository;
         }
 
-        public async Task<GetModelByIdQueryResult> Handle(GetModelByIdQuery request, CancellationToken cancellationToken)
+        public Task<GetModelByIdQueryResult> Handle(GetModelByIdQuery request, CancellationToken cancellationToken)
         {
-            var model = await _repository.GetByIdAsync(request.Id);
+            var model = _repository.GetById(request.Id);
             var result = new GetModelByIdQueryResult()
             {
                 Id = model.Id,
                 BrandId = model.BrandId,
+                Brand = model.Brand,
                 Name = model.Name,
             };
 
-            return await Task.FromResult(result);
+            return Task.FromResult(result);
         }
     }
 }

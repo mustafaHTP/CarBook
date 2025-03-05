@@ -1,0 +1,34 @@
+﻿@model CarBook.WebApp.Areas.Admin.Models.ModelModels.CreateModelViewModel
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Create Car Model</h4>
+                    <p class="card-subtitle mb-4">Here’s a quick example to demonstrate Bootstrap’s form styles. Keep reading for documentation on required classes, form layout, and more.</p>
+
+                    <form method="post" asp-area="Admin" asp-controller="Model" asp-action="Create">
+
+                        <div class="form-group">
+                            <label asp-for="BrandId">Car Brands</label>
+                            <select asp-for="BrandId" asp-items="ViewBag.BrandList" class="form-control">
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Name">Model Name</label>
+                            <input asp-for="Name" type="text" class="form-control" placeholder="Enter car model name">
+                        </div>
+
+                        <button type="submit" class="btn btn-success waves-effect waves-light">
+                            <i class="bi bi-floppy"></i>
+                            Save
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

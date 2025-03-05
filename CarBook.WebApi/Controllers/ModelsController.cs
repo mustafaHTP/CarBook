@@ -52,8 +52,15 @@ namespace CarBook.WebApi.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var model = await _mediator.Send(new GetModelByIdQuery() { Id = id });
+            var modelDto = new GetModelByIdDto
+            {
+                Id = model.Id,
+                Name = model.Name,
+                BrandId = model.BrandId,
+                BrandName = model.Brand.Name
+            };
 
-            return Ok(model);
+            return Ok(modelDto);
         }
 
         [HttpPost]

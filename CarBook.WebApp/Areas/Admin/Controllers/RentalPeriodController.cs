@@ -9,11 +9,11 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
 {
     [Authorize(Roles = "Admin")]
     [Area("Admin")]
-    public class PricingPlanController : Controller
+    public class RentalPeriodController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
 
-        public PricingPlanController(IHttpClientFactory httpClientFactory)
+        public RentalPeriodController(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
         }

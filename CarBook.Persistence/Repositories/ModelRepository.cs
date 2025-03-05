@@ -21,5 +21,12 @@ namespace CarBook.Persistence.Repositories
 
             return [.. models];
         }
+
+        public Model? GetById(int id)
+        {
+            return _context.Models
+                .Include(m => m.Brand)
+                .SingleOrDefault(m => m.Id == id);
+        }
     }
 }
