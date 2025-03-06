@@ -3,6 +3,7 @@ using CarBook.Application.Dtos.SmartBookDtos;
 using CarBook.Application.Interfaces.Services;
 using CarBook.Persistence.Filters;
 using CarBook.WebApp.Models;
+using CarBook.WebApp.Models.SmartBookModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -26,8 +27,8 @@ namespace CarBook.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ServiceFilter(typeof(ValidationFilterAttribute<CreateCarRecommendationDto>))]
-        public async Task<IActionResult> Recommend([FromForm] CreateCarRecommendationDto createCarRecommendationDto)
+        [ServiceFilter(typeof(ValidationFilterAttribute<CreateCarRecommendationViewModel>))]
+        public async Task<IActionResult> Recommend([FromForm] CreateCarRecommendationViewModel createCarRecommendationDto)
         {
             var smartBookRequestDto = new SmartBookRequestDto
             {

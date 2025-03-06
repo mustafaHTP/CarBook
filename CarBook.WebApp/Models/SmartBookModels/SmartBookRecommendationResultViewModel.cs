@@ -1,6 +1,6 @@
 ﻿using CarBook.Application.Dtos.CarDtos;
 
-namespace CarBook.WebApp.Models
+namespace CarBook.WebApp.Models.SmartBookModels
 {
     public class SmartBookRecommendationResultViewModel
     {

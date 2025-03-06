@@ -2,7 +2,7 @@
 
 namespace CarBook.WebApp.Models
 {
-    public class CreateCarRecommendationDto
+    public class CreateCarRecommendationViewModel
     {
         public string UserInput { get; set; } = null!;
     }

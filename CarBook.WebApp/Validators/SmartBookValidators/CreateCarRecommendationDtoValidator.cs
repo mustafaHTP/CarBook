@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarBook.Application.Validators.SmartBookValidators
+namespace CarBook.WebApp.Validators.SmartBookValidators
 {
-    public class CreateCarRecommendationDtoValidator : AbstractValidator<CreateCarRecommendationDto>
+    public class CreateCarRecommendationDtoValidator : AbstractValidator<CreateCarRecommendationViewModel>
     {
         public CreateCarRecommendationDtoValidator()
         {
