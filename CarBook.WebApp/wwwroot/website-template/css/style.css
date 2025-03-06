@@ -12245,6 +12245,12 @@ h1, h2, h3, h4, h5,
             margin-bottom: 0;
         }
 
+        .car-wrap .text span.car-d {
+            font-weight: 400;
+            display: block;
+            margin-bottom: 0;
+        }
+
         .car-wrap .text p.d-block {
             width: 100%;
         }

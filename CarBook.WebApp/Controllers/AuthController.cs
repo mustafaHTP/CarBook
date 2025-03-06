@@ -87,7 +87,7 @@ namespace CarBook.WebApp.Controllers
                 var authProperties = new AuthenticationProperties
                 {
                     ExpiresUtc = _jwtService.GetTokenExpirationDate(token),
-                    IsPersistent = false
+                    IsPersistent = true
                 };
 
                 await HttpContext.SignInAsync(
