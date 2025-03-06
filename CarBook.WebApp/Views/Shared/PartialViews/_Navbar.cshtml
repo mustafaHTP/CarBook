@@ -60,7 +60,7 @@
                     @if (User.Identity is not null && User.Identity.IsAuthenticated)
                     {
 
-                        <a asp-area="" asp-controller="Auth" asp-action="Logout" class="nav-link">
+                        <a asp-area="" asp-controller="Auth" asp-action="Logout" class="nav-link" title="Click to logout">
                             Hello,  @User.FindFirst(JwtRegisteredClaimNames.GivenName)?.Value
                         </a>
                     }
