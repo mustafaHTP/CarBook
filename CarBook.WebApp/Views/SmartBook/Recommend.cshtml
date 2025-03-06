@@ -1,4 +1,4 @@
-﻿@model CreateCarRecommendationViewModel
+﻿@model CreateCarRecommendationDto
 
 <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/website-template/images/smartbook-ai.jpeg');" data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
@@ -36,7 +36,10 @@
 
                         <form method="post" asp-controller="SmartBook" asp-action="Recommend">
                             <div class="input-group">
-                                <input asp-for="UserInput" type="text" class="form-control">
+                                <textarea asp-for="UserInput" type="text" rows="4" class="form-control"></textarea>
+                            </div>
+                            <span class="text-danger" asp-validation-for="UserInput"></span>
+                            <div class="d-flex mt-3 justify-content-end">
                                 <button type="submit" class="btn btn-primary waves-effect waves-light">
                                     <i class="bi bi-box-arrow-in-up-right"></i>
                                     Submit

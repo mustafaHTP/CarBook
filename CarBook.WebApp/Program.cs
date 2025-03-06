@@ -1,5 +1,6 @@
 using CarBook.Application.Interfaces.Services;
 using CarBook.Application.Validators;
+using CarBook.Persistence.Filters;
 using CarBook.Persistence.Services;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -36,6 +37,9 @@ builder.Services.AddValidatorsFromAssemblyContaining<ValidatorAssemblyMarker>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IApiService, ApiService>();
 builder.Services.AddScoped<ISmartBookService, SmartBookService>();
+
+//Add filters
+builder.Services.AddScoped(typeof(ValidationFilterAttribute<>));
 
 var app = builder.Build();
 
