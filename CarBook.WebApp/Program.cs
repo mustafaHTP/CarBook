@@ -1,7 +1,7 @@
 using CarBook.Application.Interfaces.Services;
-using CarBook.Application.Validators;
 using CarBook.Persistence.Filters;
 using CarBook.Persistence.Services;
+using CarBook.WebApp.Validators;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Globalization;

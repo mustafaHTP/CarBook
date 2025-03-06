@@ -1,5 +1,6 @@
 ﻿using CarBook.Application.Dtos.AuthDtos;
 using CarBook.Application.Interfaces.Services;
+using CarBook.Persistence.Filters;
 using CarBook.WebApp.Models.AuthModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -15,31 +16,68 @@ namespace CarBook.WebApp.Controllers
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IJwtService _jwtService;
+        private readonly IApiService _apiService;
 
-        public AuthController(IHttpClientFactory httpClientFactory, IJwtService jwtService)
+        public AuthController(IHttpClientFactory httpClientFactory, IJwtService jwtService, IApiService apiService)
         {
             _httpClientFactory = httpClientFactory;
             _jwtService = jwtService;
+            _apiService = apiService;
         }
 
         public IActionResult Register()
         {
+            TempData["ReturnUrl"] = HttpContext.Request.Query["ReturnUrl"].ToString();
+
             return View();
         }
 
         [HttpPost]
-        public IActionResult Register(RegisterAppUserViewModel registerAppUserViewModel)
+        [ValidateAntiForgeryToken]
+        [ServiceFilter(typeof(ValidationFilterAttribute<RegisterAppUserViewModel>))]
+        public async Task<IActionResult> Register([FromForm] RegisterAppUserViewModel registerAppUserViewModel)
         {
-            return RedirectToAction("Index", "Home", new { area = "" });
+            var registerAppUserDto = new RegisterAppUserDto
+            {
+                FirstName = registerAppUserViewModel.FirstName,
+                LastName = registerAppUserViewModel.LastName,
+                AppUserRole = Domain.Enums.AppUserRole.User,
+                Email = registerAppUserViewModel.Email,
+                Password = registerAppUserViewModel.Password,
+            };
+
+            var content = new StringContent(
+                content: JsonConvert.SerializeObject(registerAppUserDto),
+                encoding: Encoding.UTF8,
+                mediaType: "application/json");
+
+            var response =
+                await _apiService.PostAsync("https://localhost:7116/api/Auth/register", content);
+            if (!response.IsSuccessful)
+            {
+                return View(registerAppUserViewModel);
+            }
+
+            var returnUrl = TempData["ReturnUrl"]?.ToString();
+            if (string.IsNullOrEmpty(returnUrl))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            return Redirect(returnUrl);
         }
 
         public IActionResult Login()
         {
+            TempData["ReturnUrl"] = HttpContext.Request.Query["ReturnUrl"].ToString();
+
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginAppUserViewModel loginAppUserViewModel)
+        [ValidateAntiForgeryToken]
+        [ServiceFilter(typeof(ValidationFilterAttribute<LoginAppUserViewModel>))]
+        public async Task<IActionResult> Login([FromForm] LoginAppUserViewModel loginAppUserViewModel)
         {
             var loginAppUserDto = new LoginAppUserDto
             {
@@ -54,15 +92,16 @@ namespace CarBook.WebApp.Controllers
             var response = await client.PostAsync(
                 "https://localhost:7116/api/Auth/login",
                 content);
-            if (response.IsSuccessStatusCode)
-            {
-                var responseContent = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<LoginAppUserResultDto>(responseContent);
 
-                var token = result.Token;
+            if (!response.IsSuccessStatusCode) return View(loginAppUserViewModel);
 
-                // Retrieve claims from the token
-                var claimsDict = new Dictionary<string, string?>
+            var responseContent = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<LoginAppUserResultDto>(responseContent);
+
+            var token = result.Token;
+
+            // Retrieve claims from the token
+            var claimsDict = new Dictionary<string, string?>
                 {
                     { JwtRegisteredClaimNames.Sub, _jwtService.GetClaimValue(token, JwtRegisteredClaimNames.Sub) },
                     { JwtRegisteredClaimNames.GivenName, _jwtService.GetClaimValue(token, JwtRegisteredClaimNames.GivenName) },
@@ -71,34 +110,37 @@ namespace CarBook.WebApp.Controllers
                     { ClaimTypes.Role, _jwtService.GetClaimValue(token, ClaimTypes.Role) }
                 };
 
-                // Check if any claim is null or empty
-                if (claimsDict.Values.Any(string.IsNullOrEmpty))
-                {
-                    // Handle missing claims (e.g., return an error or log it)
-                    return BadRequest("Invalid token: Some claims are missing.");
-                }
+            // Check if any claim is null or empty
+            if (claimsDict.Values.Any(string.IsNullOrEmpty))
+            {
+                // Handle missing claims (e.g., return an error or log it)
+                return BadRequest("Invalid token: Some claims are missing.");
+            }
 
-                // Construct claims list
-                var claims = claimsDict.Select(kv => new Claim(kv.Key, kv.Value!)).ToList();
-                claims.Add(new Claim("AccessToken", result.Token));
+            // Construct claims list
+            var claims = claimsDict.Select(kv => new Claim(kv.Key, kv.Value!)).ToList();
+            claims.Add(new Claim("AccessToken", result.Token));
 
-                var claimsIdentity = new ClaimsIdentity(claims, JwtBearerDefaults.AuthenticationScheme);
+            var claimsIdentity = new ClaimsIdentity(claims, JwtBearerDefaults.AuthenticationScheme);
 
-                var authProperties = new AuthenticationProperties
-                {
-                    ExpiresUtc = _jwtService.GetTokenExpirationDate(token),
-                    IsPersistent = true
-                };
+            var authProperties = new AuthenticationProperties
+            {
+                ExpiresUtc = _jwtService.GetTokenExpirationDate(token),
+                IsPersistent = true
+            };
 
-                await HttpContext.SignInAsync(
-                    JwtBearerDefaults.AuthenticationScheme,
-                    new ClaimsPrincipal(claimsIdentity),
-                    authProperties);
+            await HttpContext.SignInAsync(
+                JwtBearerDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(claimsIdentity),
+                authProperties);
 
+            var returnUrl = TempData["ReturnUrl"]?.ToString();
+            if (string.IsNullOrEmpty(returnUrl))
+            {
                 return RedirectToAction("Index", "Home");
             }
 
-            return View(loginAppUserViewModel);
+            return Redirect(returnUrl);
         }
 
         public IActionResult Logout()
