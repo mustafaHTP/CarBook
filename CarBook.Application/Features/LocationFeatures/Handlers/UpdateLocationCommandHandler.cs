@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.LocationFeatures.Commands;
+﻿using CarBook.Application.Exceptions;
+using CarBook.Application.Features.LocationFeatures.Commands;
 using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
 using MediatR;
@@ -16,12 +17,13 @@ namespace CarBook.Application.Features.LocationFeatures.Handlers
 
         public async Task Handle(UpdateLocationCommand request, CancellationToken cancellationToken)
         {
-            var locationToBeUpdated = await _repository.GetByIdAsync(request.Id);
+            var location = await _repository.GetByIdAsync(request.Id)
+                ?? throw new NotFoundException<Location>(request.Id);
 
             //update here
-            locationToBeUpdated.Name = request.Name;
+            location.Name = request.Name;
 
-            await _repository.UpdateAsync(locationToBeUpdated);
+            await _repository.UpdateAsync(location);
         }
     }
 }

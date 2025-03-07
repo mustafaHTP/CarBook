@@ -4,7 +4,6 @@ namespace CarBook.Application.Dtos.CarDtos
 {
     public class UpdateCarDto
     {
-        public int Id { get; set; }
         public int ModelId { get; set; }
         public int Km { get; set; }
         public byte SeatCount { get; set; }

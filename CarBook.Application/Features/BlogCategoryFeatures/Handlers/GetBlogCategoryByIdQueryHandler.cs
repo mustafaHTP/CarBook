@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.BlogCategoryFeatures.Queries;
+﻿using CarBook.Application.Exceptions;
+using CarBook.Application.Features.BlogCategoryFeatures.Queries;
 using CarBook.Application.Features.BlogCategoryFeatures.Results;
 using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
@@ -17,7 +18,8 @@ namespace CarBook.Application.Features.BlogCategoryFeatures.Handlers
 
         public async Task<GetBlogCategoryByIdQueryResult> Handle(GetBlogCategoryByIdQuery request, CancellationToken cancellationToken)
         {
-            var blogCategory = await _repository.GetByIdAsync(request.Id);
+            var blogCategory = await _repository.GetByIdAsync(request.Id)
+                ?? throw new NotFoundException<BlogCategory>(request.Id);
 
             return new GetBlogCategoryByIdQueryResult()
             {

@@ -1,6 +1,8 @@
-﻿using CarBook.Application.Features.BlogAuthorFeatures.Queries;
+﻿using CarBook.Application.Exceptions;
+using CarBook.Application.Features.BlogAuthorFeatures.Queries;
 using CarBook.Application.Features.BlogAuthorFeatures.Results;
 using CarBook.Application.Interfaces.Repositories;
+using CarBook.Domain.Entities;
 using MediatR;
 
 namespace CarBook.Application.Features.BlogAuthorFeatures.Handlers
@@ -16,7 +18,8 @@ namespace CarBook.Application.Features.BlogAuthorFeatures.Handlers
 
         public async Task<GetBlogAuthorByIdQueryResult> Handle(GetBlogAuthorByIdQuery request, CancellationToken cancellationToken)
         {
-            var blogAuthor = await _repository.GetByIdAsync(request.Id);
+            var blogAuthor = await _repository.GetByIdAsync(request.Id)
+                ?? throw new NotFoundException<BlogAuthor>(request.Id);
             var result = new GetBlogAuthorByIdQueryResult
             {
                 Id = blogAuthor.Id,

@@ -22,7 +22,6 @@
     <Folder Include="Features\CarFeatureFeatures\Results\" />
     <Folder Include="Features\ReservationFeatures\Results\" />
     <Folder Include="Features\ReservationFeatures\Queries\" />
-    <Folder Include="Filters\" />
   </ItemGroup>
 
 </Project>

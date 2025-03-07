@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.LocationFeatures.Queries;
+﻿using CarBook.Application.Exceptions;
+using CarBook.Application.Features.LocationFeatures.Queries;
 using CarBook.Application.Features.LocationFeatures.Results;
 using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
@@ -17,7 +18,8 @@ namespace CarBook.Application.Features.LocationFeatures.Handlers
 
         public async Task<GetLocationByIdQueryResult> Handle(GetLocationByIdQuery request, CancellationToken cancellationToken)
         {
-            var location = await _repository.GetByIdAsync(request.Id);
+            var location = await _repository.GetByIdAsync(request.Id)
+                ?? throw new NotFoundException<Location>(request.Id);
 
             return new GetLocationByIdQueryResult
             {

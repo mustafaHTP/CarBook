@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.AboutFeatures.Commands;
+﻿using CarBook.Application.Exceptions;
+using CarBook.Application.Features.AboutFeatures.Commands;
 using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
 using MediatR;
@@ -16,8 +17,10 @@ namespace CarBook.Application.Features.AboutFeatures.Handlers
 
         public async Task Handle(DeleteAboutCommand request, CancellationToken cancellationToken)
         {
-            var aboutToBeDeleted = await _repository.GetByIdAsync(request.Id);
-            await _repository.DeleteAsync(aboutToBeDeleted);
+            var about = await _repository.GetByIdAsync(request.Id)
+                ?? throw new NotFoundException<About>(request.Id);
+
+            await _repository.DeleteAsync(about);
         }
     }
 }

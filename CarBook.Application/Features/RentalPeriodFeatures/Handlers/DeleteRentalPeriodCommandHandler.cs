@@ -6,23 +6,21 @@ using MediatR;
 
 namespace CarBook.Application.Features.PricingPlanFeatures.Handlers
 {
-    public class UpdateRentalPeriodCommandHandler : IRequestHandler<UpdateRentaPeriodCommand>
+    public class DeleteRentalPeriodCommandHandler : IRequestHandler<DeleteRentalPeriodCommand>
     {
         private readonly IRepository<RentalPeriod> _repository;
 
-        public UpdateRentalPeriodCommandHandler(IRepository<RentalPeriod> repository)
+        public DeleteRentalPeriodCommandHandler(IRepository<RentalPeriod> repository)
         {
             _repository = repository;
         }
 
-        public async Task Handle(UpdateRentaPeriodCommand request, CancellationToken cancellationToken)
+        public async Task Handle(DeleteRentalPeriodCommand request, CancellationToken cancellationToken)
         {
             var rentalPeriod = await _repository.GetByIdAsync(request.Id)
                 ?? throw new NotFoundException<RentalPeriod>(request.Id);
 
-            rentalPeriod.Name = request.Name;
-
-            await _repository.UpdateAsync(rentalPeriod);
+            await _repository.DeleteAsync(rentalPeriod);
         }
     }
 }

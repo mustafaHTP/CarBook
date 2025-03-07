@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.FooterAddressFeatures.Queries;
+﻿using CarBook.Application.Exceptions;
+using CarBook.Application.Features.FooterAddressFeatures.Queries;
 using CarBook.Application.Features.FooterAddressFeatures.Results;
 using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
@@ -17,7 +18,8 @@ namespace CarBook.Application.Features.FooterAddressFeatures.Handlers
 
         public async Task<GetFooterAddressByIdQueryResult> Handle(GetFooterAddressByIdQuery request, CancellationToken cancellationToken)
         {
-            var footerAddress = await _repository.GetByIdAsync(request.Id);
+            var footerAddress = await _repository.GetByIdAsync(request.Id)
+                ?? throw new NotFoundException<FooterAddress>(request.Id);
 
             return new GetFooterAddressByIdQueryResult()
             {

@@ -16,14 +16,14 @@ namespace CarBook.Application.Features.ServiceFeatures.Handlers
 
         public async Task Handle(CreateServiceCommand request, CancellationToken cancellationToken)
         {
-            var serviceToBeCreated = new Service()
+            var service = new Service()
             {
                 Description = request.Description,
                 IconUrl = request.IconUrl,
                 Title = request.Title,
             };
 
-            await _repository.CreateAsync(serviceToBeCreated);
+            await _repository.CreateAsync(service);
         }
     }
 }

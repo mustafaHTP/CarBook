@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.SocialMediaFeatures.Commands;
+﻿using CarBook.Application.Exceptions;
+using CarBook.Application.Features.SocialMediaFeatures.Commands;
 using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
 using MediatR;
@@ -17,9 +18,10 @@ namespace CarBook.Application.Features.SocialMediaFeatures.Handlers
 
         public async Task Handle(DeleteSocialMediaCommand request, CancellationToken cancellationToken)
         {
-            var socialMediaToBeDeleted = await _repository.GetByIdAsync(request.Id);
+            var socialMedia = await _repository.GetByIdAsync(request.Id)
+                ?? throw new NotFoundException<SocialMedia>(request.Id);
 
-            await _repository.DeleteAsync(socialMediaToBeDeleted);
+            await _repository.DeleteAsync(socialMedia);
         }
     }
 }

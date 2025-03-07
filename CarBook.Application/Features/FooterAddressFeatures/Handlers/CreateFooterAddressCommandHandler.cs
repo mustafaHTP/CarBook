@@ -16,7 +16,7 @@ namespace CarBook.Application.Features.FooterAddressFeatures.Handlers
 
         public async Task Handle(CreateFooterAddressCommand request, CancellationToken cancellationToken)
         {
-            var footerAddressToBeCreated = new FooterAddress()
+            var footerAddress = new FooterAddress()
             {
                 Address = request.Address,
                 Description = request.Description,
@@ -24,7 +24,7 @@ namespace CarBook.Application.Features.FooterAddressFeatures.Handlers
                 Phone = request.Phone
             };
 
-            await _repository.CreateAsync(footerAddressToBeCreated);
+            await _repository.CreateAsync(footerAddress);
         }
     }
 }

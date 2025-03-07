@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.TestimonialFeatures.Queries;
+﻿using CarBook.Application.Exceptions;
+using CarBook.Application.Features.TestimonialFeatures.Queries;
 using CarBook.Application.Features.TestimonialFeatures.Results;
 using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
@@ -17,7 +18,8 @@ namespace CarBook.Application.Features.TestimonialFeatures.Handlers
 
         public async Task<GetTestimonialByIdQueryResult> Handle(GetTestimonialByIdQuery request, CancellationToken cancellationToken)
         {
-            var testimonial = await _repository.GetByIdAsync(request.Id);
+            var testimonial = await _repository.GetByIdAsync(request.Id)
+                ?? throw new NotFoundException<Testimonial>(request.Id);
 
             return new GetTestimonialByIdQueryResult
             {

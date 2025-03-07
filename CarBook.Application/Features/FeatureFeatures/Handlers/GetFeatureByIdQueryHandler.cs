@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.FeatureFeatures.Queries;
+﻿using CarBook.Application.Exceptions;
+using CarBook.Application.Features.FeatureFeatures.Queries;
 using CarBook.Application.Features.FeatureFeatures.Results;
 using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
@@ -17,7 +18,8 @@ namespace CarBook.Application.Features.FeatureFeatures.Handlers
 
         public async Task<GetFeatureByIdQueryResult> Handle(GetFeatureByIdQuery request, CancellationToken cancellationToken)
         {
-            var feature = await _repository.GetByIdAsync(request.Id);
+            var feature = await _repository.GetByIdAsync(request.Id)
+                ?? throw new NotFoundException<Feature>(request.Id);
 
             return new GetFeatureByIdQueryResult()
             {

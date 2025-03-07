@@ -16,12 +16,12 @@ namespace CarBook.Application.Features.BrandFeatures.Handlers
 
         public async Task Handle(CreateBrandCommand request, CancellationToken cancellationToken)
         {
-            var brandToBeCreated = new Brand()
+            var brand = new Brand()
             {
                 Name = request.Name,
             };
 
-            await _repository.CreateAsync(brandToBeCreated);
+            await _repository.CreateAsync(brand);
         }
     }
 }

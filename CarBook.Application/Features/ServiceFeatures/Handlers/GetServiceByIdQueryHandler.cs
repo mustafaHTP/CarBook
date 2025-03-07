@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.ServiceFeatures.Queries;
+﻿using CarBook.Application.Exceptions;
+using CarBook.Application.Features.ServiceFeatures.Queries;
 using CarBook.Application.Features.ServiceFeatures.Results;
 using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
@@ -17,7 +18,8 @@ namespace CarBook.Application.Features.ServiceFeatures.Handlers
 
         public async Task<GetServiceByIdQueryResult> Handle(GetServiceByIdQuery request, CancellationToken cancellationToken)
         {
-            var service = await _repository.GetByIdAsync(request.Id);
+            var service = await _repository.GetByIdAsync(request.Id)
+                ?? throw new NotFoundException<Service>(request.Id);
 
             return new GetServiceByIdQueryResult()
             {

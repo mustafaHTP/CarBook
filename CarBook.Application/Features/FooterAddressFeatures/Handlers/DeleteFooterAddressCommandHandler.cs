@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.FooterAddressFeatures.Commands;
+﻿using CarBook.Application.Exceptions;
+using CarBook.Application.Features.FooterAddressFeatures.Commands;
 using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
 using MediatR;
@@ -16,8 +17,10 @@ namespace CarBook.Application.Features.FooterAddressFeatures.Handlers
 
         public async Task Handle(DeleteFooterAddressCommand request, CancellationToken cancellationToken)
         {
-            var footerAddressToBeDeleted = await _repository.GetByIdAsync(request.Id);
-            await _repository.DeleteAsync(footerAddressToBeDeleted);
+            var footerAddress = await _repository.GetByIdAsync(request.Id)
+                ?? throw new NotFoundException<FooterAddress>(request.Id);
+
+            await _repository.DeleteAsync(footerAddress);
         }
     }
 }

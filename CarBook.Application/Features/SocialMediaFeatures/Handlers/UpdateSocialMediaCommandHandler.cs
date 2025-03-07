@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.SocialMediaFeatures.Commands;
+﻿using CarBook.Application.Exceptions;
+using CarBook.Application.Features.SocialMediaFeatures.Commands;
 using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
 using MediatR;
@@ -16,14 +17,14 @@ namespace CarBook.Application.Features.SocialMediaFeatures.Handlers
 
         public async Task Handle(UpdateSocialMediaCommand request, CancellationToken cancellationToken)
         {
-            var socialMediaToBeUpdated = await _repository.GetByIdAsync(request.Id);
+            var socialMedia = await _repository.GetByIdAsync(request.Id)
+                ?? throw new NotFoundException<SocialMedia>(request.Id);
 
-            //update here
-            socialMediaToBeUpdated.Name = request.Name;
-            socialMediaToBeUpdated.Url = request.Url;
-            socialMediaToBeUpdated.Icon = request.Icon;
+            socialMedia.Name = request.Name;
+            socialMedia.Url = request.Url;
+            socialMedia.Icon = request.Icon;
 
-            await _repository.UpdateAsync(socialMediaToBeUpdated);
+            await _repository.UpdateAsync(socialMedia);
         }
     }
 }

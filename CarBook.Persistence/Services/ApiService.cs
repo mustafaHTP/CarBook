@@ -32,14 +32,14 @@ namespace CarBook.Persistence.Services
             var response = await client.GetAsync(url);
             if (!response.IsSuccessStatusCode)
             {
-                return ApiResponse<T>.CreateResponse(false, $"Failed to get data. Status code: {response.StatusCode}", null);
+                return ApiResponse<T>.Failure($"Failed to get data. Status code: {response.StatusCode}");
             }
 
             T? result;
             var jsonData = await response.Content.ReadAsStringAsync();
             result = JsonConvert.DeserializeObject<T>(jsonData);
 
-            return ApiResponse<T>.CreateResponse(true, "Data retrieved successfully", result);
+            return ApiResponse<T>.Success("Data retrieved successfully", result);
         }
 
         public async Task<ApiResponse> PostAsync(string url, HttpContent? data)

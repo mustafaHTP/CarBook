@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.LocationFeatures.Commands;
+﻿using CarBook.Application.Exceptions;
+using CarBook.Application.Features.LocationFeatures.Commands;
 using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
 using MediatR;
@@ -16,9 +17,10 @@ namespace CarBook.Application.Features.LocationFeatures.Handlers
 
         public async Task Handle(DeleteLocationCommand request, CancellationToken cancellationToken)
         {
-            var locationToBeDeleted = await _repository.GetByIdAsync(request.Id);
+            var location = await _repository.GetByIdAsync(request.Id)
+                ?? throw new NotFoundException<Location>(request.Id);
 
-            await _repository.DeleteAsync(locationToBeDeleted);
+            await _repository.DeleteAsync(location);
         }
     }
 }

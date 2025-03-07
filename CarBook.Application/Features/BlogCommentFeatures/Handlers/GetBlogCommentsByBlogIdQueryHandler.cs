@@ -1,6 +1,8 @@
-﻿using CarBook.Application.Features.BlogCommentFeatures.Queries;
+﻿using CarBook.Application.Exceptions;
+using CarBook.Application.Features.BlogCommentFeatures.Queries;
 using CarBook.Application.Features.BlogCommentFeatures.Results;
 using CarBook.Application.Interfaces.Repositories;
+using CarBook.Domain.Entities;
 using MediatR;
 
 namespace CarBook.Application.Features.BlogCommentFeatures.Handlers

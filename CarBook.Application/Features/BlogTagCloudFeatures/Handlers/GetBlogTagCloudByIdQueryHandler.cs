@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.BlogTagCloudFeatures.Queries;
+﻿using CarBook.Application.Exceptions;
+using CarBook.Application.Features.BlogTagCloudFeatures.Queries;
 using CarBook.Application.Features.BlogTagCloudFeatures.Results;
 using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
@@ -17,7 +18,8 @@ namespace CarBook.Application.Features.BlogTagCloudFeatures.Handlers
 
         public async Task<GetBlogTagCloudByIdQueryResult> Handle(GetBlogTagCloudByIdQuery request, CancellationToken cancellationToken)
         {
-            var blogTagCloud = await _repository.GetByIdAsync(request.Id);
+            var blogTagCloud = await _repository.GetByIdAsync(request.Id)
+                ?? throw new NotFoundException<BlogTagCloud>(request.Id);
             var result = new GetBlogTagCloudByIdQueryResult
             {
                 Id = blogTagCloud.Id,

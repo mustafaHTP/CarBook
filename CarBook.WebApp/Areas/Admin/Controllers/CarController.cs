@@ -104,7 +104,6 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
         {
             UpdateCarDto updateCarDto = new()
             {
-                Id = updateCarViewModel.Id,
                 ModelId = updateCarViewModel.ModelId,
                 Km = updateCarViewModel.Km,
                 SeatCount = updateCarViewModel.SeatCount,
@@ -118,7 +117,8 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
             var jsonData = JsonConvert.SerializeObject(updateCarDto);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-            var response = await _apiService.PutAsync("https://localhost:7116/api/Cars", content);
+            var response =
+                await _apiService.PutAsync($"https://localhost:7116/api/Cars/{updateCarViewModel.Id}", content);
             if (response.IsSuccessful)
             {
                 return RedirectToAction(nameof(Index));

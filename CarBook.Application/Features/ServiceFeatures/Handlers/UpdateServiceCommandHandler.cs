@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.ServiceFeatures.Commands;
+﻿using CarBook.Application.Exceptions;
+using CarBook.Application.Features.ServiceFeatures.Commands;
 using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
 using MediatR;
@@ -16,13 +17,14 @@ namespace CarBook.Application.Features.ServiceFeatures.Handlers
 
         public async Task Handle(UpdateServiceCommand request, CancellationToken cancellationToken)
         {
-            var serviceToBeUpdated = await _repository.GetByIdAsync(request.Id);
-            //update here
-            serviceToBeUpdated.Description = request.Description;
-            serviceToBeUpdated.Title = request.Title;
-            serviceToBeUpdated.IconUrl = request.IconUrl;
+            var service = await _repository.GetByIdAsync(request.Id)
+                ?? throw new NotFoundException<Service>(request.Id);
 
-            await _repository.UpdateAsync(serviceToBeUpdated);
+            service.Description = request.Description;
+            service.Title = request.Title;
+            service.IconUrl = request.IconUrl;
+
+            await _repository.UpdateAsync(service);
         }
     }
 }

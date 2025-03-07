@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.ContactFeatures.Commands;
+﻿using CarBook.Application.Exceptions;
+using CarBook.Application.Features.ContactFeatures.Commands;
 using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
 using MediatR;
@@ -16,7 +17,8 @@ namespace CarBook.Application.Features.ContactFeatures.Handlers
 
         public async Task Handle(UpdateContactCommand request, CancellationToken cancellationToken)
         {
-            var contact = await _repository.GetByIdAsync(request.Id);
+            var contact = await _repository.GetByIdAsync(request.Id)
+                ?? throw new NotFoundException<Contact>(request.Id);
 
             contact.Email = request.Email;
             contact.Message = request.Message;

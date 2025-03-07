@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Interfaces.Repositories;
+﻿using CarBook.Application;
+using CarBook.Application.Interfaces.Repositories;
 using CarBook.Persistence.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -22,6 +23,11 @@ namespace CarBook.Persistence.Extensions
             services.AddScoped<IRentalCarRepository, RentalCarRepository>();
             services.AddScoped<ICarFeatureRepository, CarFeatureRepository>();
             services.AddScoped<ICarReviewRepository, CarReviewRepository>();
+        }
+
+        public static void AddMediatRService(this IServiceCollection services)
+        {
+            services.AddMediatR(config => config.RegisterServicesFromAssemblyContaining<ApplicationAssemblyMarker>());
         }
     }
 }

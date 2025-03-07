@@ -1,6 +1,8 @@
-﻿using CarBook.Application.Features.CarFeatures.Queries;
+﻿using CarBook.Application.Exceptions;
+using CarBook.Application.Features.CarFeatures.Queries;
 using CarBook.Application.Features.CarFeatures.Results;
 using CarBook.Application.Interfaces.Repositories;
+using CarBook.Domain.Entities;
 using MediatR;
 
 namespace CarBook.Application.Features.CarFeatures.Handlers
@@ -16,7 +18,8 @@ namespace CarBook.Application.Features.CarFeatures.Handlers
 
         public async Task<GetCarByIdQueryResult> Handle(GetCarByIdQuery request, CancellationToken cancellationToken)
         {
-            var car = _repository.GetById(request.Id);
+            var car = _repository.GetById(request.Id)
+                ?? throw new NotFoundException<Car>(request.Id);
 
             var result = new GetCarByIdQueryResult()
             {

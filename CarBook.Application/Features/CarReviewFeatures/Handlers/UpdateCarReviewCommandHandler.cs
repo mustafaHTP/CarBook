@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.CarReviewFeatures.Commands;
+﻿using CarBook.Application.Exceptions;
+using CarBook.Application.Features.CarReviewFeatures.Commands;
 using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
 using MediatR;
@@ -16,7 +17,8 @@ namespace CarBook.Application.Features.CarReviewFeatures.Handlers
 
         public async Task Handle(UpdateCarReviewCommand request, CancellationToken cancellationToken)
         {
-            var carReview = await _repository.GetByIdAsync(request.Id);
+            var carReview = await _repository.GetByIdAsync(request.Id)
+                ?? throw new NotFoundException<CarReview>(request.Id);
 
             // Update here
             carReview.Review = request.Review;

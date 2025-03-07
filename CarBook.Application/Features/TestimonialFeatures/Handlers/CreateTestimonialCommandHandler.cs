@@ -17,7 +17,7 @@ namespace CarBook.Application.Features.TestimonialFeatures.Handlers
 
         public async Task Handle(CreateTestimonialCommand request, CancellationToken cancellationToken)
         {
-            var testimonialToBeCreated = new Testimonial()
+            var testimonial = new Testimonial()
             {
                 Name = request.Name,
                 Comment = request.Comment,
@@ -25,7 +25,7 @@ namespace CarBook.Application.Features.TestimonialFeatures.Handlers
                 Title = request.Title
             };
 
-            await _repository.CreateAsync(testimonialToBeCreated);
+            await _repository.CreateAsync(testimonial);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.FooterAddressFeatures.Commands;
+﻿using CarBook.Application.Exceptions;
+using CarBook.Application.Features.FooterAddressFeatures.Commands;
 using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
 using MediatR;
@@ -16,15 +17,16 @@ namespace CarBook.Application.Features.FooterAddressFeatures.Handlers
 
         public async Task Handle(UpdateFooterAddressCommand request, CancellationToken cancellationToken)
         {
-            var footerAddressToBeUpdated = await _repository.GetByIdAsync(request.Id);
+            var footerAddress = await _repository.GetByIdAsync(request.Id)
+                ?? throw new NotFoundException<FooterAddress>(request.Id);
 
             //update here
-            footerAddressToBeUpdated.Description = request.Description;
-            footerAddressToBeUpdated.Phone = request.Phone;
-            footerAddressToBeUpdated.Address = request.Address;
-            footerAddressToBeUpdated.Email = request.Email;
+            footerAddress.Description = request.Description;
+            footerAddress.Phone = request.Phone;
+            footerAddress.Address = request.Address;
+            footerAddress.Email = request.Email;
 
-            await _repository.UpdateAsync(footerAddressToBeUpdated);
+            await _repository.UpdateAsync(footerAddress);
         }
     }
 }

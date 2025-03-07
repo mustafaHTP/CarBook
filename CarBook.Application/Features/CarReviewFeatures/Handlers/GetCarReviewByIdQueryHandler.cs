@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.CarReviewFeatures.Queries;
+﻿using CarBook.Application.Exceptions;
+using CarBook.Application.Features.CarReviewFeatures.Queries;
 using CarBook.Application.Features.CarReviewFeatures.Results;
 using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
@@ -17,7 +18,8 @@ namespace CarBook.Application.Features.CarReviewFeatures.Handlers
 
         public async Task<GetCarReviewByIdQueryResult> Handle(GetCarReviewByIdQuery request, CancellationToken cancellationToken)
         {
-            var carReview = await _repository.GetByIdAsync(request.Id);
+            var carReview = await _repository.GetByIdAsync(request.Id)
+                ?? throw new NotFoundException<CarReview>(request.Id);
             var result = new GetCarReviewByIdQueryResult
             {
                 Id = carReview.Id,

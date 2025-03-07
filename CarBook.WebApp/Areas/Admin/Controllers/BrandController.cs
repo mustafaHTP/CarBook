@@ -85,7 +85,8 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
             var jsonData = JsonConvert.SerializeObject(updateBrandDto);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-            var response = await _apiService.PutAsync("https://localhost:7116/api/Brands", content);
+            var response =
+                await _apiService.PutAsync($"https://localhost:7116/api/Brands/{updateBrandViewModel.Id}", content);
             if (response.IsSuccessful)
             {
                 return RedirectToAction(nameof(Index));

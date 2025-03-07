@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.TestimonialFeatures.Commands;
+﻿using CarBook.Application.Exceptions;
+using CarBook.Application.Features.TestimonialFeatures.Commands;
 using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
 using MediatR;
@@ -16,8 +17,10 @@ namespace CarBook.Application.Features.TestimonialFeatures.Handlers
 
         public async Task Handle(DeleteTestimonialCommand request, CancellationToken cancellationToken)
         {
-            var testimonialToBeDeleted = await _repository.GetByIdAsync(request.Id);
-            await _repository.DeleteAsync(testimonialToBeDeleted);
+            var testimonial = await _repository.GetByIdAsync(request.Id)
+                ?? throw new NotFoundException<Testimonial>(request.Id);
+
+            await _repository.DeleteAsync(testimonial);
         }
     }
 }

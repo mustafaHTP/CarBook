@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.BannerFeatures.Commands;
+﻿using CarBook.Application.Exceptions;
+using CarBook.Application.Features.BannerFeatures.Commands;
 using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
 using MediatR;
@@ -16,7 +17,8 @@ namespace CarBook.Application.Features.BannerFeatures.Handlers
 
         public async Task Handle(UpdateBannerCommand request, CancellationToken cancellationToken)
         {
-            var bannerToBeUpdated = await _repository.GetByIdAsync(request.Id);
+            var bannerToBeUpdated = await _repository.GetByIdAsync(request.Id)
+                ?? throw new NotFoundException<Banner>(request.Id);
 
             // Update here
             bannerToBeUpdated.VideoDescription = request.VideoDescription;

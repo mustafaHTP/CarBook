@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.ModelFeatures.Commands;
+﻿using CarBook.Application.Exceptions;
+using CarBook.Application.Features.ModelFeatures.Commands;
 using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
 using MediatR;
@@ -16,14 +17,11 @@ namespace CarBook.Application.Features.ModelFeatures.Handlers
 
         public async Task Handle(UpdateModelCommand request, CancellationToken cancellationToken)
         {
-            var model = await _repository.GetByIdAsync(request.Id);
+            var model = await _repository.GetByIdAsync(request.Id)
+                ?? throw new NotFoundException<Model>(request.Id);
 
-            // Update here
             model.BrandId = request.BrandId;
-            if (request.Name is not null)
-            {
-                model.Name = request.Name;
-            }
+            model.Name = request.Name;
 
             await _repository.UpdateAsync(model);
         }

@@ -16,12 +16,12 @@ namespace CarBook.Application.Features.LocationFeatures.Handlers
 
         public async Task Handle(CreateLocationCommand request, CancellationToken cancellationToken)
         {
-            var locationToBeCreated = new Location()
+            var location = new Location()
             {
                 Name = request.Name
             };
 
-            await _repository.CreateAsync(locationToBeCreated);
+            await _repository.CreateAsync(location);
         }
     }
 }

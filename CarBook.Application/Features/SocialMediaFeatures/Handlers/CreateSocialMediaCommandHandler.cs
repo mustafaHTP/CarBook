@@ -16,14 +16,14 @@ namespace CarBook.Application.Features.SocialMediaFeatures.Handlers
 
         public async Task Handle(CreateSocialMediaCommand request, CancellationToken cancellationToken)
         {
-            var socialMediaToBeCreated = new SocialMedia()
+            var socialMedia = new SocialMedia()
             {
                 Icon = request.Icon,
                 Name = request.Name,
                 Url = request.Url,
             };
 
-            await _repository.CreateAsync(socialMediaToBeCreated);
+            await _repository.CreateAsync(socialMedia);
         }
     }
 }

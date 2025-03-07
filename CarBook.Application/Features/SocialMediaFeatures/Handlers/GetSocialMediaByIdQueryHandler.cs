@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.SocialMediaFeatures.Queries;
+﻿using CarBook.Application.Exceptions;
+using CarBook.Application.Features.SocialMediaFeatures.Queries;
 using CarBook.Application.Features.SocialMediaFeatures.Results;
 using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
@@ -17,7 +18,8 @@ namespace CarBook.Application.Features.SocialMediaFeatures.Handlers
 
         public async Task<GetSocialMediaByIdQueryResult> Handle(GetSocialMediaByIdQuery request, CancellationToken cancellationToken)
         {
-            var socialMedia = await _repository.GetByIdAsync(request.Id);
+            var socialMedia = await _repository.GetByIdAsync(request.Id)
+                ?? throw new NotFoundException<SocialMedia>(request.Id);
 
             return new GetSocialMediaByIdQueryResult()
             {

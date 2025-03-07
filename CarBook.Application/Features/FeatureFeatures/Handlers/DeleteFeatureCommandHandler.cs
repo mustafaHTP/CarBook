@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.FeatureFeatures.Commands;
+﻿using CarBook.Application.Exceptions;
+using CarBook.Application.Features.FeatureFeatures.Commands;
 using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
 using MediatR;
@@ -16,8 +17,10 @@ namespace CarBook.Application.Features.FeatureFeatures.Handlers
 
         public async Task Handle(DeleteFeatureCommand request, CancellationToken cancellationToken)
         {
-            var featureToBeDeleted = await _repository.GetByIdAsync(request.Id);
-            await _repository.DeleteAsync(featureToBeDeleted);
+            var feature = await _repository.GetByIdAsync(request.Id)
+                ?? throw new NotFoundException<Feature>(request.Id);
+
+            await _repository.DeleteAsync(feature);
         }
     }
 }

@@ -1,9 +1,9 @@
 using CarBook.Application.Interfaces.Services;
-using CarBook.Application.Services;
 using CarBook.Application.Validators;
 using CarBook.Persistence.Context;
 using CarBook.Persistence.Extensions;
 using CarBook.Persistence.Services;
+using CarBook.WebApi.Middlewares;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -38,8 +38,9 @@ builder.Services.AddRepositories();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IApiService, ApiService>();
 
-//Add application services
-builder.Services.AddApplicationService();
+////Add application services
+//builder.Services.AddApplicationService();
+builder.Services.AddMediatRService();
 
 //Force English language for validation messages
 ValidatorOptions.Global.LanguageManager.Culture = new CultureInfo("en");
@@ -87,6 +88,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.UseCors("AllowSpecificOrigin");
 

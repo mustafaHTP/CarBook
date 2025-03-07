@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.BlogFeatures.Commands;
+﻿using CarBook.Application.Exceptions;
+using CarBook.Application.Features.BlogFeatures.Commands;
 using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
 using MediatR;
@@ -16,7 +17,8 @@ namespace CarBook.Application.Features.BlogFeatures.Handlers
 
         public async Task Handle(UpdateBlogCommand request, CancellationToken cancellationToken)
         {
-            var blog = await _repository.GetByIdAsync(request.Id);
+            var blog = await _repository.GetByIdAsync(request.Id)
+                ?? throw new NotFoundException<Blog>(request.Id);
 
             // Update here
             blog.BlogAuthorId = request.BlogAuthorId;

@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.BlogCategoryFeatures.Commands;
+﻿using CarBook.Application.Exceptions;
+using CarBook.Application.Features.BlogCategoryFeatures.Commands;
 using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
 using MediatR;
@@ -16,7 +17,8 @@ namespace CarBook.Application.Features.BlogCategoryFeatures.Handlers
 
         public async Task Handle(DeleteBlogCategoryCommand request, CancellationToken cancellationToken)
         {
-            var blogCategory = await _repository.GetByIdAsync(request.Id);
+            var blogCategory = await _repository.GetByIdAsync(request.Id)
+                ?? throw new NotFoundException<BlogCategory>(request.Id);
 
             await _repository.DeleteAsync(blogCategory);
         }

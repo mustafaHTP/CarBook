@@ -81,14 +81,14 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
         {
             UpdateFeatureDto updateCarDto = new()
             {
-                Id = updateFeatureViewModel.Id,
                 Name = updateFeatureViewModel.Name
             };
 
             var jsonData = JsonConvert.SerializeObject(updateCarDto);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-            var response = await _apiService.PutAsync("https://localhost:7116/api/Features", content);
+            var response =
+                await _apiService.PutAsync($"https://localhost:7116/api/Features/{updateFeatureViewModel.Id}", content);
             if (response.IsSuccessful)
             {
                 return RedirectToAction(nameof(Index));

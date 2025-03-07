@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.TestimonialFeatures.Commands;
+﻿using CarBook.Application.Exceptions;
+using CarBook.Application.Features.TestimonialFeatures.Commands;
 using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
 using MediatR;
@@ -15,14 +16,15 @@ namespace CarBook.Application.Features.TestimonialFeatures.Handlers
         }
         public async Task Handle(UpdateTestimonialCommand request, CancellationToken cancellationToken)
         {
-            var testimonialToBeUpdated = await _repository.GetByIdAsync(request.Id);
+            var testimonial = await _repository.GetByIdAsync(request.Id)
+                ?? throw new NotFoundException<Testimonial>(request.Id);
 
-            testimonialToBeUpdated.Name = request.Name;
-            testimonialToBeUpdated.Comment = request.Comment;
-            testimonialToBeUpdated.ImageUrl = request.ImageUrl;
-            testimonialToBeUpdated.Title = request.Title;
+            testimonial.Name = request.Name;
+            testimonial.Comment = request.Comment;
+            testimonial.ImageUrl = request.ImageUrl;
+            testimonial.Title = request.Title;
 
-            await _repository.UpdateAsync(testimonialToBeUpdated);
+            await _repository.UpdateAsync(testimonial);
 
         }
     }

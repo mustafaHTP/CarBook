@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.FeatureFeatures.Commands;
+﻿using CarBook.Application.Exceptions;
+using CarBook.Application.Features.FeatureFeatures.Commands;
 using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
 using MediatR;
@@ -16,11 +17,12 @@ namespace CarBook.Application.Features.FeatureFeatures.Handlers
 
         public async Task Handle(UpdateFeatureCommand request, CancellationToken cancellationToken)
         {
-            var featureToBeUpdated = await _repository.GetByIdAsync(request.Id);
-            //update here
-            featureToBeUpdated.Name = request.Name;
+            var feature = await _repository.GetByIdAsync(request.Id)
+                ?? throw new NotFoundException<Feature>(request.Id);
 
-            await _repository.UpdateAsync(featureToBeUpdated);
+            feature.Name = request.Name;
+
+            await _repository.UpdateAsync(feature);
         }
     }
 }

@@ -56,12 +56,12 @@ namespace CarBook.WebApi.Controllers
             return Ok("Feature has been created");
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update(UpdateFeatureDto updateFeatureDto)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateFeatureDto updateFeatureDto)
         {
             var updateFeatureCommand = new UpdateFeatureCommand()
             {
-                Id = updateFeatureDto.Id,
+                Id = id,
                 Name = updateFeatureDto.Name
             };
 

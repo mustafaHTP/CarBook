@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.ServiceFeatures.Commands;
+﻿using CarBook.Application.Exceptions;
+using CarBook.Application.Features.ServiceFeatures.Commands;
 using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
 using MediatR;
@@ -16,9 +17,10 @@ namespace CarBook.Application.Features.ServiceFeatures.Handlers
 
         public async Task Handle(DeleteServiceCommand request, CancellationToken cancellationToken)
         {
-            var serviceToBeDeleted = await _repository.GetByIdAsync(request.Id);
+            var service = await _repository.GetByIdAsync(request.Id)
+                ?? throw new NotFoundException<Service>(request.Id);
 
-            await _repository.DeleteAsync(serviceToBeDeleted);
+            await _repository.DeleteAsync(service);
         }
     }
 }

@@ -16,12 +16,12 @@ namespace CarBook.Application.Features.PricingPlanFeatures.Handlers
 
         public async Task Handle(CreateRentaPeriodCommand request, CancellationToken cancellationToken)
         {
-            var pricingPlan = new RentalPeriod()
+            var rentalPeriod = new RentalPeriod()
             {
                 Name = request.Name,
             };
 
-            await _repository.CreateAsync(pricingPlan);
+            await _repository.CreateAsync(rentalPeriod);
         }
     }
 }

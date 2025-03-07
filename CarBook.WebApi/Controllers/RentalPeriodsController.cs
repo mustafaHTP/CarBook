@@ -71,7 +71,7 @@ namespace CarBook.WebApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var command = new DeleteRentaPeriodCommand
+            var command = new DeleteRentalPeriodCommand
             {
                 Id = id
             };

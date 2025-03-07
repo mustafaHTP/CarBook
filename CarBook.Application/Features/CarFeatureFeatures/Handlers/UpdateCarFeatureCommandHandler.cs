@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.CarFeatureFeatures.Commands;
+﻿using CarBook.Application.Exceptions;
+using CarBook.Application.Features.CarFeatureFeatures.Commands;
 using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
 using MediatR;
@@ -16,7 +17,8 @@ namespace CarBook.Application.Features.CarFeatureFeatures.Handlers
 
         public async Task Handle(UpdateCarFeatureCommand request, CancellationToken cancellationToken)
         {
-            var carFeature = await _repository.GetByIdAsync(request.Id);
+            var carFeature = await _repository.GetByIdAsync(request.Id)
+                ?? throw new NotFoundException<CarFeature>(request.Id);
 
             carFeature.Available = request.IsAvailable;
 
