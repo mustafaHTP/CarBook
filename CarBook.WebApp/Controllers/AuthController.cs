@@ -1,6 +1,6 @@
 ﻿using CarBook.Application.Dtos.AuthDtos;
 using CarBook.Application.Interfaces.Services;
-using CarBook.Persistence.Filters;
+using CarBook.WebApp.Filters;
 using CarBook.WebApp.Models.AuthModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

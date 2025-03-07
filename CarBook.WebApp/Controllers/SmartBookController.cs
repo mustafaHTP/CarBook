@@ -1,7 +1,7 @@
 ﻿using CarBook.Application.Dtos.CarDtos;
 using CarBook.Application.Dtos.SmartBookDtos;
 using CarBook.Application.Interfaces.Services;
-using CarBook.Persistence.Filters;
+using CarBook.WebApp.Filters;
 using CarBook.WebApp.Models;
 using CarBook.WebApp.Models.SmartBookModels;
 using Microsoft.AspNetCore.Mvc;

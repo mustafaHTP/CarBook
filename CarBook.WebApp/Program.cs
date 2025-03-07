@@ -1,10 +1,5 @@
-using CarBook.Application.Interfaces.Services;
-using CarBook.Persistence.Filters;
-using CarBook.Persistence.Services;
-using CarBook.WebApp.Validators;
-using FluentValidation;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System.Globalization;
+using CarBook.Persistence.Extensions;
+using CarBook.WebApp.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,28 +10,11 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
 builder.Services.AddHttpContextAccessor();
 
-// Add authentication
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddCookie(JwtBearerDefaults.AuthenticationScheme, options =>
-    {
-        options.LoginPath = "/Auth/Login";
-        options.LogoutPath = "/Auth/Logout";
-        options.AccessDeniedPath = "/Auth/AccessDenied";
-        options.Cookie.Name = "CarBookCookie";
-        options.Cookie.HttpOnly = true;
-        options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
-        options.Cookie.SameSite = SameSiteMode.Strict;
-    });
+builder.Services.AddJwtAuthenticationApp();
 
+builder.Services.AddFluentValidationApp();
 
-//Force English language for validation messages
-ValidatorOptions.Global.LanguageManager.Culture = new CultureInfo("en");
-//Add validators
-builder.Services.AddValidatorsFromAssemblyContaining<ValidatorAssemblyMarker>();
-
-builder.Services.AddScoped<IJwtService, JwtService>();
-builder.Services.AddScoped<IApiService, ApiService>();
-builder.Services.AddScoped<ISmartBookService, SmartBookService>();
+builder.Services.AddServicesApp();
 
 //Add filters
 builder.Services.AddScoped(typeof(ValidationFilterAttribute<>));
@@ -51,7 +29,6 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -62,7 +39,6 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "area",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-
 
 app.MapDefaultControllerRoute();
 

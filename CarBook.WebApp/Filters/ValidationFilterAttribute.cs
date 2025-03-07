@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarBook.Persistence.Filters
+namespace CarBook.WebApp.Filters
 {
     public class ValidationFilterAttribute<T> : ActionFilterAttribute
     {

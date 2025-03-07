@@ -31,9 +31,9 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddApplicationDbContext();
 builder.Services.AddRepositories();
 
-builder.Services.AddServices();
+builder.Services.AddServicesApi();
 builder.Services.AddMediatRService();
-builder.Services.AddFluentValidation();
+builder.Services.AddFluentValidationApi();
 
 builder.Services.AddCors(options =>
 {
@@ -44,7 +44,7 @@ builder.Services.AddCors(options =>
 });
 
 
-builder.Services.AddJwtAuthentication(builder.Configuration);
+builder.Services.AddJwtAuthenticationApi(builder.Configuration);
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
