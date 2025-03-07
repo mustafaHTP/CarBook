@@ -21,8 +21,9 @@ namespace CarBook.Persistence.Services
         public async Task<ApiResponse<T>> GetAsync<T>(string url) where T : class
         {
             var client = _httpClientFactory.CreateClient();
-            var accessToken = GetAccessToken();
 
+            //Get the access token from the HttpContext
+            var accessToken = GetAccessToken();
             if (!string.IsNullOrEmpty(accessToken))
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
@@ -31,7 +32,7 @@ namespace CarBook.Persistence.Services
             var response = await client.GetAsync(url);
             if (!response.IsSuccessStatusCode)
             {
-                return ApiResponse<T>.CreateResponse(true, $"Failed to get data. Status code: {response.StatusCode}", null);
+                return ApiResponse<T>.CreateResponse(false, $"Failed to get data. Status code: {response.StatusCode}", null);
             }
 
             T? result;
