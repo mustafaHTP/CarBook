@@ -1,6 +1,9 @@
 ﻿using CarBook.Application.Features.BlogFeatures.Queries;
 using CarBook.Application.Features.BlogFeatures.Results;
+using CarBook.Application.Helpers;
 using CarBook.Application.Interfaces.Repositories;
+using CarBook.Application.RepositoryMappings;
+using CarBook.Domain.Entities;
 using MediatR;
 
 namespace CarBook.Application.Features.BlogFeatures.Handlers
@@ -16,7 +19,9 @@ namespace CarBook.Application.Features.BlogFeatures.Handlers
 
         public async Task<IEnumerable<GetBlogsQueryResult>> Handle(GetBlogsQuery request, CancellationToken cancellationToken)
         {
-            var blogs = _repository.GetAll(request.Includes, request.Limit, request.DescendingOrder);
+            var includeExpressions = IncludeExpressionHelper.GetIncludeExpressions<Blog>(request.Includes, BlogMappings.IncludeMappings);
+
+            var blogs = _repository.GetAll(includeExpressions, request.Limit, request.DescendingOrder);
             var result = blogs.Select(blog => new GetBlogsQueryResult
             {
                 Id = blog.Id,

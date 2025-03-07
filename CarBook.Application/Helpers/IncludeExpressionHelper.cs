@@ -12,6 +12,13 @@ namespace CarBook.Application.Helpers
 {
     public static class IncludeExpressionHelper
     {
+        /// <summary>
+        /// It returns the include expressions for the given includes
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="includes"></param>
+        /// <param name="includeMappings"></param>
+        /// <returns></returns>
         public static IEnumerable<Expression<Func<Blog, object?>>> GetIncludeExpressions<T>(string? includes, Dictionary<string, Expression<Func<Blog, object?>>> includeMappings)
         {
             ICollection<Expression<Func<Blog, object?>>> includeExpressions = [];

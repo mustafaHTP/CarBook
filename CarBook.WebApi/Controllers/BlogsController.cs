@@ -22,11 +22,9 @@ namespace CarBook.WebApi.Controllers
         [HttpGet()]
         public async Task<IActionResult> GetAll([FromQuery] GetBlogsQueryDto getBlogsQueryDto)
         {
-            //Parse includes query string to list
-            var includes = getBlogsQueryDto.Includes?.Split(',').ToList();
             var query = new GetBlogsQuery()
             {
-                Includes = includes ?? [],
+                Includes = getBlogsQueryDto.Includes,
                 Limit = getBlogsQueryDto.Limit,
                 DescendingOrder = getBlogsQueryDto.DescendingOrder
             };

@@ -19,21 +19,15 @@ namespace CarBook.Persistence.Repositories
         {
         }
 
-        public IEnumerable<Blog> GetAll(IEnumerable<string> includes, int limit = 0, bool isDescendingOrder = false)
+        public IEnumerable<Blog> GetAll(IEnumerable<Expression<Func<Blog, object?>>> includes, int limit = 0, bool isDescendingOrder = false)
         {
             var blogs = _context.Blogs.AsQueryable();
 
             if (includes.Any())
             {
-                //Normalize the includes and ensure they are unique
-                var uniqueIncludes = new HashSet<string>(includes.Select(i => i.ToLower()));
-
-                foreach (var item in uniqueIncludes)
+                foreach (var include in includes)
                 {
-                    if (_includeMappings.TryGetValue(item, out Expression<Func<Blog, object>>? value))
-                    {
-                        blogs = blogs.Include(value);
-                    }
+                    blogs = blogs.Include(include);
                 }
             }
 
