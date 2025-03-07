@@ -8,13 +8,6 @@ namespace CarBook.Persistence.Repositories
 {
     public class BlogRepository : Repository<Blog>, IBlogRepository
     {
-        private static readonly Dictionary<string, Expression<Func<Blog, object>>> _includeMappings =
-            new(StringComparer.OrdinalIgnoreCase)
-            {
-                { "author", b => b.BlogAuthor },
-                { "category", b => b.BlogCategory },
-            };
-
         public BlogRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
         {
         }
@@ -77,21 +70,15 @@ namespace CarBook.Persistence.Repositories
                 .Select(bt => bt.BlogTag);
         }
 
-        public Blog? GetById(int id, IEnumerable<string> includes)
+        public Blog? GetById(int id, IEnumerable<Expression<Func<Blog, object?>>> includes)
         {
             var blogs = _context.Blogs.AsQueryable();
 
             if (includes.Any())
             {
-                //Normalize the includes and ensure they are unique
-                var uniqueIncludes = new HashSet<string>(includes.Select(i => i.ToLower()));
-
-                foreach (var item in uniqueIncludes)
+                foreach (var include in includes)
                 {
-                    if (_includeMappings.TryGetValue(item, out Expression<Func<Blog, object>>? value))
-                    {
-                        blogs = blogs.Include(value);
-                    }
+                    blogs = blogs.Include(include);
                 }
             }
 

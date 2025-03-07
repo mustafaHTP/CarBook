@@ -51,12 +51,10 @@ namespace CarBook.WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById([FromRoute] int id, [FromQuery] GetBlogByIdQueryDto getBlogByIdQueryDto)
         {
-            // Parse includes query string to list
-            var includes = getBlogByIdQueryDto.Includes?.Split(',').ToList();
             var query = new GetBlogByIdQuery()
             {
                 Id = id,
-                Includes = includes ?? []
+                Includes = getBlogByIdQueryDto.Includes
             };
 
             var blog = await _mediator.Send(query);

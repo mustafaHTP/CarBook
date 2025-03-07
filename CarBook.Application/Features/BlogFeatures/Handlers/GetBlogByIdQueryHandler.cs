@@ -1,7 +1,9 @@
 ﻿using CarBook.Application.Exceptions;
 using CarBook.Application.Features.BlogFeatures.Queries;
 using CarBook.Application.Features.BlogFeatures.Results;
+using CarBook.Application.Helpers;
 using CarBook.Application.Interfaces.Repositories;
+using CarBook.Application.RepositoryMappings;
 using CarBook.Domain.Entities;
 using MediatR;
 
@@ -18,7 +20,9 @@ namespace CarBook.Application.Features.BlogFeatures.Handlers
 
         public async Task<GetBlogByIdQueryResult> Handle(GetBlogByIdQuery request, CancellationToken cancellationToken)
         {
-            var blog = _repository.GetById(request.Id, request.Includes)
+            var includeExpressions = IncludeExpressionHelper.GetIncludeExpressions<Blog>(request.Includes, BlogMappings.IncludeMappings);
+
+            var blog = _repository.GetById(request.Id, includeExpressions)
                 ?? throw new NotFoundException<Blog>(request.Id);
             var result = new GetBlogByIdQueryResult()
             {

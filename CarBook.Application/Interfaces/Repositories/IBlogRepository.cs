@@ -9,7 +9,7 @@ namespace CarBook.Application.Interfaces.Repositories
         IEnumerable<Blog> GetAllByBlogCategoryId(int blogCategoryId, IEnumerable<Expression<Func<Blog, object?>>> includes);
         IEnumerable<BlogTag> GetBlogTagsById(int id);
         int GetCommentCountById(int id);
-        Blog? GetById(int id, IEnumerable<string> includes);
+        Blog? GetById(int id, IEnumerable<Expression<Func<Blog, object?>>> includes);
         IEnumerable<Blog> GetAll(IEnumerable<Expression<Func<Blog, object?>>> includes, int limit, bool isDescendingOrder);
         Blog GetByIdWithAuthor(int id);
         List<Blog> GetAllWithAuthorAndCategory();
