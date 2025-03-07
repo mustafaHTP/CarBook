@@ -37,6 +37,11 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
+    name: "blogCategory",
+    pattern: "Blog/GetAllByBlogCategoryId/{blogCategoryId?}",
+    defaults: new { controller = "Blog", action = "GetAllByBlogCategoryId" });
+
+app.MapControllerRoute(
     name: "area",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 

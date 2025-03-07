@@ -1,6 +1,7 @@
 ﻿using CarBook.Application.Dtos.BlogCategoryDtos;
 using CarBook.Application.Features.BlogCategoryFeatures.Commands;
 using CarBook.Application.Features.BlogCategoryFeatures.Queries;
+using CarBook.Application.Features.BlogFeatures.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,6 +29,48 @@ namespace CarBook.WebApi.Controllers
             });
 
             return Ok(blogCategoriesDto);
+        }
+
+        [HttpGet("{id}/blogs")]
+        public async Task<IActionResult> GetAllBlogsById([FromRoute ]int id, [FromQuery] GetBlogsByBlogCategoryIdQueryDto getBlogsByBlogCategoryIdQueryDto)
+        {
+            var query = new GetBlogsByBlogCategoryIdQuery
+            {
+                BlogCategoryId = id,
+                Includes = getBlogsByBlogCategoryIdQueryDto.Includes
+            };
+
+            var blogs = await _mediator.Send(query);
+            var blogsDto = blogs.Select(blog => new GetBlogsByBlogCategoryIdDto
+            {
+                Id = blog.Id,
+                Title = blog.Title,
+                Description = blog.Description,
+                BlogCategoryId = blog.BlogCategoryId,
+                BlogCategoryName = blog.BlogCategory.Name,
+                BlogAuthorId = blog.BlogAuthorId,
+                BlogAuthorName = blog.BlogAuthor.Name,
+                BlogAuthorDescription = blog.BlogAuthor.Description,
+                BlogAuthorImageUrl = blog.BlogAuthor.ImageUrl,
+                Content = blog.Content,
+                CoverImageUrl = blog.CoverImageUrl,
+                CreatedDate = blog.CreatedDate
+            });
+
+            return Ok(blogsDto);
+        }
+
+        [HttpGet("{id}/blogs/count")]
+        public async Task<IActionResult> GetBlogsCountById(int id)
+        {
+            var query = new GetBlogsCountByBlogCategoryIdQuery() { BlogCategoryId = id };
+            var blogCount = await _mediator.Send(query);
+            var blogCountDto = new GetBlogsCountByIdDto
+            {
+                Count = blogCount.Count
+            };
+
+            return Ok(blogCountDto);
         }
 
         [HttpGet("{id}")]

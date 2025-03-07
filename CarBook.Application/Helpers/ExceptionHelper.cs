@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarBook.Application
+namespace CarBook.Application.Helpers
 {
     public static class ExceptionHelper
     {

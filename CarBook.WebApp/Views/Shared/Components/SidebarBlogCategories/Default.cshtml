@@ -6,7 +6,12 @@
         @foreach (var item in Model)
         {
             <li>
-                <a href="#">@item.Name<span>(12)</span></a>
+                <a asp-area="" asp-controller="Blog" asp-action="GetAllByBlogCategoryId" asp-route-blogCategoryId="@item.Id">
+                    @item.Name
+                    <span>
+                    @await Component.InvokeAsync("BlogCountByBlogCategory", new { blogCategoryId = item.Id }) 
+                    </span>
+                </a>
             </li>
         }
     </div>

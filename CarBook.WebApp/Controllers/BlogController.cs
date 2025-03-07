@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Dtos.BlogCommentDtos;
+﻿using CarBook.Application.Dtos.BlogCategoryDtos;
+using CarBook.Application.Dtos.BlogCommentDtos;
 using CarBook.Application.Dtos.BlogDtos;
 using CarBook.Application.Interfaces.Services;
 using CarBook.WebApp.Models;
@@ -36,6 +37,17 @@ namespace CarBook.WebApp.Controllers
             if (response.IsSuccessful)
             {
                 return View(response.Result);
+            }
+
+            return View();
+        }
+
+        public async Task<IActionResult> GetAllByBlogCategoryId(int blogCategoryId)
+        {
+            var result = await _apiService.GetAsync<IEnumerable<GetBlogsByBlogCategoryIdDto>>($"https://localhost:7116/api/BlogCategories/{blogCategoryId}/blogs?Includes=author,category");
+            if (result.IsSuccessful)
+            {
+                return View(result.Result);
             }
 
             return View();

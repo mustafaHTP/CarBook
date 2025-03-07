@@ -50,9 +50,29 @@ namespace CarBook.Persistence.Repositories
             return blogs;
         }
 
+        public IEnumerable<Blog> GetAllByBlogCategoryId(int blogCategoryId, IEnumerable<Expression<Func<Blog, object?>>> includes)
+        {
+            var blogs = _context.Blogs.AsQueryable();
+
+            if (includes.Any())
+            {
+                foreach (var include in includes)
+                {
+                    blogs = blogs.Include(include);
+                }
+            }
+
+            return blogs.Where(b => b.BlogCategoryId == blogCategoryId);
+        }
+
         public List<Blog> GetAllWithAuthorAndCategory()
         {
             return [.. _context.Blogs.Include(b => b.BlogAuthor).Include(b => b.BlogCategory)];
+        }
+
+        public int GetBlogsCountByBlogCategoryId(int blogCategoryId)
+        {
+            return _context.Blogs.Count(b => b.BlogCategoryId == blogCategoryId);
         }
 
         public IEnumerable<BlogTag> GetBlogTagsById(int id)
