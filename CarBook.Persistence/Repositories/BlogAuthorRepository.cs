@@ -11,7 +11,7 @@ namespace CarBook.Persistence.Repositories
         {
         }
 
-        public List<BlogAuthor> GetAll(bool includeModels)
+        public IEnumerable<BlogAuthor> GetAll(bool includeModels)
         {
             var blogAuthors = _context.BlogAuthors.AsQueryable();
 

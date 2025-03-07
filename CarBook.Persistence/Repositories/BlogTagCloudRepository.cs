@@ -11,7 +11,7 @@ namespace CarBook.Persistence.Repositories
         {
         }
 
-        public List<BlogTagCloud> GetAllByBlogIdWithBlogTag(int blogId)
+        public IEnumerable<BlogTagCloud> GetAllByBlogIdWithBlogTag(int blogId)
         {
             return [.. _context.BlogTagClouds.Include(btc => btc.BlogTag).Where(btc => btc.BlogId == blogId)];
         }

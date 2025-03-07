@@ -38,7 +38,7 @@ namespace CarBook.Persistence.Repositories
                 .ToList();
         }
 
-        public List<CarReservationPricing> GetAllWithCarAndDayPricePlan()
+        public IEnumerable<CarReservationPricing> GetAllWithCarAndDayPricePlan()
         {
             return _context.CarReservationPricings
                 .Include(crp => crp.RentalPeriod)
@@ -53,7 +53,7 @@ namespace CarBook.Persistence.Repositories
         /// Gets all CarReservationPricing with Car (with Model and Brand) and PricePlan
         /// </summary>
         /// <returns></returns>
-        public List<CarReservationPricing> GetAllWithCarAndPricePlan()
+        public IEnumerable<CarReservationPricing> GetAllWithCarAndPricePlan()
         {
             return _context.CarReservationPricings
                 .Include(crp => crp.RentalPeriod)

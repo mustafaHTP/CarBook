@@ -11,7 +11,7 @@ namespace CarBook.Persistence.Repositories
         {
         }
 
-        public List<Model> GetAll(bool IncludeCars)
+        public IEnumerable<Model> GetAll(bool IncludeCars)
         {
             var models = _context.Models
                 .Include(m => m.Brand)

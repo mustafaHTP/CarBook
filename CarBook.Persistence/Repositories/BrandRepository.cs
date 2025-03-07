@@ -11,7 +11,7 @@ namespace CarBook.Persistence.Repositories
         {
         }
 
-        public async Task<List<Brand>> GetAllAsync(bool includeModels)
+        public async Task<IEnumerable<Brand>> GetAllAsync(bool includeModels)
         {
             var brands = _context.Brands.AsQueryable();
 

@@ -52,11 +52,6 @@ namespace CarBook.Persistence.Repositories
             return blogs.Where(b => b.BlogCategoryId == blogCategoryId);
         }
 
-        public List<Blog> GetAllWithAuthorAndCategory()
-        {
-            return [.. _context.Blogs.Include(b => b.BlogAuthor).Include(b => b.BlogCategory)];
-        }
-
         public int GetBlogsCountByBlogCategoryId(int blogCategoryId)
         {
             return _context.Blogs.Count(b => b.BlogCategoryId == blogCategoryId);
@@ -87,21 +82,11 @@ namespace CarBook.Persistence.Repositories
             return blog;
         }
 
-        public Blog GetByIdWithAuthor(int id)
-        {
-            return _context.Blogs.Include(b => b.BlogAuthor).FirstOrDefault(b => b.Id == id);
-        }
-
         public int GetCommentCountById(int id)
         {
             return _context.BlogComments
                 .Where(bc => bc.BlogId == id)
                 .Count();
-        }
-
-        public List<Blog> GetLast3BlogsWithAuthorAndCategory()
-        {
-            return _context.Set<Blog>().Include(b => b.BlogAuthor).Include(b => b.BlogCategory).OrderByDescending(b => b.Id).Take(3).ToList();
         }
     }
 }

@@ -5,7 +5,7 @@ namespace CarBook.Application.Interfaces.Repositories
     public interface IRepository<T> where T : class
     {
         int Count();
-        Task<List<T>> GetAllAsync();
+        Task<IEnumerable<T>> GetAllAsync();
         Task<T?> GetByIdAsync(int id);
         Task CreateAsync(T entity);
         Task UpdateAsync(T entity);

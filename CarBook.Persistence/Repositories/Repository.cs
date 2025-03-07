@@ -36,7 +36,7 @@ namespace CarBook.Persistence.Repositories
             return _context.Set<T>().FirstOrDefault(predicate);
         }
 
-        public async Task<List<T>> GetAllAsync()
+        public async Task<IEnumerable<T>> GetAllAsync()
         {
             return await _context.Set<T>().ToListAsync();
         }

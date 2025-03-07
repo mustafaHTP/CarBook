@@ -4,6 +4,6 @@ namespace CarBook.Application.Interfaces.Repositories
 {
     public interface IBlogAuthorRepository : IRepository<BlogAuthor>
     {
-        List<BlogAuthor> GetAll(bool includeModels);
+        IEnumerable<BlogAuthor> GetAll(bool includeModels);
     }
 }

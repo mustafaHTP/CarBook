@@ -4,6 +4,6 @@ namespace CarBook.Application.Interfaces.Repositories
 {
     public interface IBlogCommentRepository : IRepository<BlogComment>
     {
-        List<BlogComment> GetAllByBlogId(int blogId);
+        IEnumerable<BlogComment> GetAllByBlogId(int blogId);
     }
 }

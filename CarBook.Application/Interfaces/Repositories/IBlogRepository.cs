@@ -11,8 +11,5 @@ namespace CarBook.Application.Interfaces.Repositories
         int GetCommentCountById(int id);
         Blog? GetById(int id, IEnumerable<Expression<Func<Blog, object?>>> includes);
         IEnumerable<Blog> GetAll(IEnumerable<Expression<Func<Blog, object?>>> includes, int limit, bool isDescendingOrder);
-        Blog GetByIdWithAuthor(int id);
-        List<Blog> GetAllWithAuthorAndCategory();
-        List<Blog> GetLast3BlogsWithAuthorAndCategory();
     }
 }

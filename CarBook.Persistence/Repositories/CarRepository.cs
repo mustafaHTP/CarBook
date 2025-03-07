@@ -11,22 +11,7 @@ namespace CarBook.Persistence.Repositories
         {
         }
 
-        public List<Car> GetAllCarsWithModel()
-        {
-            return [.. _context.Cars.Include(c => c.Model)];
-        }
-
-        public List<Car> GetAllCarsWithBrand()
-        {
-            return [.. _context.Cars.Include(c => c.Model).ThenInclude(m => m.Brand)];
-        }
-
-        public List<Car> GetLast5CarsWithBrand()
-        {
-            return [.. _context.Cars.Include(c => c.Model).ThenInclude(m => m.Brand).OrderByDescending(c => c.Id)];
-        }
-
-        public List<Car> GetCarsWithReservationPricings()
+        public IEnumerable<Car> GetCarsWithReservationPricings()
         {
             return [.. _context.Cars.Include(c => c.Model).ThenInclude(m => m.Brand).Include(c => c.CarReservationPricings).ThenInclude(cr => cr.RentalPeriod)];
         }

@@ -10,7 +10,7 @@ namespace CarBook.Persistence.Repositories
         {
         }
 
-        public List<BlogTag> GetLastN(int count)
+        public IEnumerable<BlogTag> GetLastN(int count)
         {
             return [.. _context.BlogTags.OrderByDescending(bt => bt.Id).Take(count)];
         }

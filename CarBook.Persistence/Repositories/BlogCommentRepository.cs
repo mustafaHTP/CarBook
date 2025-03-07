@@ -10,7 +10,7 @@ namespace CarBook.Persistence.Repositories
         {
         }
 
-        public List<BlogComment> GetAllByBlogId(int blogId)
+        public IEnumerable<BlogComment> GetAllByBlogId(int blogId)
         {
             return [.. _context.BlogComments.Where(bc => bc.BlogId == blogId)];
         }
