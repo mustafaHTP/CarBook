@@ -7,15 +7,12 @@ using CarBook.Persistence.Repositories;
 using CarBook.Persistence.Services;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 using System.Globalization;
 using System.Text;
 
-namespace CarBook.Persistence.Extensions
+namespace CarBook.WebApi.Extensions
 {
     public static class ServiceRegistrationExtensions
     {
@@ -37,17 +34,10 @@ namespace CarBook.Persistence.Extensions
             services.AddScoped<ICarReviewRepository, CarReviewRepository>();
         }
 
-        public static void AddServicesApi(this IServiceCollection services)
+        public static void AddServices(this IServiceCollection services)
         {
             services.AddScoped<IJwtService, JwtService>();
             services.AddScoped<IApiService, ApiService>();
-        }
-
-        public static void AddServicesApp(this IServiceCollection services)
-        {
-            services.AddScoped<IJwtService, JwtService>();
-            services.AddScoped<IApiService, ApiService>();
-            services.AddScoped<ISmartBookService, SmartBookService>();
         }
 
         public static void AddMediatRService(this IServiceCollection services)
@@ -60,7 +50,7 @@ namespace CarBook.Persistence.Extensions
             services.AddScoped<ApplicationDbContext>();
         }
 
-        public static void AddFluentValidationApi(this IServiceCollection services)
+        public static void AddFluentValidation(this IServiceCollection services)
         {
             //Force English language for validation messages
             ValidatorOptions.Global.LanguageManager.Culture = new CultureInfo("en");
@@ -73,15 +63,7 @@ namespace CarBook.Persistence.Extensions
             });
         }
 
-        public static void AddFluentValidationApp(this IServiceCollection services)
-        {
-            //Force English language for validation messages
-            ValidatorOptions.Global.LanguageManager.Culture = new CultureInfo("en");
-            //Add validators
-            services.AddValidatorsFromAssemblyContaining<ValidatorAssemblyMarker>();
-        }
-
-        public static void AddJwtAuthenticationApi(this IServiceCollection services, IConfiguration configuration)
+        public static void AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
             var jwtSettings = configuration.GetSection("Jwt");
 
@@ -118,21 +100,6 @@ namespace CarBook.Persistence.Extensions
                         ValidAudience = jwtSettings["Audience"],
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
                     };
-                });
-        }
-
-        public static void AddJwtAuthenticationApp(this IServiceCollection services)
-        {
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddCookie(JwtBearerDefaults.AuthenticationScheme, options =>
-                {
-                    options.LoginPath = "/Auth/Login";
-                    options.LogoutPath = "/Auth/Logout";
-                    options.AccessDeniedPath = "/Auth/AccessDenied";
-                    options.Cookie.Name = "CarBookCookie";
-                    options.Cookie.HttpOnly = true;
-                    options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
-                    options.Cookie.SameSite = SameSiteMode.Strict;
                 });
         }
     }

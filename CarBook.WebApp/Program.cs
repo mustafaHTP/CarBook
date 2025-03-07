@@ -1,4 +1,4 @@
-using CarBook.Persistence.Extensions;
+using CarBook.WebApp.Extensions;
 using CarBook.WebApp.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,11 +10,11 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddJwtAuthenticationApp();
+builder.Services.AddJwtAuthentication();
 
-builder.Services.AddFluentValidationApp();
+builder.Services.AddFluentValidation();
 
-builder.Services.AddServicesApp();
+builder.Services.AddServices();
 
 //Add filters
 builder.Services.AddScoped(typeof(ValidationFilterAttribute<>));

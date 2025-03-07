@@ -1,8 +1,8 @@
 using CarBook.Application.Interfaces.Services;
 using CarBook.Application.Validators;
 using CarBook.Persistence.Context;
-using CarBook.Persistence.Extensions;
 using CarBook.Persistence.Services;
+using CarBook.WebApi.Extensions;
 using CarBook.WebApi.Middlewares;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -30,10 +30,9 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddApplicationDbContext();
 builder.Services.AddRepositories();
-
-builder.Services.AddServicesApi();
+builder.Services.AddServices();
 builder.Services.AddMediatRService();
-builder.Services.AddFluentValidationApi();
+builder.Services.AddFluentValidation();
 
 builder.Services.AddCors(options =>
 {
@@ -44,7 +43,7 @@ builder.Services.AddCors(options =>
 });
 
 
-builder.Services.AddJwtAuthenticationApi(builder.Configuration);
+builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
