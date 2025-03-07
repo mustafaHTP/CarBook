@@ -28,29 +28,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
 builder.Services.AddHttpContextAccessor();
 
-//Add db context
-builder.Services.AddScoped<ApplicationDbContext>();
-
-//Add repositories
+builder.Services.AddApplicationDbContext();
 builder.Services.AddRepositories();
 
-//Add Services
-builder.Services.AddScoped<IJwtService, JwtService>();
-builder.Services.AddScoped<IApiService, ApiService>();
-
-////Add application services
-//builder.Services.AddApplicationService();
+builder.Services.AddServices();
 builder.Services.AddMediatRService();
-
-//Force English language for validation messages
-ValidatorOptions.Global.LanguageManager.Culture = new CultureInfo("en");
-//Add validators
-builder.Services.AddValidatorsFromAssemblyContaining<ValidatorAssemblyMarker>();
-//Add auto validation
-builder.Services.AddFluentValidationAutoValidation(config =>
-{
-    config.DisableBuiltInModelValidation = true;
-});
+builder.Services.AddFluentValidation();
 
 builder.Services.AddCors(options =>
 {
@@ -61,21 +44,7 @@ builder.Services.AddCors(options =>
 });
 
 
-var jwtSettings = builder.Configuration.GetSection("Jwt");
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = jwtSettings["Issuer"],
-            ValidAudience = jwtSettings["Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]))
-        };
-    });
+builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddAuthorization();
 
 var app = builder.Build();

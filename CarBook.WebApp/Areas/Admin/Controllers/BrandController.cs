@@ -78,7 +78,6 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
         {
             UpdateFeatureDto updateBrandDto = new()
             {
-                Id = updateBrandViewModel.Id,
                 Name = updateBrandViewModel.Name
             };
 
