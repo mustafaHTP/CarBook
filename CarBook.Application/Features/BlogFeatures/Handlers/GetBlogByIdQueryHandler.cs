@@ -23,7 +23,7 @@ namespace CarBook.Application.Features.BlogFeatures.Handlers
             var includeExpressions = IncludeExpressionHelper.GetIncludeExpressions<Blog>(request.Includes, BlogMappings.IncludeMappings);
 
             var blog = _repository.GetById(request.Id, includeExpressions)
-                ?? throw new NotFoundException(typeof(Blog), request.Id);
+                ?? throw new NotFoundException(typeof(Blog).Name, request.Id.ToString());
             var result = new GetBlogByIdQueryResult()
             {
                 Id = blog.Id,

@@ -18,7 +18,7 @@ namespace CarBook.Application.Features.AboutFeatures.Handlers
         public async Task Handle(UpdateAboutCommand request, CancellationToken cancellationToken)
         {
             var about = await _repository.GetByIdAsync(request.Id)
-                ?? throw new NotFoundException(typeof(About), request.Id);
+                ?? throw new NotFoundException(typeof(About).Name, request.Id.ToString());
 
             // Update here
             about.Description = request.Description;

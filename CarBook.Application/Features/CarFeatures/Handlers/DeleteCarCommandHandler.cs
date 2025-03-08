@@ -18,7 +18,7 @@ namespace CarBook.Application.Features.CarFeatures.Handlers
         public async Task Handle(DeleteCarCommand request, CancellationToken cancellationToken)
         {
             var car = await _repository.GetByIdAsync(request.Id)
-                ?? throw new NotFoundException(typeof(Car), request.Id);
+                ?? throw new NotFoundException(typeof(Car).Name, request.Id.ToString());
 
             await _repository.DeleteAsync(car);
         }

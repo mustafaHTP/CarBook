@@ -19,7 +19,7 @@ namespace CarBook.Application.Features.SocialMediaFeatures.Handlers
         public async Task<GetSocialMediaByIdQueryResult> Handle(GetSocialMediaByIdQuery request, CancellationToken cancellationToken)
         {
             var socialMedia = await _repository.GetByIdAsync(request.Id)
-                ?? throw new NotFoundException(typeof(SocialMedia), request.Id);
+                ?? throw new NotFoundException(typeof(SocialMedia).Name, request.Id.ToString());
 
             return new GetSocialMediaByIdQueryResult()
             {

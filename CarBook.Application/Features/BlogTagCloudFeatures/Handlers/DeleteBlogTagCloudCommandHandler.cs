@@ -18,7 +18,7 @@ namespace CarBook.Application.Features.BlogTagCloudFeatures.Handlers
         public async Task Handle(DeleteBlogTagCloudCommand request, CancellationToken cancellationToken)
         {
             var blogTagCloud = await _repository.GetByIdAsync(request.Id)
-                ?? throw new NotFoundException(typeof(BlogTagCloud), request.Id);
+                ?? throw new NotFoundException(typeof(BlogTagCloud).Name, request.Id.ToString());
 
             await _repository.DeleteAsync(blogTagCloud);
         }

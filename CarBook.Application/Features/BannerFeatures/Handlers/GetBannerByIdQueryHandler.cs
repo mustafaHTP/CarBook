@@ -19,7 +19,7 @@ namespace CarBook.Application.Features.BannerFeatures.Handlers
         public async Task<GetBannerByIdQueryResult> Handle(GetBannerByIdQuery request, CancellationToken cancellationToken)
         {
             var banner = await _repository.GetByIdAsync(request.Id)
-                ?? throw new NotFoundException(typeof(Banner), request.Id);
+                ?? throw new NotFoundException(typeof(Banner).Name, request.Id.ToString());
             var result = new GetBannerByIdQueryResult()
             {
                 Id = banner.Id,

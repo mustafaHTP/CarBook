@@ -19,7 +19,7 @@ namespace CarBook.Application.Features.BlogCategoryFeatures.Handlers
         public async Task<GetBlogCategoryByIdQueryResult> Handle(GetBlogCategoryByIdQuery request, CancellationToken cancellationToken)
         {
             var blogCategory = await _repository.GetByIdAsync(request.Id)
-                ?? throw new NotFoundException(typeof(BlogCategory), request.Id);
+                ?? throw new NotFoundException(typeof(BlogCategory).Name, request.Id.ToString());
 
             return new GetBlogCategoryByIdQueryResult()
             {

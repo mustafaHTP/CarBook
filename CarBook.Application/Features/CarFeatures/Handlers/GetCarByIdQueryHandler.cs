@@ -19,7 +19,7 @@ namespace CarBook.Application.Features.CarFeatures.Handlers
         public async Task<GetCarByIdQueryResult> Handle(GetCarByIdQuery request, CancellationToken cancellationToken)
         {
             var car = _repository.GetById(request.Id)
-                ?? throw new NotFoundException(typeof(Car), request.Id);
+                ?? throw new NotFoundException(typeof(Car).Name, request.Id.ToString());
 
             var result = new GetCarByIdQueryResult()
             {

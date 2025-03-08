@@ -1,5 +1,6 @@
 ﻿using CarBook.Application;
 using CarBook.Application.Exceptions;
+using CarBook.WebApi.Responses;
 using Newtonsoft.Json;
 using System.Net;
 
@@ -7,6 +8,7 @@ namespace CarBook.WebApi.Middlewares
 {
     public class ErrorHandlingMiddleware(RequestDelegate next)
     {
+        private const string UnExpectedError = "An unexpected error occurred. Please try again later.";
         private readonly RequestDelegate _next = next;
 
         public async Task InvokeAsync(HttpContext httpContext)
@@ -23,19 +25,51 @@ namespace CarBook.WebApi.Middlewares
 
         private static async Task HandleExceptionAsync(HttpContext httpContext, Exception ex)
         {
-            httpContext.Response.ContentType = "application/json";
-            httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            int statusCode = (int) HttpStatusCode.InternalServerError;
+            string title = "Internal Server Error";
+            List<string> messages = new();
 
-            httpContext.Response.StatusCode = ex switch
+            switch (ex)
             {
-                NotFoundException => (int)HttpStatusCode.NotFound,
-                _ => (int)HttpStatusCode.InternalServerError,
+                case ArgumentValidationException argumentValidationException:
+                    statusCode = (int)argumentValidationException.StatusCode;
+                    title = argumentValidationException.Title;
+
+                    messages.AddRange(argumentValidationException.MessageProps);
+
+                    break;
+
+                case BaseCustomException baseCustomException:
+                    statusCode = (int)baseCustomException.StatusCode;
+                    title = baseCustomException.Title;
+
+                    var messageFormat = baseCustomException.MessageFormat;
+                    foreach (var messageProp in baseCustomException.MessageProps)
+                    {
+                        messageFormat = messageFormat.Replace(messageProp.Key, messageProp.Value);
+                    }
+
+                    messages.Add(messageFormat);
+                    break;
+                default:
+                    messages.Add(UnExpectedError);
+                    break;
+            }
+
+            var problemDetails = new ProblemDetails
+            {
+                Title = title,
+                Status = statusCode,
+                Detail = string.Join(Environment.NewLine, [.. messages])
             };
 
-            var response = ApiResponse.Failure(ex.Message);
-            var responseJson = JsonConvert.SerializeObject(response);
+            //Prepare response
+            httpContext.Response.ContentType = "application/json";
+            httpContext.Response.StatusCode = statusCode;
 
-            await httpContext.Response.WriteAsync(responseJson);
+            var genericApiResult = GenericApiResult<GenericResponse>.Failure(problemDetails);
+            var json = JsonConvert.SerializeObject(genericApiResult);
+            await httpContext.Response.WriteAsync(json);
         }
     }
 }

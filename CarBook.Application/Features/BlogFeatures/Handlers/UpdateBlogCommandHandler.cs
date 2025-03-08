@@ -18,7 +18,7 @@ namespace CarBook.Application.Features.BlogFeatures.Handlers
         public async Task Handle(UpdateBlogCommand request, CancellationToken cancellationToken)
         {
             var blog = await _repository.GetByIdAsync(request.Id)
-                ?? throw new NotFoundException(typeof(Blog), request.Id);
+                ?? throw new NotFoundException(typeof(Blog).Name, request.Id.ToString());
 
             // Update here
             blog.BlogAuthorId = request.BlogAuthorId;

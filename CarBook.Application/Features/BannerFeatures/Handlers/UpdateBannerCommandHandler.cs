@@ -18,7 +18,7 @@ namespace CarBook.Application.Features.BannerFeatures.Handlers
         public async Task Handle(UpdateBannerCommand request, CancellationToken cancellationToken)
         {
             var bannerToBeUpdated = await _repository.GetByIdAsync(request.Id)
-                ?? throw new NotFoundException(typeof(Banner), request.Id);
+                ?? throw new NotFoundException(typeof(Banner).Name, request.Id.ToString());
 
             // Update here
             bannerToBeUpdated.VideoDescription = request.VideoDescription;

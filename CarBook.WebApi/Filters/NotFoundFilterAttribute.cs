@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Helpers;
+﻿using CarBook.Application.Exceptions;
+using CarBook.Application.Helpers;
 using CarBook.Application.Interfaces.Repositories;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -22,9 +23,7 @@ namespace CarBook.WebApi.Filters
             if(!id.HasValue || id is null)
                 throw new BadHttpRequestException("Id must be an integer");
 
-            var entity = await _repository.GetByIdAsync(id.Value);
-            if (entity is null)
-                ExceptionHelper.ThrowIfNotFound<T>(id.Value);
+            var entity = await _repository.GetByIdAsync(id.Value) ?? throw new NotFoundException(typeof(T).Name, id.ToString() ?? "Unknown");
 
             await next();
         }

@@ -18,7 +18,7 @@ namespace CarBook.Application.Features.LocationFeatures.Handlers
         public async Task Handle(DeleteLocationCommand request, CancellationToken cancellationToken)
         {
             var location = await _repository.GetByIdAsync(request.Id)
-                ?? throw new NotFoundException(typeof(Location), request.Id);
+                ?? throw new NotFoundException(typeof(Location).Name, request.Id.ToString());
 
             await _repository.DeleteAsync(location);
         }

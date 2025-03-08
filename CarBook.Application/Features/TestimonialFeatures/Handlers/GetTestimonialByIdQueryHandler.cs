@@ -19,7 +19,7 @@ namespace CarBook.Application.Features.TestimonialFeatures.Handlers
         public async Task<GetTestimonialByIdQueryResult> Handle(GetTestimonialByIdQuery request, CancellationToken cancellationToken)
         {
             var testimonial = await _repository.GetByIdAsync(request.Id)
-                ?? throw new NotFoundException(typeof(Testimonial), request.Id);
+                ?? throw new NotFoundException(typeof(Testimonial).Name, request.Id.ToString());
 
             return new GetTestimonialByIdQueryResult
             {

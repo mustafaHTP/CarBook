@@ -9,6 +9,7 @@ using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Text;
 
@@ -60,6 +61,7 @@ namespace CarBook.WebApi.Extensions
             services.AddFluentValidationAutoValidation(config =>
             {
                 config.DisableBuiltInModelValidation = true;
+                config.OverrideDefaultResultFactoryWith<CustomResultFactory>();
             });
         }
 

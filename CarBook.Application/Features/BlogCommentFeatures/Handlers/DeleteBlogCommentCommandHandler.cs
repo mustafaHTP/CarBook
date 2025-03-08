@@ -18,7 +18,7 @@ namespace CarBook.Application.Features.BlogCommentFeatures.Handlers
         public async Task Handle(DeleteBlogCommentCommand request, CancellationToken cancellationToken)
         {
             var blogComment = await _repository.GetByIdAsync(request.Id)
-                ?? throw new NotFoundException(typeof(BlogComment), request.Id);
+                ?? throw new NotFoundException(typeof(BlogComment).Name, request.Id.ToString());
 
             await _repository.DeleteAsync(blogComment);
         }

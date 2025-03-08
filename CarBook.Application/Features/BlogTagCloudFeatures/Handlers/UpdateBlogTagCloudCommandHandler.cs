@@ -19,7 +19,7 @@ namespace CarBook.Application.Features.BlogTagCloudFeatures.Handlers
         public async Task Handle(UpdateBlogTagCloudCommand request, CancellationToken cancellationToken)
         {
             var blogTagCloud = await _repository.GetByIdAsync(request.Id)
-                ?? throw new NotFoundException(typeof(BlogTagCloud), request.Id);
+                ?? throw new NotFoundException(typeof(BlogTagCloud).Name, request.Id.ToString());
 
             // Update here
             blogTagCloud.BlogId = request.BlogId;
