@@ -1,5 +1,7 @@
-﻿using CarBook.Application.Dtos.CarReservationPricingDtos;
+﻿using CarBook.Application.Dtos.BlogTagDtos;
+using CarBook.Application.Dtos.CarReservationPricingDtos;
 using CarBook.Application.Features.CarReservationPricingFeatures.Queries;
+using CarBook.WebApi.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -44,7 +46,7 @@ namespace CarBook.WebApi.Controllers
                 Price = crp.Price
             });
 
-            return Ok(carReservationPricingsDto);
+            return Ok(GenericApiResponse<IEnumerable<GetCarReservationPricingsDto>>.Success(carReservationPricingsDto));
         }
     }
 }

@@ -3,6 +3,7 @@ using CarBook.Application.Features.BannerFeatures.Commands;
 using CarBook.Application.Features.BannerFeatures.Queries;
 using CarBook.Domain.Entities;
 using CarBook.WebApi.Filters;
+using CarBook.WebApi.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,7 +33,7 @@ namespace CarBook.WebApi.Controllers
                 VideoUrl = banner.VideoUrl
             }).ToList();
 
-            return Ok(bannersDto);
+            return Ok(GenericApiResponse<IEnumerable<GetBannersDto>>.Success(bannersDto));
         }
 
         [HttpGet("{id}")]
@@ -41,7 +42,7 @@ namespace CarBook.WebApi.Controllers
         {
             var query = new GetBannerByIdQuery(id);
             var banner = await _mediator.Send(query);
-            var bannerDto = new GetBannersDto
+            var bannerDto = new GetBannerByIdDto
             {
                 Id = banner.Id,
                 Title = banner.Title,
@@ -50,7 +51,7 @@ namespace CarBook.WebApi.Controllers
                 VideoUrl = banner.VideoUrl
             };
 
-            return Ok(bannerDto);
+            return Ok(GenericApiResponse<GetBannerByIdDto>.Success(bannerDto));
         }
 
         [HttpPost]

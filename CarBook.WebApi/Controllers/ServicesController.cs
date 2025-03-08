@@ -1,8 +1,10 @@
-﻿using CarBook.Application.Dtos.ServiceDtos;
+﻿using CarBook.Application.Dtos.BlogTagDtos;
+using CarBook.Application.Dtos.ServiceDtos;
 using CarBook.Application.Features.ServiceFeatures.Commands;
 using CarBook.Application.Features.ServiceFeatures.Queries;
 using CarBook.Domain.Entities;
 using CarBook.WebApi.Filters;
+using CarBook.WebApi.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,7 +25,7 @@ namespace CarBook.WebApi.Controllers
         public async Task<IActionResult> GetAll()
         {
             var services = await _mediator.Send(new GetServicesQuery());
-            var serviceDtos = services.Select(service => new GetServicesDto
+            var servicesDto = services.Select(service => new GetServicesDto
             {
                 Id = service.Id,
                 Title = service.Title,
@@ -31,7 +33,7 @@ namespace CarBook.WebApi.Controllers
                 IconUrl = service.IconUrl
             });
 
-            return Ok(serviceDtos);
+            return Ok(GenericApiResponse<IEnumerable<GetServicesDto>>.Success(servicesDto));
         }
 
         [HttpGet("{id}")]
@@ -47,7 +49,7 @@ namespace CarBook.WebApi.Controllers
                 IconUrl = service.IconUrl
             };
 
-            return Ok(serviceDto);
+            return Ok(GenericApiResponse<GetServiceByIdDto>.Success(serviceDto));
         }
 
         [HttpPost]

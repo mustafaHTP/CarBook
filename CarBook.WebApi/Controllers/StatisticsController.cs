@@ -1,6 +1,8 @@
 ﻿using CarBook.Application.Dtos.BlogDtos;
+using CarBook.Application.Dtos.BlogTagDtos;
 using CarBook.Application.Dtos.StatisticsDtos;
 using CarBook.Application.Features.StatisticsFeatures.Queries;
+using CarBook.WebApi.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,7 +28,7 @@ namespace CarBook.WebApi.Controllers
                 CarCount = result.CarCount
             };
 
-            return Ok(resultDto);
+            return Ok(GenericApiResponse<GetCarCountDto>.Success(resultDto));
         }
 
         [HttpGet("car/countByFuelType")]
@@ -42,7 +44,7 @@ namespace CarBook.WebApi.Controllers
                 CarCount = result.CarCount
             };
 
-            return Ok(resultDto);
+            return Ok(GenericApiResponse<GetCarCountByFuelTypeDto>.Success(resultDto));
         }
 
         [HttpGet("car/countByTransmissionType")]
@@ -58,7 +60,7 @@ namespace CarBook.WebApi.Controllers
                 CarCount = result.CarCount
             };
 
-            return Ok(resultDto);
+            return Ok(GenericApiResponse<GetCarCountByTransmissionTypeDto>.Success(resultDto));
         }
 
         [HttpGet("car/{carId}/carReviews/count")]
@@ -74,7 +76,7 @@ namespace CarBook.WebApi.Controllers
                 CarReviewCount = result.CarReviewCount
             };
 
-            return Ok(resultDto);
+            return Ok(GenericApiResponse<GetCarReviewsCountByCarIdDto>.Success(resultDto));
         }
 
         [HttpGet("blogAuthor/count")]
@@ -86,7 +88,7 @@ namespace CarBook.WebApi.Controllers
                 BlogAuthorCount = result.BlogAuthorCount
             };
 
-            return Ok(resultDto);
+            return Ok(GenericApiResponse<GetBlogAuthorCountDto>.Success(resultDto));
         }
 
         [HttpGet("location/count")]
@@ -98,7 +100,7 @@ namespace CarBook.WebApi.Controllers
                 LocationCount = result.LocationCount
             };
 
-            return Ok(resultDto);
+            return Ok(GenericApiResponse<GetLocationCountDto>.Success(resultDto));
         }
 
         [HttpGet("blog/count")]
@@ -110,7 +112,7 @@ namespace CarBook.WebApi.Controllers
                 BlogCount = result.BlogCount
             };
 
-            return Ok(resultDto);
+            return Ok(GenericApiResponse<GetBlogCountDto>.Success(resultDto));
         }
 
         [HttpGet("blog/{id}/comments/count")]
@@ -126,7 +128,7 @@ namespace CarBook.WebApi.Controllers
                 BlogCommentCount = result.BlogCommentCount
             };
 
-            return Ok(resultDto);
+            return Ok(GenericApiResponse<GetBlogCommentCountByBlogIdDto>.Success(resultDto));
         }
 
         [HttpGet("blog/hasMaxCommentCount")]
@@ -139,7 +141,7 @@ namespace CarBook.WebApi.Controllers
                 CommentCount = result.CommentCount
             };
 
-            return Ok(resultDto);
+            return Ok(GenericApiResponse<GetBlogHasMaxCommentCountDto>.Success(resultDto));
         }
 
         [HttpGet("brand/count")]
@@ -151,7 +153,7 @@ namespace CarBook.WebApi.Controllers
                 BrandCount = result.BrandCount
             };
 
-            return Ok(resultDto);
+            return Ok(GenericApiResponse<GetBrandCountDto>.Success(resultDto));
         }
 
         [HttpGet("brand/car/count")]
@@ -164,7 +166,7 @@ namespace CarBook.WebApi.Controllers
                 CarCount = b.CarCount
             });
 
-            return Ok(resultDto);
+            return Ok(GenericApiResponse<IEnumerable<GetBrandsCarCountDto>>.Success(resultDto));
         }
 
         [HttpGet("brand/hasMaxModelCount")]
@@ -177,7 +179,7 @@ namespace CarBook.WebApi.Controllers
                 ModelCount = result.ModelCount
             };
 
-            return Ok(resultDto);
+            return Ok(GenericApiResponse<GetBrandHasMaxModelCountDto>.Success(resultDto));
         }
 
         [HttpGet("carRentalPrice/avg")]
@@ -195,7 +197,7 @@ namespace CarBook.WebApi.Controllers
                 AveragePrice = result.AveragePrice
             };
 
-            return Ok(resultDto);
+            return Ok(GenericApiResponse<GetAverageCarRentalPriceDto>.Success(resultDto));
         }
     }
 }

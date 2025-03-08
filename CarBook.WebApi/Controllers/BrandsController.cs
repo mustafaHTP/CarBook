@@ -1,9 +1,11 @@
-﻿using CarBook.Application.Dtos.BrandDtos;
+﻿using CarBook.Application.Dtos.BlogTagDtos;
+using CarBook.Application.Dtos.BrandDtos;
 using CarBook.Application.Dtos.ModelDtos;
 using CarBook.Application.Features.BrandFeatures.Commands;
 using CarBook.Application.Features.BrandFeatures.Queries;
 using CarBook.Domain.Entities;
 using CarBook.WebApi.Filters;
+using CarBook.WebApi.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,7 +38,7 @@ namespace CarBook.WebApi.Controllers
                 }).ToList()
             }).ToList();
 
-            return Ok(brandsDto);
+            return Ok(GenericApiResponse<IEnumerable<GetBrandsDto>>.Success(brandsDto));
         }
 
         [HttpGet("{id}")]
@@ -51,7 +53,7 @@ namespace CarBook.WebApi.Controllers
                 Name = brand.Name,
             };
 
-            return Ok(brandDto);
+            return Ok(GenericApiResponse<GetBrandByIdDto>.Success(brandDto));
         }
 
         [HttpPost]

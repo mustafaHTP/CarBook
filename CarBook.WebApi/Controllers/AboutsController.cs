@@ -3,6 +3,7 @@ using CarBook.Application.Features.AboutFeatures.Commands;
 using CarBook.Application.Features.AboutFeatures.Queries;
 using CarBook.Domain.Entities;
 using CarBook.WebApi.Filters;
+using CarBook.WebApi.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -32,7 +33,7 @@ namespace CarBook.WebApi.Controllers
                 ImageUrl = about.ImageUrl
             });
 
-            return Ok(aboutsDto);
+            return Ok(GenericApiResponse<IEnumerable<GetAboutsDto>>.Success(aboutsDto));
         }
 
         [HttpGet("{id}")]
@@ -49,7 +50,7 @@ namespace CarBook.WebApi.Controllers
                 ImageUrl = about.ImageUrl
             };
 
-            return Ok(aboutDto);
+            return Ok(GenericApiResponse<GetAboutByIdDto>.Success(aboutDto));
         }
 
         [HttpPost]

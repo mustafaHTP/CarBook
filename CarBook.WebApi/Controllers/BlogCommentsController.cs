@@ -1,8 +1,10 @@
-﻿using CarBook.Application.Dtos.BlogCommentDtos;
+﻿using CarBook.Application.Dtos.BannerDtos;
+using CarBook.Application.Dtos.BlogCommentDtos;
 using CarBook.Application.Features.BlogCommentFeatures.Commands;
 using CarBook.Application.Features.BlogCommentFeatures.Queries;
 using CarBook.Domain.Entities;
 using CarBook.WebApi.Filters;
+using CarBook.WebApi.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,7 +35,7 @@ namespace CarBook.WebApi.Controllers
                 Name = x.Name
             });
 
-            return Ok(blogCommentsDto);
+            return Ok(GenericApiResponse<IEnumerable<GetBlogCommentsDto>>.Success(blogCommentsDto));
         }
 
         [HttpGet("{id}")]
@@ -51,7 +53,7 @@ namespace CarBook.WebApi.Controllers
                 Name = blogComment.Name
             };
 
-            return Ok(blogCommentDto);
+            return Ok(GenericApiResponse<GetBlogCommentByIdDto>.Success(blogCommentDto));
         }
 
         [HttpPost]

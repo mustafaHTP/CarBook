@@ -1,5 +1,7 @@
 ﻿using CarBook.Application;
 using CarBook.Application.Interfaces.Services;
+using CarBook.Application.Responses;
+using CarBook.WebApi.Responses;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
@@ -18,7 +20,7 @@ namespace CarBook.Persistence.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<ApiResponse<T>> GetAsync<T>(string url) where T : class
+        public async Task<GenericApiResponse<T>> GetAsync<T>(string url) where T : class
         {
             var client = _httpClientFactory.CreateClient();
 
@@ -32,17 +34,26 @@ namespace CarBook.Persistence.Services
             var response = await client.GetAsync(url);
             if (!response.IsSuccessStatusCode)
             {
-                return ApiResponse<T>.Failure($"Failed to get data. Status code: {response.StatusCode}");
+                return GenericApiResponse<T>.Failure(
+                    title: "Failed to get data",
+                    status: (int)response.StatusCode,
+                    detail: "Failed to get data from the server.");
             }
 
-            T? result;
             var jsonData = await response.Content.ReadAsStringAsync();
-            result = JsonConvert.DeserializeObject<T>(jsonData);
+            var result = JsonConvert.DeserializeObject<GenericApiResponse<T>>(jsonData);
+            if(result is null)
+            {
+                return GenericApiResponse<T>.Failure(
+                    title: "Failed to deserialize data",
+                    status: 500,
+                    detail: "Failed to deserialize data from the server.");
+            }
 
-            return ApiResponse<T>.Success("Data retrieved successfully", result);
+            return result;
         }
 
-        public async Task<ApiResponse> PostAsync(string url, HttpContent? data)
+        public async Task<GenericApiResponse<EmptyApiResult>> PostAsync(string url, HttpContent? data)
         {
             var client = _httpClientFactory.CreateClient();
             var accessToken = GetAccessToken();
@@ -55,13 +66,16 @@ namespace CarBook.Persistence.Services
             var response = await client.PostAsync(url, data);
             if (!response.IsSuccessStatusCode)
             {
-                return ApiResponse.Failure($"Failed to get data. Status code: {response.StatusCode}");
+                return GenericApiResponse<EmptyApiResult>.Failure(
+                    title: "Failed to post data",
+                    status: (int)response.StatusCode,
+                    detail: "Failed to post data to the server.");
             }
 
-            return ApiResponse.Success("Resource created successfully.");
+            return GenericApiResponse<EmptyApiResult>.Success();
         }
 
-        public async Task<ApiResponse> PutAsync(string url, HttpContent? data)
+        public async Task<GenericApiResponse<EmptyApiResult>> PutAsync(string url, HttpContent? data)
         {
             var client = _httpClientFactory.CreateClient();
             var accessToken = GetAccessToken();
@@ -74,13 +88,16 @@ namespace CarBook.Persistence.Services
             var response = await client.PutAsync(url, data);
             if (!response.IsSuccessStatusCode)
             {
-                return ApiResponse.Failure($"Failed to update resource. Status code: {response.StatusCode}");
+                return GenericApiResponse<EmptyApiResult>.Failure(
+                    title: "Failed to put data",
+                    status: (int)response.StatusCode,
+                    detail: "Failed to put data to the server.");
             }
 
-            return ApiResponse.Success("Resource updated successfully.");
+            return GenericApiResponse<EmptyApiResult>.Success();
         }
 
-        public async Task<ApiResponse> DeleteAsync(string url)
+        public async Task<GenericApiResponse<EmptyApiResult>> DeleteAsync(string url)
         {
             var client = _httpClientFactory.CreateClient();
             var accessToken = GetAccessToken();
@@ -93,10 +110,13 @@ namespace CarBook.Persistence.Services
             var response = await client.DeleteAsync(url);
             if (!response.IsSuccessStatusCode)
             {
-                return ApiResponse.Failure($"Failed to delete resource. Status code: {response.StatusCode}");
+                return GenericApiResponse<EmptyApiResult>.Failure(
+                    title: "Failed to delete data",
+                    status: (int)response.StatusCode,
+                    detail: "Failed to delete data from the server.");
             }
 
-            return ApiResponse.Success("Resource deleted successfully.");
+            return GenericApiResponse<EmptyApiResult>.Success();
         }
 
         private string? GetAccessToken()

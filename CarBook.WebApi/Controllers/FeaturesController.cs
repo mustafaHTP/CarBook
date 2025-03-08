@@ -1,8 +1,10 @@
-﻿using CarBook.Application.Dtos.FeatureDtos;
+﻿using CarBook.Application.Dtos.BlogTagDtos;
+using CarBook.Application.Dtos.FeatureDtos;
 using CarBook.Application.Features.FeatureFeatures.Commands;
 using CarBook.Application.Features.FeatureFeatures.Queries;
 using CarBook.Domain.Entities;
 using CarBook.WebApi.Filters;
+using CarBook.WebApi.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,7 +31,7 @@ namespace CarBook.WebApi.Controllers
                 Name = f.Name
             });
 
-            return Ok(featuresDto);
+            return Ok(GenericApiResponse<IEnumerable<GetFeaturesDto>>.Success(featuresDto));
         }
 
         [HttpGet("{id}")]
@@ -43,7 +45,7 @@ namespace CarBook.WebApi.Controllers
                 Name = feature.Name
             };
 
-            return Ok(featureDto);
+            return Ok(GenericApiResponse<GetFeatureByIdDto>.Success(featureDto));
         }
 
         [HttpPost]

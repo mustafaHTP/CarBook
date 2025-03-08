@@ -1,8 +1,10 @@
-﻿using CarBook.Application.Dtos.CarReviewDtos;
+﻿using CarBook.Application.Dtos.BlogTagDtos;
+using CarBook.Application.Dtos.CarReviewDtos;
 using CarBook.Application.Features.CarReviewFeatures.Commands;
 using CarBook.Application.Features.CarReviewFeatures.Queries;
 using CarBook.Domain.Entities;
 using CarBook.WebApi.Filters;
+using CarBook.WebApi.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -39,7 +41,7 @@ namespace CarBook.WebApi.Controllers
                 RatingStarCount = result.RatingStarCount
             };
 
-            return Ok(resultDto);
+            return Ok(GenericApiResponse<GetCarReviewByIdDto>.Success(resultDto));
         }
 
         [HttpGet]
@@ -47,7 +49,7 @@ namespace CarBook.WebApi.Controllers
         {
             var query = new GetCarReviewsQuery();
             var result = await _mediator.Send(query);
-            var resultDto = result.Select(x => new GetCarReviewByIdDto
+            var resultDto = result.Select(x => new GetCarReviewsDto
             {
                 Id = x.Id,
                 CarId = x.CarId,
@@ -57,7 +59,7 @@ namespace CarBook.WebApi.Controllers
                 RatingStarCount = x.RatingStarCount
             });
 
-            return Ok(resultDto);
+            return Ok(GenericApiResponse<IEnumerable<GetCarReviewsDto>>.Success(resultDto));
         }
 
         [HttpPost]

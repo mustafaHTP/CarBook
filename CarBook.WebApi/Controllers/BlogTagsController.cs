@@ -1,8 +1,10 @@
-﻿using CarBook.Application.Dtos.BlogTagDtos;
+﻿using CarBook.Application.Dtos.BannerDtos;
+using CarBook.Application.Dtos.BlogTagDtos;
 using CarBook.Application.Features.BlogTagFeatures.Commands;
 using CarBook.Application.Features.BlogTagFeatures.Queries;
 using CarBook.Domain.Entities;
 using CarBook.WebApi.Filters;
+using CarBook.WebApi.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,7 +31,7 @@ namespace CarBook.WebApi.Controllers
                 Name = x.Name
             });
 
-            return Ok(blogTagsDto);
+            return Ok(GenericApiResponse<IEnumerable<GetBlogTagsDto>>.Success(blogTagsDto));
         }
 
         [HttpGet("{id}")]
@@ -43,7 +45,7 @@ namespace CarBook.WebApi.Controllers
                 Name = blogTag.Name
             };
 
-            return Ok(blogTagDto);
+            return Ok(GenericApiResponse<GetBlogTagByIdDto>.Success(blogTagDto));
         }
 
         [HttpGet("last/{count}")]
@@ -56,7 +58,7 @@ namespace CarBook.WebApi.Controllers
                 Name = x.Name
             }).ToList();
 
-            return Ok(blogTagsDto);
+            return Ok(GenericApiResponse<IEnumerable<GetLastNBlogTagsDto>>.Success(blogTagsDto));
         }
 
         [HttpPost]

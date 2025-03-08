@@ -1,8 +1,10 @@
-﻿using CarBook.Application.Dtos.ContactDtos;
+﻿using CarBook.Application.Dtos.BlogTagDtos;
+using CarBook.Application.Dtos.ContactDtos;
 using CarBook.Application.Features.ContactFeatures.Commands;
 using CarBook.Application.Features.ContactFeatures.Queries;
 using CarBook.Domain.Entities;
 using CarBook.WebApi.Filters;
+using CarBook.WebApi.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,7 +25,7 @@ namespace CarBook.WebApi.Controllers
         public async Task<IActionResult> GetAll()
         {
             var contacts = await _mediator.Send(new GetContactsQuery());
-            var contactDtos = contacts.Select(c => new GetContactsDto()
+            var contactsDto = contacts.Select(c => new GetContactsDto()
             {
                 Id = c.Id,
                 Name = c.Name,
@@ -33,7 +35,7 @@ namespace CarBook.WebApi.Controllers
                 SendDate = c.SendDate
             });
 
-            return Ok(contactDtos);
+            return Ok(GenericApiResponse<IEnumerable<GetContactsDto>>.Success(contactsDto));
         }
 
         [HttpGet("{id}")]
@@ -52,7 +54,7 @@ namespace CarBook.WebApi.Controllers
                 SendDate = contact.SendDate
             };
 
-            return Ok(contactDto);
+            return Ok(GenericApiResponse<GetContactByIdDto>.Success(contactDto));
         }
 
         [HttpPost]

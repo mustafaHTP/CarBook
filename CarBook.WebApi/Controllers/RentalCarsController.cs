@@ -1,5 +1,7 @@
-﻿using CarBook.Application.Dtos.RentalCarDtos;
+﻿using CarBook.Application.Dtos.BlogTagDtos;
+using CarBook.Application.Dtos.RentalCarDtos;
 using CarBook.Application.Features.RentalCarFeatures.Queries;
+using CarBook.WebApi.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,7 +26,7 @@ namespace CarBook.WebApi.Controllers
                 {
                     PickUpLocationId = getRentalCarsQueryDto.PickUpLocationId,
                 });
-            var rentalCarDtos = rentalCars.Select(rc => new GetRentalCarsDto()
+            var rentalCarsDto = rentalCars.Select(rc => new GetRentalCarsDto()
             {
                 Id = rc.Id,
                 LocationId = rc.LocationId,
@@ -34,7 +36,7 @@ namespace CarBook.WebApi.Controllers
                 IsAvailable = rc.IsAvailable,
             });
 
-            return Ok(rentalCars);
+            return Ok(GenericApiResponse<IEnumerable<GetRentalCarsDto>>.Success(rentalCarsDto));
         }
     }
 }

@@ -1,9 +1,11 @@
-﻿using CarBook.Application.Dtos.BlogAuthorDtos;
+﻿using CarBook.Application.Dtos.BannerDtos;
+using CarBook.Application.Dtos.BlogAuthorDtos;
 using CarBook.Application.Dtos.BlogDtos;
 using CarBook.Application.Features.BlogAuthorFeatures.Commands;
 using CarBook.Application.Features.BlogAuthorFeatures.Queries;
 using CarBook.Domain.Entities;
 using CarBook.WebApi.Filters;
+using CarBook.WebApi.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -44,7 +46,7 @@ namespace CarBook.WebApi.Controllers
                 }).ToList()
             });
 
-            return Ok(blogAuthorsDto);
+            return Ok(GenericApiResponse<IEnumerable<GetBlogAuthorsDto>>.Success(blogAuthorsDto));
         }
 
         [HttpGet("{id}")]
@@ -60,7 +62,7 @@ namespace CarBook.WebApi.Controllers
                 ImageUrl = blogAuthor.ImageUrl
             };
 
-            return Ok(blogAuthorDto);
+            return Ok(GenericApiResponse<GetBlogAuthorByIdDto>.Success(blogAuthorDto));
         }
 
         [HttpPost]

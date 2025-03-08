@@ -1,8 +1,10 @@
-﻿using CarBook.Application.Dtos.PricingPlanDtos;
+﻿using CarBook.Application.Dtos.BlogTagDtos;
+using CarBook.Application.Dtos.PricingPlanDtos;
 using CarBook.Application.Features.PricingPlanFeatures.Commands;
 using CarBook.Application.Features.PricingPlanFeatures.Queries;
 using CarBook.Domain.Entities;
 using CarBook.WebApi.Filters;
+using CarBook.WebApi.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,28 +24,28 @@ namespace CarBook.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var pricingPlans = await _mediator.Send(new GetRentalPeriodsQuery());
-            var pricingPlanDtos = pricingPlans.Select(pricingPlan => new GetRentalPeriodsDto
+            var rentalPeriods = await _mediator.Send(new GetRentalPeriodsQuery());
+            var rentalPeriodsDto = rentalPeriods.Select(pricingPlan => new GetRentalPeriodsDto
             {
                 Id = pricingPlan.Id,
                 Name = pricingPlan.Name
             });
 
-            return Ok(pricingPlanDtos);
+            return Ok(GenericApiResponse<IEnumerable<GetRentalPeriodsDto>>.Success(rentalPeriodsDto));
         }
 
         [HttpGet("{id}")]
         [ServiceFilter(typeof(NotFoundFilterAttribute<RentalPeriod>))]
         public async Task<IActionResult> GetById(int id)
         {
-            var pricingPlan = await _mediator.Send(new GetRentalPeriodByIdQuery() { Id = id });
-            var pricingPlanDto = new GetRentalPeriodByIdDto
+            var rentalPeriod = await _mediator.Send(new GetRentalPeriodByIdQuery() { Id = id });
+            var rentalPeriodDto = new GetRentalPeriodByIdDto
             {
-                Id = pricingPlan.Id,
-                Name = pricingPlan.Name
+                Id = rentalPeriod.Id,
+                Name = rentalPeriod.Name
             };
 
-            return Ok(pricingPlanDto);
+            return Ok(GenericApiResponse<GetRentalPeriodByIdDto>.Success(rentalPeriodDto));
         }
 
         [HttpPost]

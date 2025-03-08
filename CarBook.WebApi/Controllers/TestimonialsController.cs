@@ -1,8 +1,10 @@
-﻿using CarBook.Application.Dtos.TestimonialDtos;
+﻿using CarBook.Application.Dtos.StatisticsDtos;
+using CarBook.Application.Dtos.TestimonialDtos;
 using CarBook.Application.Features.TestimonialFeatures.Commands;
 using CarBook.Application.Features.TestimonialFeatures.Queries;
 using CarBook.Domain.Entities;
 using CarBook.WebApi.Filters;
+using CarBook.WebApi.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,7 +25,7 @@ namespace CarBook.WebApi.Controllers
         public async Task<IActionResult> GetAll()
         {
             var testimonials = await _mediator.Send(new GetTestimonialsQuery());
-            var testimonialDtos = testimonials.Select(t => new GetTestimonialsDto()
+            var testimonialsDto = testimonials.Select(t => new GetTestimonialsDto()
             {
                 Id = t.Id,
                 Name = t.Name,
@@ -32,7 +34,7 @@ namespace CarBook.WebApi.Controllers
                 ImageUrl = t.ImageUrl
             });
 
-            return Ok(testimonialDtos);
+            return Ok(GenericApiResponse<IEnumerable<GetTestimonialsDto>>.Success(testimonialsDto));
         }
 
         [HttpGet("{id}")]
@@ -50,7 +52,7 @@ namespace CarBook.WebApi.Controllers
             };
 
 
-            return Ok(testimonialDto);
+            return Ok(GenericApiResponse<GetTestimonialByIdDto>.Success(testimonialDto));
         }
 
         [HttpPost]

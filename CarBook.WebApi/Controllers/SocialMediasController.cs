@@ -1,8 +1,10 @@
-﻿using CarBook.Application.Dtos.SocialMediaDtos;
+﻿using CarBook.Application.Dtos.BlogTagDtos;
+using CarBook.Application.Dtos.SocialMediaDtos;
 using CarBook.Application.Features.SocialMediaFeatures.Commands;
 using CarBook.Application.Features.SocialMediaFeatures.Queries;
 using CarBook.Domain.Entities;
 using CarBook.WebApi.Filters;
+using CarBook.WebApi.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,7 +25,7 @@ namespace CarBook.WebApi.Controllers
         public async Task<IActionResult> GetAll()
         {
             var socialMedias = await _mediator.Send(new GetSocialMediasQuery());
-            var socialMediaDtos = socialMedias.Select(socialMedia => new GetSocialMediasDto
+            var socialMediasDto = socialMedias.Select(socialMedia => new GetSocialMediasDto
             {
                 Id = socialMedia.Id,
                 Name = socialMedia.Name,
@@ -31,7 +33,7 @@ namespace CarBook.WebApi.Controllers
                 Icon = socialMedia.Icon
             });
 
-            return Ok(socialMediaDtos);
+            return Ok(GenericApiResponse<IEnumerable<GetSocialMediasDto>>.Success(socialMediasDto));
         }
 
         [HttpGet("{id}")]
@@ -47,7 +49,7 @@ namespace CarBook.WebApi.Controllers
                 Icon = socialMedia.Icon
             };
 
-            return Ok(socialMediaDto);
+            return Ok(GenericApiResponse<GetSocialMediaByIdDto>.Success(socialMediaDto));
         }
 
         [HttpPost]

@@ -1,8 +1,10 @@
-﻿using CarBook.Application.Dtos.LocationDtos;
+﻿using CarBook.Application.Dtos.BlogTagDtos;
+using CarBook.Application.Dtos.LocationDtos;
 using CarBook.Application.Features.LocationFeatures.Commands;
 using CarBook.Application.Features.LocationFeatures.Queries;
 using CarBook.Domain.Entities;
 using CarBook.WebApi.Filters;
+using CarBook.WebApi.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,9 +25,9 @@ namespace CarBook.WebApi.Controllers
         public async Task<IActionResult> GetAll()
         {
             var locations = await _mediator.Send(new GetLocationsQuery());
-            var locationDtos = locations.Select(location => new GetLocationsDto() { Id = location.Id, Name = location.Name });
+            var locationsDto = locations.Select(location => new GetLocationsDto() { Id = location.Id, Name = location.Name });
 
-            return Ok(locationDtos);
+            return Ok(GenericApiResponse<IEnumerable<GetLocationsDto>>.Success(locationsDto));
         }
 
         [HttpGet("{id}")]
@@ -35,7 +37,7 @@ namespace CarBook.WebApi.Controllers
             var location = await _mediator.Send(new GetLocationByIdQuery() { Id = id });
             var locationDto = new GetLocationByIdDto() { Id = location.Id, Name = location.Name };
 
-            return Ok(locationDto);
+            return Ok(GenericApiResponse<GetLocationByIdDto>.Success(locationDto));
         }
 
         [HttpPost]

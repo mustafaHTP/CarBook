@@ -1,10 +1,12 @@
-﻿using CarBook.Application.Dtos.BlogCommentDtos;
+﻿using CarBook.Application.Dtos.BannerDtos;
+using CarBook.Application.Dtos.BlogCommentDtos;
 using CarBook.Application.Dtos.BlogDtos;
 using CarBook.Application.Features.BlogCommentFeatures.Queries;
 using CarBook.Application.Features.BlogFeatures.Commands;
 using CarBook.Application.Features.BlogFeatures.Queries;
 using CarBook.Domain.Entities;
 using CarBook.WebApi.Filters;
+using CarBook.WebApi.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -47,7 +49,7 @@ namespace CarBook.WebApi.Controllers
                 BlogCategoryName = b.BlogCategory?.Name
             });
 
-            return Ok(blogsDto);
+            return Ok(GenericApiResponse<IEnumerable<GetBlogsDto>>.Success(blogsDto));
         }
 
         [HttpGet("{id}")]
@@ -77,7 +79,7 @@ namespace CarBook.WebApi.Controllers
                 BlogCategoryName = blog.BlogCategory?.Name
             };
 
-            return Ok(blogDto);
+            return Ok(GenericApiResponse<GetBlogByIdDto>.Success(blogDto));
         }
 
         [HttpGet("{id}/tags")]
@@ -91,7 +93,7 @@ namespace CarBook.WebApi.Controllers
                 Name = bt.Name
             });
 
-            return Ok(blogTagsDto);
+            return Ok(GenericApiResponse<IEnumerable<GetBlogTagsByIdDto>>.Success(blogTagsDto));
         }
 
         [HttpGet("{id}/comments")]
@@ -108,7 +110,7 @@ namespace CarBook.WebApi.Controllers
                 BlogId = bc.BlogId,
             });
 
-            return Ok(blogCommentsDto);
+            return Ok(GenericApiResponse<IEnumerable<GetBlogCommentsByBlogIdDto>>.Success(blogCommentsDto));
         }
 
         [HttpGet("{id}/comments/count")]
@@ -122,7 +124,7 @@ namespace CarBook.WebApi.Controllers
                 BlogCommentCount = result.BlogCommentCount
             };
 
-            return Ok(resultDto);
+            return Ok(GenericApiResponse<GetBlogCommentCountByIdDto>.Success(resultDto));
         }
 
         [HttpPost]

@@ -1,8 +1,10 @@
-﻿using CarBook.Application.Dtos.FooterAddressDtos;
+﻿using CarBook.Application.Dtos.BlogTagDtos;
+using CarBook.Application.Dtos.FooterAddressDtos;
 using CarBook.Application.Features.FooterAddressFeatures.Commands;
 using CarBook.Application.Features.FooterAddressFeatures.Queries;
 using CarBook.Domain.Entities;
 using CarBook.WebApi.Filters;
+using CarBook.WebApi.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,7 +25,7 @@ namespace CarBook.WebApi.Controllers
         public async Task<IActionResult> GetAll()
         {
             var footerAddresses = await _mediator.Send(new GetFooterAddressesQuery());
-            var footerAddressDtos = footerAddresses.Select(footerAddress => new GetFooterAddressesDto
+            var footerAddressesDto = footerAddresses.Select(footerAddress => new GetFooterAddressesDto
             {
                 Id = footerAddress.Id,
                 Description = footerAddress.Description,
@@ -32,7 +34,7 @@ namespace CarBook.WebApi.Controllers
                 Phone = footerAddress.Phone
             }).ToList();
 
-            return Ok(footerAddressDtos);
+            return Ok(GenericApiResponse<IEnumerable<GetFooterAddressesDto>>.Success(footerAddressesDto));
         }
 
         [HttpGet("{id}")]
@@ -40,7 +42,7 @@ namespace CarBook.WebApi.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var footerAddress = await _mediator.Send(new GetFooterAddressByIdQuery() { Id = id });
-            var footerAddressDto = new GetFooterAddressesDto
+            var footerAddressDto = new GetFooterAddressByIdDto
             {
                 Id = footerAddress.Id,
                 Description = footerAddress.Description,
@@ -49,7 +51,7 @@ namespace CarBook.WebApi.Controllers
                 Phone = footerAddress.Phone
             };
 
-            return Ok(footerAddressDto);
+            return Ok(GenericApiResponse<GetFooterAddressByIdDto>.Success(footerAddressDto));
         }
 
         [HttpPost]

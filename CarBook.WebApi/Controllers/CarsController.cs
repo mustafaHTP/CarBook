@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Dtos.CarDtos;
+﻿using CarBook.Application.Dtos.BlogTagDtos;
+using CarBook.Application.Dtos.CarDtos;
 using CarBook.Application.Dtos.CarReviewDtos;
 using CarBook.Application.Dtos.PricingPlanDtos;
 using CarBook.Application.Features.CarFeatures.Commands;
@@ -6,6 +7,7 @@ using CarBook.Application.Features.CarFeatures.Queries;
 using CarBook.Application.Features.CarReviewFeatures.Queries;
 using CarBook.Domain.Entities;
 using CarBook.WebApi.Filters;
+using CarBook.WebApi.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -43,7 +45,7 @@ namespace CarBook.WebApi.Controllers
                 TransmissionType = c.TransmissionType
             });
 
-            return Ok(carsDto);
+            return Ok(GenericApiResponse<IEnumerable<GetCarsDto>>.Success(carsDto));
         }
 
         [HttpGet("{id}/CarFeatures")]
@@ -65,7 +67,7 @@ namespace CarBook.WebApi.Controllers
                 IsAvailable = cf.IsAvailable
             });
 
-            return Ok(carFeaturesDto);
+            return Ok(GenericApiResponse<IEnumerable<GetCarFeaturesByCarIdDto>>.Success(carFeaturesDto));
         }
 
         [HttpGet("RentalPricings")]
@@ -98,7 +100,7 @@ namespace CarBook.WebApi.Controllers
                 })
             });
 
-            return Ok(carsWithRentalPricingsDto);
+            return Ok(GenericApiResponse<IEnumerable<GetCarsWithRentalPricingsDto>>.Success(carsWithRentalPricingsDto));
         }
 
         [HttpGet("{id}/RentalPricings")]
@@ -119,7 +121,7 @@ namespace CarBook.WebApi.Controllers
                 Price = crp.Price
             });
 
-            return Ok(carRentalPricingsDto);
+            return Ok(GenericApiResponse<IEnumerable<GetCarRentalPricingsByCarIdDto>>.Success(carRentalPricingsDto));
         }
 
         [HttpGet("{id}/CarDescriptions")]
@@ -139,7 +141,7 @@ namespace CarBook.WebApi.Controllers
                 Description = cf.Description
             });
 
-            return Ok(carDescriptionsDto);
+            return Ok(GenericApiResponse<IEnumerable<GetCarDescriptionsByCarIdDto>>.Success(carDescriptionsDto));
         }
 
         [HttpGet("{id}/CarReviews")]
@@ -163,7 +165,7 @@ namespace CarBook.WebApi.Controllers
                 RatingStarCount = cr.RatingStarCount
             });
 
-            return Ok(carReviewsDto);
+            return Ok(GenericApiResponse<IEnumerable<GetCarReviewByCarIdDto>>.Success(carReviewsDto));
         }
 
         [HttpGet("{id}")]
@@ -192,7 +194,7 @@ namespace CarBook.WebApi.Controllers
                 BigImageUrl = car.BigImageUrl
             };
 
-            return Ok(carDto);
+            return Ok(GenericApiResponse<GetCarByIdDto>.Success(carDto));
         }
 
         [HttpPost]

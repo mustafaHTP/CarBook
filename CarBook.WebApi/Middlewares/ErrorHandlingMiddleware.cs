@@ -1,5 +1,6 @@
 ﻿using CarBook.Application;
 using CarBook.Application.Exceptions;
+using CarBook.Application.Responses;
 using CarBook.WebApi.Responses;
 using Newtonsoft.Json;
 using System.Net;
@@ -67,7 +68,7 @@ namespace CarBook.WebApi.Middlewares
             httpContext.Response.ContentType = "application/json";
             httpContext.Response.StatusCode = statusCode;
 
-            var genericApiResult = GenericApiResult<GenericResponse>.Failure(problemDetails);
+            var genericApiResult = GenericApiResponse<EmptyApiResult>.Failure(problemDetails);
             var json = JsonConvert.SerializeObject(genericApiResult);
             await httpContext.Response.WriteAsync(json);
         }
