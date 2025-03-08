@@ -1,4 +1,4 @@
-﻿namespace CarBook.Application.Dtos.PricingPlanDtos
+﻿namespace CarBook.Application.Dtos.RentalPeriodDtos
 {
     public class GetRentalPeriodByIdDto
     {

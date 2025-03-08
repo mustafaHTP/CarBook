@@ -1,7 +1,7 @@
 ﻿using CarBook.Application.Dtos.BlogTagDtos;
 using CarBook.Application.Dtos.CarDtos;
 using CarBook.Application.Dtos.CarReviewDtos;
-using CarBook.Application.Dtos.PricingPlanDtos;
+using CarBook.Application.Dtos.RentalPeriodDtos;
 using CarBook.Application.Features.CarFeatures.Commands;
 using CarBook.Application.Features.CarFeatures.Queries;
 using CarBook.Application.Features.CarReviewFeatures.Queries;

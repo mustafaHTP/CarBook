@@ -1,6 +1,6 @@
 ﻿using CarBook.Application.Dtos.BrandDtos;
 using CarBook.Application.Dtos.ModelDtos;
-using CarBook.Application.Dtos.PricingPlanDtos;
+using CarBook.Application.Dtos.RentalPeriodDtos;
 using CarBook.Application.Interfaces.Services;
 using CarBook.WebApp.Areas.Admin.Models.ModelModels;
 using CarBook.WebApp.Areas.Admin.Models.PricingPlanModels;

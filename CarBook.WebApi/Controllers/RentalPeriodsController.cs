@@ -1,5 +1,5 @@
 ﻿using CarBook.Application.Dtos.BlogTagDtos;
-using CarBook.Application.Dtos.PricingPlanDtos;
+using CarBook.Application.Dtos.RentalPeriodDtos;
 using CarBook.Application.Features.PricingPlanFeatures.Commands;
 using CarBook.Application.Features.PricingPlanFeatures.Queries;
 using CarBook.Domain.Entities;

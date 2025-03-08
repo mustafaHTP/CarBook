@@ -2,6 +2,6 @@
 {
     public class CreateLocationDto
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
     }
 }

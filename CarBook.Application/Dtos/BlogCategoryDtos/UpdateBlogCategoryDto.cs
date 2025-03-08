@@ -2,6 +2,6 @@
 {
     public class UpdateBlogCategoryDto
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
     }
 }

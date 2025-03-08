@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Dtos.PricingPlanDtos;
+﻿
+using CarBook.Application.Dtos.RentalPeriodDtos;
 
 namespace CarBook.Application.Dtos.CarDtos
 {
