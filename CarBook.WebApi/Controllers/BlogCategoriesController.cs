@@ -2,6 +2,8 @@
 using CarBook.Application.Features.BlogCategoryFeatures.Commands;
 using CarBook.Application.Features.BlogCategoryFeatures.Queries;
 using CarBook.Application.Features.BlogFeatures.Queries;
+using CarBook.Domain.Entities;
+using CarBook.WebApi.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,6 +34,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpGet("{id}/blogs")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<BlogCategory>))]
         public async Task<IActionResult> GetAllBlogsById([FromRoute ]int id, [FromQuery] GetBlogsByBlogCategoryIdQueryDto getBlogsByBlogCategoryIdQueryDto)
         {
             var query = new GetBlogsByBlogCategoryIdQuery
@@ -61,6 +64,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpGet("{id}/blogs/count")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<BlogCategory>))]
         public async Task<IActionResult> GetBlogsCountById(int id)
         {
             var query = new GetBlogsCountByBlogCategoryIdQuery() { BlogCategoryId = id };
@@ -74,6 +78,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<BlogCategory>))]
         public async Task<IActionResult> GetById(int id)
         {
             var query = new GetBlogCategoryByIdQuery() { Id = id };
@@ -100,6 +105,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpPut("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<BlogCategory>))]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateBlogCategoryCommand updateBlogCategoryCommand)
         {
             var command = new UpdateBlogCategoryCommand
@@ -113,6 +119,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<BlogCategory>))]
         public async Task<IActionResult> Delete(int id)
         {
             var command = new DeleteBlogCategoryCommand() { Id = id };

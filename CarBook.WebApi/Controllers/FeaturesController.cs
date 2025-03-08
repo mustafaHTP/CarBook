@@ -1,6 +1,8 @@
 ﻿using CarBook.Application.Dtos.FeatureDtos;
 using CarBook.Application.Features.FeatureFeatures.Commands;
 using CarBook.Application.Features.FeatureFeatures.Queries;
+using CarBook.Domain.Entities;
+using CarBook.WebApi.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,6 +33,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<Feature>))]
         public async Task<IActionResult> GetById(int id)
         {
             var feature = await _mediator.Send(new GetFeatureByIdQuery(id));
@@ -57,6 +60,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpPut("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<Feature>))]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateFeatureDto updateFeatureDto)
         {
             var updateFeatureCommand = new UpdateFeatureCommand()
@@ -71,6 +75,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<Feature>))]
         public async Task<IActionResult> Delete(int id)
         {
             await _mediator.Send(new DeleteFeatureCommand() { Id = id });

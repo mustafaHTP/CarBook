@@ -18,7 +18,7 @@ namespace CarBook.Application.Features.ContactFeatures.Handlers
         public async Task Handle(UpdateContactCommand request, CancellationToken cancellationToken)
         {
             var contact = await _repository.GetByIdAsync(request.Id)
-                ?? throw new NotFoundException<Contact>(request.Id);
+                ?? throw new NotFoundException(typeof(Contact), request.Id);
 
             contact.Email = request.Email;
             contact.Message = request.Message;

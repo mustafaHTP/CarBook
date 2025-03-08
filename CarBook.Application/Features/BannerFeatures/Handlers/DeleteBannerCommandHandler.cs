@@ -18,7 +18,7 @@ namespace CarBook.Application.Features.BannerFeatures.Handlers
         public async Task Handle(DeleteBannerCommand request, CancellationToken cancellationToken)
         {
             var banner = await _repository.GetByIdAsync(request.Id)
-                ?? throw new NotFoundException<Banner>(request.Id);
+                ?? throw new NotFoundException(typeof(Banner), request.Id);
 
             await _repository.DeleteAsync(banner);
         }

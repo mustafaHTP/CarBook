@@ -1,6 +1,8 @@
 ﻿using CarBook.Application.Dtos.BlogTagDtos;
 using CarBook.Application.Features.BlogTagFeatures.Commands;
 using CarBook.Application.Features.BlogTagFeatures.Queries;
+using CarBook.Domain.Entities;
+using CarBook.WebApi.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,6 +33,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<BlogTag>))]
         public async Task<IActionResult> GetById(int id)
         {
             var blogTag = await _mediator.Send(new GetBlogTagByIdQuery() { Id = id });
@@ -70,6 +73,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpPut("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<BlogTag>))]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateBlogTagDto updateBlogTagDto)
         {
             var command = new UpdateBlogTagCommand
@@ -84,6 +88,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<BlogTag>))]
         public async Task<IActionResult> Delete(int id)
         {
             var command = new DeleteBlogTagCommand() { Id = id };

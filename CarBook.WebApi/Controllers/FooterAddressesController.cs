@@ -1,6 +1,8 @@
 ﻿using CarBook.Application.Dtos.FooterAddressDtos;
 using CarBook.Application.Features.FooterAddressFeatures.Commands;
 using CarBook.Application.Features.FooterAddressFeatures.Queries;
+using CarBook.Domain.Entities;
+using CarBook.WebApi.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,6 +36,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<FooterAddress>))]
         public async Task<IActionResult> GetById(int id)
         {
             var footerAddress = await _mediator.Send(new GetFooterAddressByIdQuery() { Id = id });
@@ -66,6 +69,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpPut("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<FooterAddress>))]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateFooterAddressDto updateFooterAddressDto)
         {
             var command = new UpdateFooterAddressCommand
@@ -83,6 +87,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<FooterAddress>))]
         public async Task<IActionResult> Delete(int id)
         {
             var command = new DeleteFooterAddressCommand { Id = id };

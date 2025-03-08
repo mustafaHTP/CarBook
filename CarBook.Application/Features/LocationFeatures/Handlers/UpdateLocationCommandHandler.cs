@@ -18,7 +18,7 @@ namespace CarBook.Application.Features.LocationFeatures.Handlers
         public async Task Handle(UpdateLocationCommand request, CancellationToken cancellationToken)
         {
             var location = await _repository.GetByIdAsync(request.Id)
-                ?? throw new NotFoundException<Location>(request.Id);
+                ?? throw new NotFoundException(typeof(Location), request.Id);
 
             //update here
             location.Name = request.Name;

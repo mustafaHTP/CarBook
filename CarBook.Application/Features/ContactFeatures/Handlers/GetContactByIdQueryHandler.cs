@@ -19,7 +19,7 @@ namespace CarBook.Application.Features.ContactFeatures.Handlers
         public async Task<GetContactByIdQueryResult> Handle(GetContactByIdQuery request, CancellationToken cancellationToken)
         {
             var contact = await _repository.GetByIdAsync(request.Id)
-                ?? throw new NotFoundException<Contact>(request.Id);
+                ?? throw new NotFoundException(typeof(Contact), request.Id);
             var result = new GetContactByIdQueryResult()
             {
                 Id = contact.Id,

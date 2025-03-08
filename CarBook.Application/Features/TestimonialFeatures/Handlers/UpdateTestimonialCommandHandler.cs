@@ -17,7 +17,7 @@ namespace CarBook.Application.Features.TestimonialFeatures.Handlers
         public async Task Handle(UpdateTestimonialCommand request, CancellationToken cancellationToken)
         {
             var testimonial = await _repository.GetByIdAsync(request.Id)
-                ?? throw new NotFoundException<Testimonial>(request.Id);
+                ?? throw new NotFoundException(typeof(Testimonial), request.Id);
 
             testimonial.Name = request.Name;
             testimonial.Comment = request.Comment;

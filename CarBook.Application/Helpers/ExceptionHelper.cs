@@ -18,7 +18,7 @@ namespace CarBook.Application.Helpers
         /// <exception cref="NotFoundException{T}"></exception>
         public static void ThrowIfNotFound<T>(int id) where T : class
         {
-            throw new NotFoundException<T>($"{typeof(T).Name} with ID {id} not found.");
+            throw new NotFoundException($"{typeof(T).Name} with ID {id} not found.");
         }
     }
 }

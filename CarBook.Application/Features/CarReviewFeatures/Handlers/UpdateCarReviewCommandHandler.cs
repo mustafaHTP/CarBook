@@ -18,7 +18,7 @@ namespace CarBook.Application.Features.CarReviewFeatures.Handlers
         public async Task Handle(UpdateCarReviewCommand request, CancellationToken cancellationToken)
         {
             var carReview = await _repository.GetByIdAsync(request.Id)
-                ?? throw new NotFoundException<CarReview>(request.Id);
+                ?? throw new NotFoundException(typeof(CarReview), request.Id);
 
             // Update here
             carReview.Review = request.Review;

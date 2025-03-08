@@ -3,6 +3,8 @@ using CarBook.Application.Dtos.BlogDtos;
 using CarBook.Application.Features.BlogCommentFeatures.Queries;
 using CarBook.Application.Features.BlogFeatures.Commands;
 using CarBook.Application.Features.BlogFeatures.Queries;
+using CarBook.Domain.Entities;
+using CarBook.WebApi.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -49,6 +51,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<Blog>))]
         public async Task<IActionResult> GetById([FromRoute] int id, [FromQuery] GetBlogByIdQueryDto getBlogByIdQueryDto)
         {
             var query = new GetBlogByIdQuery()
@@ -78,6 +81,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpGet("{id}/tags")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<Blog>))]
         public async Task<IActionResult> GetAllBlogTagsById(int id)
         {
             var blogTags = await _mediator.Send(new GetBlogTagsByIdQuery() { Id = id });
@@ -91,6 +95,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpGet("{id}/comments")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<Blog>))]
         public async Task<IActionResult> GetAllBlogCommentsById(int id)
         {
             var blogComments = await _mediator.Send(new GetBlogCommentsByBlogIdQuery() { BlogId = id });
@@ -107,6 +112,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpGet("{id}/comments/count")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<Blog>))]
         public async Task<IActionResult> GetBlogCommentCountById(int id)
         {
             var result =
@@ -138,6 +144,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpPut("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<Blog>))]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateBlogDto updateBlogDto)
         {
             var command = new UpdateBlogCommand()
@@ -156,6 +163,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<Blog>))]
         public async Task<IActionResult> Delete(int id)
         {
             var command = new DeleteBlogCommand() { Id = id };

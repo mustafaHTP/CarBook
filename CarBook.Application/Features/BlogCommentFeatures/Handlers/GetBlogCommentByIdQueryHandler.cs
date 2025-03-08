@@ -19,7 +19,7 @@ namespace CarBook.Application.Features.BlogCommentFeatures.Handlers
         public async Task<GetBlogCommentByIdQueryResult> Handle(GetBlogCommentByIdQuery request, CancellationToken cancellationToken)
         {
             var blogComment = await _repository.GetByIdAsync(request.Id)
-                ?? throw new NotFoundException<BlogComment>(request.Id);
+                ?? throw new NotFoundException(typeof(BlogComment), request.Id);
 
             return new GetBlogCommentByIdQueryResult
             {

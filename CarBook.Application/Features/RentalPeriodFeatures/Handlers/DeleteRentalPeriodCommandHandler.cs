@@ -18,7 +18,7 @@ namespace CarBook.Application.Features.PricingPlanFeatures.Handlers
         public async Task Handle(DeleteRentalPeriodCommand request, CancellationToken cancellationToken)
         {
             var rentalPeriod = await _repository.GetByIdAsync(request.Id)
-                ?? throw new NotFoundException<RentalPeriod>(request.Id);
+                ?? throw new NotFoundException(typeof(RentalPeriod), request.Id);
 
             await _repository.DeleteAsync(rentalPeriod);
         }

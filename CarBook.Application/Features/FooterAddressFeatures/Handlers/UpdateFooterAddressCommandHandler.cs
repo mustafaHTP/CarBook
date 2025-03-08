@@ -18,7 +18,7 @@ namespace CarBook.Application.Features.FooterAddressFeatures.Handlers
         public async Task Handle(UpdateFooterAddressCommand request, CancellationToken cancellationToken)
         {
             var footerAddress = await _repository.GetByIdAsync(request.Id)
-                ?? throw new NotFoundException<FooterAddress>(request.Id);
+                ?? throw new NotFoundException(typeof(FooterAddress), request.Id);
 
             //update here
             footerAddress.Description = request.Description;

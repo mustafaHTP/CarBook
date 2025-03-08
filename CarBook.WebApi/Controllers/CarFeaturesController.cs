@@ -1,5 +1,7 @@
 ﻿using CarBook.Application.Dtos.CarFeatureDtos;
 using CarBook.Application.Features.CarFeatureFeatures.Commands;
+using CarBook.Domain.Entities;
+using CarBook.WebApi.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,6 +19,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpPut("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<CarFeature>))]
         public async Task<IActionResult> UpdateAsync([FromRoute] int id, [FromBody] UpdateCarFeatureDto updateCarFeatureDto)
         {
             var command = new UpdateCarFeatureCommand

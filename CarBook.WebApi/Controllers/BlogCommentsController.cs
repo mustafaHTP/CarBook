@@ -1,6 +1,8 @@
 ﻿using CarBook.Application.Dtos.BlogCommentDtos;
 using CarBook.Application.Features.BlogCommentFeatures.Commands;
 using CarBook.Application.Features.BlogCommentFeatures.Queries;
+using CarBook.Domain.Entities;
+using CarBook.WebApi.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,6 +37,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<BlogComment>))]
         public async Task<IActionResult> GetById(int id)
         {
             var blogComment = await _mediator.Send(new GetBlogCommentByIdQuery() { Id = id });
@@ -68,6 +71,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpPut("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<BlogComment>))]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateBlogCommentDto updateBlogCommentDto)
         {
             var command = new UpdateBlogCommentCommand()
@@ -85,6 +89,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<BlogComment>))]
         public async Task<IActionResult> Delete(int id)
         {
             var command = new DeleteBlogCommentCommand() { Id = id };

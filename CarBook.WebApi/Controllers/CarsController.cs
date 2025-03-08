@@ -4,6 +4,8 @@ using CarBook.Application.Dtos.PricingPlanDtos;
 using CarBook.Application.Features.CarFeatures.Commands;
 using CarBook.Application.Features.CarFeatures.Queries;
 using CarBook.Application.Features.CarReviewFeatures.Queries;
+using CarBook.Domain.Entities;
+using CarBook.WebApi.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -44,12 +46,13 @@ namespace CarBook.WebApi.Controllers
             return Ok(carsDto);
         }
 
-        [HttpGet("{carId}/CarFeatures")]
-        public async Task<IActionResult> GetCarFeatures(int carId)
+        [HttpGet("{id}/CarFeatures")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<Car>))]
+        public async Task<IActionResult> GetCarFeatures(int id)
         {
             var query = new GetCarFeaturesByCarIdQuery()
             {
-                CarId = carId
+                CarId = id
             };
 
             var carFeatures = await _mediator.Send(query);
@@ -98,12 +101,13 @@ namespace CarBook.WebApi.Controllers
             return Ok(carsWithRentalPricingsDto);
         }
 
-        [HttpGet("{carId}/RentalPricings")]
-        public async Task<IActionResult> GetRentalPricings(int carId)
+        [HttpGet("{id}/RentalPricings")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<Car>))]
+        public async Task<IActionResult> GetRentalPricings(int id)
         {
             var query = new GetCarRentalPricingsByIdQuery()
             {
-                CarId = carId
+                CarId = id
             };
             var carRentalPricings = await _mediator.Send(query);
             var carRentalPricingsDto = carRentalPricings.Select(crp => new GetCarRentalPricingsByCarIdDto
@@ -118,12 +122,13 @@ namespace CarBook.WebApi.Controllers
             return Ok(carRentalPricingsDto);
         }
 
-        [HttpGet("{carId}/CarDescriptions")]
-        public async Task<IActionResult> GetCarDescriptions(int carId)
+        [HttpGet("{id}/CarDescriptions")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<Car>))]
+        public async Task<IActionResult> GetCarDescriptions(int id)
         {
             var query = new GetCarDescriptionsByCarIdQuery()
             {
-                CarId = carId
+                CarId = id
             };
 
             var carDescriptions = await _mediator.Send(query);
@@ -137,12 +142,13 @@ namespace CarBook.WebApi.Controllers
             return Ok(carDescriptionsDto);
         }
 
-        [HttpGet("{carId}/CarReviews")]
-        public async Task<IActionResult> GetCarReviewsByCarId(int carId)
+        [HttpGet("{id}/CarReviews")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<Car>))]
+        public async Task<IActionResult> GetCarReviewsByCarId(int id)
         {
             var query = new GetCarReviewsByCarIdQuery()
             {
-                CarId = carId
+                CarId = id
             };
             var carReviews = await _mediator.Send(query);
             var carReviewsDto = carReviews.Select(cr => new GetCarReviewByCarIdDto
@@ -161,6 +167,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<Car>))]
         public async Task<IActionResult> GetById(int id)
         {
             var query = new GetCarByIdQuery()
@@ -209,6 +216,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<Car>))]
         public async Task<IActionResult> Delete(int id)
         {
             var command = new DeleteCarCommand(id);
@@ -219,6 +227,7 @@ namespace CarBook.WebApi.Controllers
 
 
         [HttpPut("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<Car>))]
         public async Task<IActionResult> Update([FromRoute]int id, [FromBody] UpdateCarDto updateCarDto)
         {
             var updateCarCommand = new UpdateCarCommand()

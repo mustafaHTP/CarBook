@@ -1,6 +1,8 @@
 ﻿using CarBook.Application.Dtos.SocialMediaDtos;
 using CarBook.Application.Features.SocialMediaFeatures.Commands;
 using CarBook.Application.Features.SocialMediaFeatures.Queries;
+using CarBook.Domain.Entities;
+using CarBook.WebApi.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,6 +35,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<SocialMedia>))]
         public async Task<IActionResult> GetById(int id)
         {
             var socialMedia = await _mediator.Send(new GetSocialMediaByIdQuery() { Id = id });
@@ -63,6 +66,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpPut("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<SocialMedia>))]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateSocialMediaDto updateSocialMediaDto)
         {
             var command = new UpdateSocialMediaCommand
@@ -79,6 +83,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<SocialMedia>))]
         public async Task<IActionResult> Delete(int id)
         {
             var command = new DeleteSocialMediaCommand { Id = id };

@@ -3,9 +3,11 @@ using CarBook.Application.Validators;
 using CarBook.Persistence.Context;
 using CarBook.Persistence.Services;
 using CarBook.WebApi.Extensions;
+using CarBook.WebApi.Filters;
 using CarBook.WebApi.Middlewares;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 using System.Globalization;
@@ -21,6 +23,11 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.MaxDepth = 64;
 });
 
+builder.Services.Configure<ApiBehaviorOptions>(config =>
+{
+    config.SuppressModelStateInvalidFilter = true;
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -33,6 +40,8 @@ builder.Services.AddRepositories();
 builder.Services.AddServices();
 builder.Services.AddMediatRService();
 builder.Services.AddFluentValidation();
+
+builder.Services.AddScoped(typeof(NotFoundFilterAttribute<>));
 
 builder.Services.AddCors(options =>
 {

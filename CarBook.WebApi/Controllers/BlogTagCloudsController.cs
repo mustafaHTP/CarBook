@@ -1,6 +1,8 @@
 ﻿using CarBook.Application.Dtos.BlogTagCloudDtos;
 using CarBook.Application.Features.BlogTagCloudFeatures.Commands;
 using CarBook.Application.Features.BlogTagCloudFeatures.Queries;
+using CarBook.Domain.Entities;
+using CarBook.WebApi.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,6 +34,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<BlogTagCloud>))]
         public async Task<IActionResult> GetById(int id)
         {
             var blogTagCloud = await _mediator.Send(new GetBlogTagCloudByIdQuery() { Id = id });
@@ -46,6 +49,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpGet("{blogId}/tags")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<BlogTagCloud>))]
         public async Task<IActionResult> GetBlogTagsByBlogId(int blogId)
         {
             var query = new GetBlogTagCloudByBlogIdWithBlogTagQuery { BlogId = blogId };
@@ -77,6 +81,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpPut("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<BlogTagCloud>))]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateBlogTagCloudDto updateBlogTagCloudDto)
         {
             var command = new UpdateBlogTagCloudCommand
@@ -92,6 +97,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<BlogTagCloud>))]
         public async Task<IActionResult> Delete(int id)
         {
             await _mediator.Send(new DeleteBlogTagCloudCommand() { Id = id });

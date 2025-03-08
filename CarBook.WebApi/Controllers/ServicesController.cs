@@ -1,6 +1,8 @@
 ﻿using CarBook.Application.Dtos.ServiceDtos;
 using CarBook.Application.Features.ServiceFeatures.Commands;
 using CarBook.Application.Features.ServiceFeatures.Queries;
+using CarBook.Domain.Entities;
+using CarBook.WebApi.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,6 +35,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<Service>))]
         public async Task<IActionResult> GetById(int id)
         {
             var service = await _mediator.Send(new GetServiceByIdQuery() { Id = id });
@@ -63,6 +66,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpPut("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<Service>))]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateServiceDto updateServiceDto)
         {
             var command = new UpdateServiceCommand
@@ -79,6 +83,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<Service>))]
         public async Task<IActionResult> Delete(int id)
         {
             var command = new DeleteServiceCommand { Id = id };

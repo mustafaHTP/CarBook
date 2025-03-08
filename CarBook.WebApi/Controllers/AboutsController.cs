@@ -1,6 +1,8 @@
 ﻿using CarBook.Application.Dtos.AboutDtos;
 using CarBook.Application.Features.AboutFeatures.Commands;
 using CarBook.Application.Features.AboutFeatures.Queries;
+using CarBook.Domain.Entities;
+using CarBook.WebApi.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -34,6 +36,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<About>))]
         public async Task<IActionResult> GetById(int id)
         {
             var query = new GetAboutByIdQuery(id);
@@ -64,6 +67,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<About>))]
         public async Task<IActionResult> Delete(int id)
         {
             var command = new DeleteAboutCommand(id);
@@ -73,6 +77,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpPut("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<About>))]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateAboutDto updateAboutDto)
         {
             var updateAboutCommand = new UpdateAboutCommand

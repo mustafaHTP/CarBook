@@ -1,4 +1,5 @@
 ﻿using CarBook.Application;
+using CarBook.Application.Exceptions;
 using Newtonsoft.Json;
 using System.Net;
 
@@ -24,6 +25,12 @@ namespace CarBook.WebApi.Middlewares
         {
             httpContext.Response.ContentType = "application/json";
             httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+
+            httpContext.Response.StatusCode = ex switch
+            {
+                NotFoundException => (int)HttpStatusCode.NotFound,
+                _ => (int)HttpStatusCode.InternalServerError,
+            };
 
             var response = ApiResponse.Failure(ex.Message);
             var responseJson = JsonConvert.SerializeObject(response);

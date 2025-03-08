@@ -19,7 +19,7 @@ namespace CarBook.Application.Features.LocationFeatures.Handlers
         public async Task<GetLocationByIdQueryResult> Handle(GetLocationByIdQuery request, CancellationToken cancellationToken)
         {
             var location = await _repository.GetByIdAsync(request.Id)
-                ?? throw new NotFoundException<Location>(request.Id);
+                ?? throw new NotFoundException(typeof(Location), request.Id);
 
             return new GetLocationByIdQueryResult
             {

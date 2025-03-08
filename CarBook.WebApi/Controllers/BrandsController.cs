@@ -2,6 +2,8 @@
 using CarBook.Application.Dtos.ModelDtos;
 using CarBook.Application.Features.BrandFeatures.Commands;
 using CarBook.Application.Features.BrandFeatures.Queries;
+using CarBook.Domain.Entities;
+using CarBook.WebApi.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,6 +40,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<Brand>))]
         public async Task<IActionResult> GetById(int id)
         {
             var query = new GetBrandByIdQuery(id);
@@ -65,6 +68,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<Brand>))]
         public async Task<IActionResult> Delete(int id)
         {
             var command = new DeleteBrandCommand(id);
@@ -75,6 +79,7 @@ namespace CarBook.WebApi.Controllers
 
 
         [HttpPut("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<Brand>))]
         public async Task<IActionResult> Update([FromRoute]int id, [FromBody] UpdateBrandDto updateBrandDto)
         {
             var updateBrandCommand = new UpdateBrandCommand()

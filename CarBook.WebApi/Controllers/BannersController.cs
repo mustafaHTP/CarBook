@@ -1,6 +1,8 @@
 ﻿using CarBook.Application.Dtos.BannerDtos;
 using CarBook.Application.Features.BannerFeatures.Commands;
 using CarBook.Application.Features.BannerFeatures.Queries;
+using CarBook.Domain.Entities;
+using CarBook.WebApi.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,6 +36,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<Banner>))]
         public async Task<IActionResult> GetById(int id)
         {
             var query = new GetBannerByIdQuery(id);
@@ -66,6 +69,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpPut("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<Banner>))]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateBannerDto updateBannerDto)
         {
             var updateBannerCommand = new UpdateBannerCommand
@@ -82,6 +86,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<Banner>))]
         public async Task<IActionResult> Delete(int id)
         {
             var command = new DeleteBannerCommand(id);

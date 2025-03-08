@@ -18,7 +18,7 @@ namespace CarBook.Application.Features.BrandFeatures.Handlers
         public async Task Handle(UpdateBrandCommand request, CancellationToken cancellationToken)
         {
             var brand = await _repository.GetByIdAsync(request.Id)
-                ?? throw new NotFoundException<Brand>(request.Id);
+                ?? throw new NotFoundException(typeof(Brand), request.Id);
 
             // Update here
             brand.Name = request.Name;

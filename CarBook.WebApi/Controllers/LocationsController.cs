@@ -1,6 +1,8 @@
 ﻿using CarBook.Application.Dtos.LocationDtos;
 using CarBook.Application.Features.LocationFeatures.Commands;
 using CarBook.Application.Features.LocationFeatures.Queries;
+using CarBook.Domain.Entities;
+using CarBook.WebApi.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,6 +29,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<Location>))]
         public async Task<IActionResult> GetById(int id)
         {
             var location = await _mediator.Send(new GetLocationByIdQuery() { Id = id });
@@ -46,6 +49,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpPut("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<Location>))]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateLocationDto updateLocationDto)
         {
             var command = new UpdateLocationCommand()
@@ -60,6 +64,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<Location>))]
         public async Task<IActionResult> Delete(int id)
         {
             var command = new DeleteLocationCommand() { Id = id };

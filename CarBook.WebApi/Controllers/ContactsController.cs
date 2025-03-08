@@ -1,6 +1,8 @@
 ﻿using CarBook.Application.Dtos.ContactDtos;
 using CarBook.Application.Features.ContactFeatures.Commands;
 using CarBook.Application.Features.ContactFeatures.Queries;
+using CarBook.Domain.Entities;
+using CarBook.WebApi.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,6 +37,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<Contact>))]
         public async Task<IActionResult> GetById(int id)
         {
             var query = new GetContactByIdQuery(id);
@@ -70,6 +73,7 @@ namespace CarBook.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<Contact>))]
         public async Task<IActionResult> Delete(int id)
         {
             var command = new DeleteContactCommand(id);
@@ -81,6 +85,7 @@ namespace CarBook.WebApi.Controllers
 
 
         [HttpPut("{id}")]
+        [ServiceFilter(typeof(NotFoundFilterAttribute<Contact>))]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateContactDto updateContactDto)
         {
             var command = new UpdateContactCommand()

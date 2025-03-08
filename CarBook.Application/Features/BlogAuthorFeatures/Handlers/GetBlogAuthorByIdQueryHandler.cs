@@ -19,7 +19,7 @@ namespace CarBook.Application.Features.BlogAuthorFeatures.Handlers
         public async Task<GetBlogAuthorByIdQueryResult> Handle(GetBlogAuthorByIdQuery request, CancellationToken cancellationToken)
         {
             var blogAuthor = await _repository.GetByIdAsync(request.Id)
-                ?? throw new NotFoundException<BlogAuthor>(request.Id);
+                ?? throw new NotFoundException(typeof(BlogAuthor), request.Id);
             var result = new GetBlogAuthorByIdQueryResult
             {
                 Id = blogAuthor.Id,

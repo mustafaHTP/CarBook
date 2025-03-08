@@ -19,7 +19,7 @@ namespace CarBook.Application.Features.ModelFeatures.Handlers
         public Task<GetModelByIdQueryResult> Handle(GetModelByIdQuery request, CancellationToken cancellationToken)
         {
             var model = _repository.GetById(request.Id)
-                ?? throw new NotFoundException<Model>(request.Id);
+                ?? throw new NotFoundException(typeof(Model), request.Id);
 
             var result = new GetModelByIdQueryResult()
             {
