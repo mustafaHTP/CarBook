@@ -1,10 +1,10 @@
-﻿@model IEnumerable<GetBlogTagsByBlogIdDto>
+﻿@model IEnumerable<GetBlogTagsByIdDto>
 
 <div class="tag-widget post-tag-container mb-5 mt-5">
     <div class="tagcloud">
         @foreach (var item in Model)
         {
-            <a href="#" class="tag-cloud-link">@item.BlogTag.Name</a>
+            <a href="#" class="tag-cloud-link">@item.Name</a>
         }
     </div>
 </div>

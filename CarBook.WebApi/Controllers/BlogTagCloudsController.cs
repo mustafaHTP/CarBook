@@ -48,24 +48,6 @@ namespace CarBook.WebApi.Controllers
             return Ok(blogTagCloudDto);
         }
 
-        [HttpGet("{blogId}/tags")]
-        [ServiceFilter(typeof(NotFoundFilterAttribute<BlogTagCloud>))]
-        public async Task<IActionResult> GetBlogTagsByBlogId(int blogId)
-        {
-            var query = new GetBlogTagCloudByBlogIdWithBlogTagQuery { BlogId = blogId };
-            var result = await _mediator.Send(query);
-
-            var resultDto = result.Select(x => new GetBlogTagsByBlogIdDto()
-            {
-                Id = x.Id,
-                BlogId = x.BlogId,
-                BlogTag = x.BlogTag,
-                BlogTagId = x.BlogTagId
-            }).ToList();
-
-            return Ok(resultDto);
-        }
-
         [HttpPost]
         public async Task<IActionResult> Create(CreateBlogTagCloudDto createBlogTagCloudDto)
         {
