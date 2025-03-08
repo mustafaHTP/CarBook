@@ -12,7 +12,7 @@ namespace CarBook.Application.Features.CarFeatures.Commands
         public byte Luggage { get; set; }
         public TransmissionType TransmissionType { get; set; }
         public FuelType FuelType { get; set; }
-        public string CoverImageUrl { get; set; }
-        public string BigImageUrl { get; set; }
+        public string CoverImageUrl { get; set; } = null!;
+        public string BigImageUrl { get; set; } = null!;
     }
 }

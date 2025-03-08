@@ -2,7 +2,7 @@
 {
     public class Feature : BaseEntity
     {
-        public string Name { get; set; }
-        public List<CarFeature> CarFeatures { get; set; }
+        public string Name { get; set; } = null!;
+        public List<CarFeature> CarFeatures { get; set; } = [];
     }
 }

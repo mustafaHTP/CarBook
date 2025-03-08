@@ -20,8 +20,24 @@ namespace CarBook.WebApp.Filters
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            var validationResult =
-                _validator.Validate((T)context.ActionArguments.Values.FirstOrDefault());
+            var argumentValue = context.ActionArguments.Values.FirstOrDefault();
+
+            if (argumentValue == null)
+            {
+                // Handle the case where the argument is null.
+                // You can add a model state error or set a result, depending on your needs.
+                context.ModelState.AddModelError("Argument", "The required argument is missing.");
+
+                string? actionName = context.ActionDescriptor.RouteValues["action"];
+                context.Result = new ViewResult
+                {
+                    ViewName = actionName,
+                };
+
+                return; // Return early to avoid attempting validation on a null object.
+            }
+
+            var validationResult = _validator.Validate((T)argumentValue);
 
             if (!validationResult.IsValid)
             {

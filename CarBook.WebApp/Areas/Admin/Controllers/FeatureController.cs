@@ -40,7 +40,7 @@ namespace CarBook.WebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateFeatureModel createFeatureModel)
+        public async Task<IActionResult> Create(CreateFeatureViewModel createFeatureModel)
         {
             var createFeatureDto = new CreateFeatureDto
             {

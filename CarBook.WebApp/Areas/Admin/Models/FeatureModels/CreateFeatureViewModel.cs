@@ -1,8 +1,7 @@
 ﻿namespace CarBook.WebApp.Areas.Admin.Models.FeatureModels
 {
-    public class UpdateFeatureViewModel
+    public class CreateFeatureViewModel
     {
-        public int Id { get; set; }
         public string Name { get; set; } = null!;
     }
 }

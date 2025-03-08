@@ -97,6 +97,8 @@ namespace CarBook.WebApp.Controllers
 
             var responseContent = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<LoginAppUserResultDto>(responseContent);
+            if (result == null)
+                throw new Exception("Invalid response from the server.");
 
             var token = result.Token;
 

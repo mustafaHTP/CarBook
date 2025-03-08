@@ -51,7 +51,7 @@ namespace CarBook.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateRentalPeriodDto createPricingPlanDto)
         {
-            var command = new CreateRentaPeriodCommand
+            var command = new CreateRentalPeriodCommand
             {
                 Name = createPricingPlanDto.Name
             };
@@ -64,7 +64,7 @@ namespace CarBook.WebApi.Controllers
         [ServiceFilter(typeof(NotFoundFilterAttribute<RentalPeriod>))]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateRentalPeriodDto updatePricingPlanDto)
         {
-            var command = new UpdateRentaPeriodCommand
+            var command = new UpdateRentalPeriodCommand
             {
                 Id = id,
                 Name = updatePricingPlanDto.Name

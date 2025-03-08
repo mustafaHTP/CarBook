@@ -2,7 +2,7 @@
 {
     public class Brand : BaseEntity
     {
-        public string Name { get; set; }
-        public List<Model> Models { get; set; }
+        public string Name { get; set; } = null!;
+        public List<Model> Models { get; set; } = [];
     }
 }

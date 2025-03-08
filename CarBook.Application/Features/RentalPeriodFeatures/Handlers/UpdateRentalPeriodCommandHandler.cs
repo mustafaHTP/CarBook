@@ -6,7 +6,7 @@ using MediatR;
 
 namespace CarBook.Application.Features.PricingPlanFeatures.Handlers
 {
-    public class UpdateRentalPeriodCommandHandler : IRequestHandler<UpdateRentaPeriodCommand>
+    public class UpdateRentalPeriodCommandHandler : IRequestHandler<UpdateRentalPeriodCommand>
     {
         private readonly IRepository<RentalPeriod> _repository;
 
@@ -15,7 +15,7 @@ namespace CarBook.Application.Features.PricingPlanFeatures.Handlers
             _repository = repository;
         }
 
-        public async Task Handle(UpdateRentaPeriodCommand request, CancellationToken cancellationToken)
+        public async Task Handle(UpdateRentalPeriodCommand request, CancellationToken cancellationToken)
         {
             var rentalPeriod = await _repository.GetByIdAsync(request.Id)
                 ?? throw new NotFoundException(typeof(RentalPeriod).Name, request.Id.ToString());

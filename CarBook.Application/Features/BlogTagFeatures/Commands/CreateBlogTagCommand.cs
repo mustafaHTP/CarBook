@@ -4,6 +4,6 @@ namespace CarBook.Application.Features.BlogTagFeatures.Commands
 {
     public class CreateBlogTagCommand : IRequest
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
     }
 }

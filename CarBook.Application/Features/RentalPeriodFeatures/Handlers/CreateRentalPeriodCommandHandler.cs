@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CarBook.Application.Features.PricingPlanFeatures.Handlers
 {
-    public class CreateRentalPeriodCommandHandler : IRequestHandler<CreateRentaPeriodCommand>
+    public class CreateRentalPeriodCommandHandler : IRequestHandler<CreateRentalPeriodCommand>
     {
         private readonly IRepository<RentalPeriod> _repository;
 
@@ -14,7 +14,7 @@ namespace CarBook.Application.Features.PricingPlanFeatures.Handlers
             _repository = repository;
         }
 
-        public async Task Handle(CreateRentaPeriodCommand request, CancellationToken cancellationToken)
+        public async Task Handle(CreateRentalPeriodCommand request, CancellationToken cancellationToken)
         {
             var rentalPeriod = new RentalPeriod()
             {

@@ -2,7 +2,7 @@
 {
     public class BlogTag : BaseEntity
     {
-        public string Name { get; set; }
-        public List<BlogTagCloud> BlogTagClouds { get; set; }
+        public string Name { get; set; } = null!;
+        public List<BlogTagCloud> BlogTagClouds { get; set; } = [];
     }
 }

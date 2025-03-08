@@ -6,9 +6,9 @@ namespace CarBook.Application.Features.CarReservationPricingFeatures.Results
     {
         public int Id { get; set; }
         public int CarId { get; set; }
-        public Car Car { get; set; }
-        public int PricingPlanId { get; set; }
-        public RentalPeriod PricingPlan { get; set; }
+        public Car Car { get; set; } = null!;
+        public int RentalPeriodId { get; set; }
+        public RentalPeriod RentalPeriod { get; set; } = null!;
         public decimal Price { get; set; }
     }
 }

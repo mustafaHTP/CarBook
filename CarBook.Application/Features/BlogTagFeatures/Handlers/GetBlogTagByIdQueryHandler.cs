@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.BlogTagFeatures.Queries;
+﻿using CarBook.Application.Exceptions;
+using CarBook.Application.Features.BlogTagFeatures.Queries;
 using CarBook.Application.Features.BlogTagFeatures.Results;
 using CarBook.Application.Interfaces.Repositories;
 using CarBook.Domain.Entities;
@@ -17,7 +18,8 @@ namespace CarBook.Application.Features.BlogTagFeatures.Handlers
 
         public async Task<GetBlogTagByIdQueryResult> Handle(GetBlogTagByIdQuery request, CancellationToken cancellationToken)
         {
-            var blog = await _repository.GetByIdAsync(request.Id);
+            var blog = await _repository.GetByIdAsync(request.Id)
+                ?? throw new NotFoundException(nameof(BlogTag), request.Id.ToString());
 
             return new GetBlogTagByIdQueryResult
             {

@@ -2,7 +2,7 @@
 {
     public class BlogCategory : BaseEntity
     {
-        public string Name { get; set; }
-        public List<Blog> Blogs { get; set; }
+        public string Name { get; set; } = null!;
+        public List<Blog> Blogs { get; set; } = [];
     }
 }

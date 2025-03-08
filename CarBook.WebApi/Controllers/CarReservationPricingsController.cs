@@ -41,8 +41,8 @@ namespace CarBook.WebApi.Controllers
                 Luggage = crp.Car.Luggage,
                 TransmissionType = crp.Car.TransmissionType,
                 FuelType = crp.Car.FuelType,
-                PricingPlanId = crp.PricingPlanId,
-                PricingPlanName = crp.PricingPlan.Name,
+                PricingPlanId = crp.RentalPeriodId,
+                PricingPlanName = crp.RentalPeriod.Name,
                 Price = crp.Price
             });
 

@@ -182,9 +182,9 @@ namespace CarBook.WebApi.Controllers
             {
                 Id = car.Id,
                 ModelId = car.ModelId,
-                ModelName = car.Model?.Name,
-                BrandId = car.Model?.BrandId ?? 0,
-                BrandName = car.Model?.Brand?.Name,
+                ModelName = car.Model.Name,
+                BrandId = car.Model.BrandId,
+                BrandName = car.Model.Brand.Name,
                 Km = car.Km,
                 SeatCount = car.SeatCount,
                 Luggage = car.Luggage,
