@@ -1,4 +1,5 @@
-﻿using CarBook.Domain.Entities;
+﻿using CarBook.Application.Dtos.CarDtos;
+using CarBook.Domain.Entities;
 
 namespace CarBook.Application.Dtos.RentalCarDtos
 {
@@ -6,9 +7,9 @@ namespace CarBook.Application.Dtos.RentalCarDtos
     {
         public int Id { get; set; }
         public int LocationId { get; set; }
-        public Location Location { get; set; } = null!;
+        public string LocationName { get; set; } = null!;
         public int CarId { get; set; }
-        public Car Car { get; set; } = null!;
+        public CarWithReservationPricingsDto Car { get; set; } = null!;
         public bool IsAvailable { get; set; }
     }
 }

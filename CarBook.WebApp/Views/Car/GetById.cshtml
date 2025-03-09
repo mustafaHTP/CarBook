@@ -1,17 +1,17 @@
-﻿<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/website-template/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
+﻿<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/website-template/images/bg_9.jpg');" data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
     <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
             <div class="col-md-9 ftco-animate pb-5">
                 <p class="breadcrumbs">
-                <span class="mr-2">
-                    <a asp-controller="Home" asp-action="Index">
-                        Home 
-                        <i class="ion-ios-arrow-forward"></i>
-                    </a>
-                </span> 
+                    <span class="mr-2">
+                        <a asp-controller="Home" asp-action="Index">
+                            Home
+                            <i class="ion-ios-arrow-forward"></i>
+                        </a>
+                    </span>
                     <span>
-                        Car details 
+                        Car details
                         <i class="ion-ios-arrow-forward"></i>
                     </span>
                 </p>
@@ -24,7 +24,7 @@
 
 <section class="ftco-section ftco-car-details">
     <div class="container">
-        @await Component.InvokeAsync("CarDetail", new {carId = ViewData["CarId"] }) 
+        @await Component.InvokeAsync("CarDetail", new { carId = ViewData["CarId"] })
 
         @* Car Specifications *@
         <div class="row">
@@ -47,7 +47,7 @@
 
                     <div class="tab-content" id="pills-tabContent">
                         <div class="tab-pane fade show active" id="pills-description" role="tabpanel" aria-labelledby="pills-description-tab">
-                            @await Component.InvokeAsync("CarFeatureSummary", new {carId = ViewData["CarId"] }) 
+                            @await Component.InvokeAsync("CarFeatureSummary", new { carId = ViewData["CarId"] })
                         </div>
 
                         <div class="tab-pane fade" id="pills-manufacturer" role="tabpanel" aria-labelledby="pills-manufacturer-tab">
@@ -55,7 +55,7 @@
                         </div>
 
                         <div class="tab-pane fade" id="pills-review" role="tabpanel" aria-labelledby="pills-review-tab">
-                            @await Component.InvokeAsync("CarReviewList", new { carId = ViewData["CarId"] }) 
+                            @await Component.InvokeAsync("CarReviewList", new { carId = ViewData["CarId"] })
                         </div>
                     </div>
                 </div>

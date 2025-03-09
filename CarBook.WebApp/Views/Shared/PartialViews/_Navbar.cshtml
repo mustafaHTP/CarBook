@@ -5,7 +5,7 @@
             <span class="oi oi-menu"></span> Menu
         </button>
 
-        <div class="collapse navbar-collapse" id="ftco-nav">
+        <div class="collapse navbar-collapse" id="ftco-nav" style="backdrop-filter: blur(5px) saturate(100%); border-radius: 50px">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a asp-controller="Home" asp-action="Index" class="nav-link">
@@ -56,7 +56,7 @@
                         </a>
                     </li>
                 }
-                <li class="nav-item rounded-lg profile">
+                <li class="nav-item profile">
                     @if (User.Identity is not null && User.Identity.IsAuthenticated)
                     {
 

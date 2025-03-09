@@ -15,8 +15,11 @@ namespace CarBook.Persistence.Repositories
         {
             var rentalCars = _context.RentalCars
                 .Include(rc => rc.Car)
-                .ThenInclude(rc => rc.Model)
-                .ThenInclude(rc => rc.Brand)
+                .ThenInclude(c => c.Model)
+                .ThenInclude(m => m.Brand)
+                .Include(rc => rc.Car)
+                .ThenInclude(c => c.CarReservationPricings)
+                .ThenInclude(crp => crp.RentalPeriod)
                 .Include(rc => rc.Location)
                 .Where(rc => rc.LocationId == pickUpLocationId);
 

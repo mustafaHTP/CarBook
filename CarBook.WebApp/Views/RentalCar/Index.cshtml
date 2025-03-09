@@ -19,13 +19,13 @@
             {
                 <div class="col-md-4">
                     <div class="car-wrap rounded ftco-animate fadeInUp ftco-animated">
-                        <div class="img rounded d-flex align-items-end" style="background-image: url(website-template/images/car-4.jpg);">
+                        <div class="img rounded d-flex align-items-end" style="background-image: url(@item.Car.CoverImageUrl);">
                         </div>
                         <div class="text">
-                            <h2 class="mb-0"><a href="car-single.html">@item.Car.Model.Brand.Name @item.Car.Model.Name</a></h2>
+                            <h2 class="mb-0"><a href="car-single.html">@item.Car.BrandName @item.Car.ModelName</a></h2>
                             <div class="d-flex mb-3">
-                                <span class="cat">@item.Car.Model.Brand.Name </span>
-                                <p class="price ml-auto">$100,00 <span>/day</span></p>
+                                <span class="cat">@item.Car.BrandName </span>
+                                <p class="price ml-auto">@(item.Car.CarReservationPricings.FirstOrDefault(crp => crp.RentalPeriod.Name.Equals("day"))?.Price)<span>/day</span></p>
                             </div>
                             <p class="d-flex mb-0 d-block">
                                 <a asp-controller="Reservation" asp-action="Create" asp-route-id="@item.Id" class="btn btn-primary py-2 mr-1">Book now</a>
