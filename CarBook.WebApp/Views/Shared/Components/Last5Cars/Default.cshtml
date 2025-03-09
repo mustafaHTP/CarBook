@@ -22,7 +22,7 @@
                                     <div class="d-flex mb-3">
                                         <span class="cat">@item.Car.BrandName </span>
                                         <p class="price ml-auto">
-                                            @item.RentalPricings?.FirstOrDefault(rp => rp.Name.Equals("day"))?.Price.ToString("C0")
+                                            @item.RentalPricings?.FirstOrDefault(rp => rp.Name.Equals("hour"))?.Price.ToString("C0", new System.Globalization.CultureInfo("en-US"))
                                             <span>/day</span>
                                         </p>
                                     </div>
