@@ -103,6 +103,18 @@ namespace CarBook.WebApi.Controllers
             return Ok(GenericApiResponse<GetLocationCountDto>.Success(resultDto));
         }
 
+        [HttpGet("location/car/count")]
+        public async Task<IActionResult> GetLocationCarCountAsync()
+        {
+            var result = await _mediator.Send(new GetLocationCarCountQuery());
+            var resultDto = result.Select(l => new GetLocationCarCountDto
+            {
+                LocationName = l.LocationName,
+                CarCount = l.CarCount
+            });
+            return Ok(GenericApiResponse<IEnumerable<GetLocationCarCountDto>>.Success(resultDto));
+        }
+
         [HttpGet("blog/count")]
         public async Task<IActionResult> GetBlogCountAsync()
         {

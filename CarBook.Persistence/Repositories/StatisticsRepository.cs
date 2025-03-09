@@ -95,5 +95,11 @@ namespace CarBook.Persistence.Repositories
         {
             return _context.CarReviews.Where(cr => cr.CarId == carId).Count();
         }
+
+        public IEnumerable<Location> GetLocationCarCount()
+        {
+            return _context.Locations
+                .Include(l => l.RentalCars);
+        }
     }
 }

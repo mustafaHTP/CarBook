@@ -18,15 +18,18 @@
     </div>
     @* END - Widget Statistics*@
 
-    <div class="row">
-        <div class="col-lg-4">
-            @await Component.InvokeAsync("BrandCarCountPieChartWidget")
-        </div>
-
-        <div class="col-lg-4">
-            @await Component.InvokeAsync("RentalCountsByYearLineChartWidget")
-        </div>
+<div class="row">
+    <div class="col-lg-4">
+        @await Component.InvokeAsync("BrandCarCountPieChartWidget")
     </div>
+
+    <div class="col-lg-4">
+        @await Component.InvokeAsync("RentalCountsByYearLineChartWidget")
+    </div>
+    <div class="col-lg-4">
+        @await Component.InvokeAsync("LocationCarCountBarChartWidget")
+    </div>
+</div>
 
     <div class="row">
         <div class="col-xl-6">

@@ -5,6 +5,7 @@ namespace CarBook.Application.Interfaces.Repositories
 {
     public interface IStatisticsRepository
     {
+        IEnumerable<Location> GetLocationCarCount();
         int GetCarReviewsCountByCarId(int carId);
         IEnumerable<Brand> GetAllBrands();
         int GetBlogCommentCountByBlogId(int blogId);

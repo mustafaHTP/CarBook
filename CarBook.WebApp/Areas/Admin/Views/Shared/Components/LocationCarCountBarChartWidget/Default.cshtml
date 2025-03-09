@@ -2,10 +2,65 @@
     <div class="card-body">
         <div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
 
-        <h4 class="card-title">Bar Chart</h4>
-        <p class="card-subtitle mb-4">Example of bar chart chart js.</p>
+        <h4 class="card-title">Car Count By Location</h4>
+        <p class="card-subtitle mb-4">
+            You can see the number of cars in each location.
+        </p>
 
-        <canvas id="barChart" width="710" height="355" style="display: block; height: 284px; width: 568px;" class="chartjs-render-monitor"></canvas>
+        <div style="width: 100%; max-width: 800px; height: 400px; margin: auto;">
+            <canvas id="barChart"></canvas>
+        </div>
 
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        fetch("https://localhost:7116/api/Statistics/location/car/count")
+            .then(response => response.json())
+            .then(data => {
+                if (data.isSuccessful) {
+                    const locations = data.result.$values.map(item => item.locationName);
+                    const carCounts = data.result.$values.map(item => item.carCount);
+
+                    const colors = [
+                        "rgba(255, 99, 132, 0.6)",  // Red
+                        "rgba(54, 162, 235, 0.6)",  // Blue
+                        "rgba(255, 206, 86, 0.6)",  // Yellow
+                        "rgba(75, 192, 192, 0.6)",  // Green
+                        "rgba(153, 102, 255, 0.6)", // Purple
+                        "rgba(255, 159, 64, 0.6)"   // Orange
+                    ];
+
+                    const ctx = document.getElementById("barChart").getContext("2d");
+                    new Chart(ctx, {
+                        type: "bar",
+                        data: {
+                            labels: locations,
+                            datasets: [{
+                                label: "Car Count",
+                                data: carCounts,
+                                backgroundColor: colors.slice(0, locations.length),
+                                borderColor: colors.slice(0, locations.length).map(color => color.replace("0.6", "1")), // Darker borders
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    console.error("Failed to fetch data.");
+                }
+            })
+            .catch(error => console.error("Error fetching data:", error));
+    });
+
+</script>
