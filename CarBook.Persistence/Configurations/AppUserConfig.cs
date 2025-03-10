@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CarBook.Persistence.Configurations
 {
-    public class AppUserConfiguration : IEntityTypeConfiguration<AppUser>
+    public class AppUserConfig : IEntityTypeConfiguration<AppUser>
     {
         public void Configure(EntityTypeBuilder<AppUser> builder)
         {

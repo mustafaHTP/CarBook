@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CarBook.Persistence.Configurations
 {
-    public class ReservationConfiguration : IEntityTypeConfiguration<Reservation>
+    public class ReservationConfig : IEntityTypeConfiguration<Reservation>
     {
         public void Configure(EntityTypeBuilder<Reservation> builder)
         {
