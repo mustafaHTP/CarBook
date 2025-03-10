@@ -83,11 +83,6 @@ namespace CarBook.Persistence.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "CarDescriptions",
-                columns: new[] { "Id", "CarId", "Description" },
-                values: new object[] { 11, 12, "A stylish and compact city car that delivers German engineering, premium features, and agile handling in a small package." });
-
-            migrationBuilder.InsertData(
                 table: "Contacts",
                 columns: new[] { "Id", "Email", "Message", "Name", "SendDate", "Subject" },
                 values: new object[,]
@@ -270,15 +265,16 @@ namespace CarBook.Persistence.Migrations
                 values: new object[,]
                 {
                     { 1, 1, "A legendary American muscle car, the GT500 boasts supercharged V8 power and a racing heritage rooted in Carroll Shelby’s performance legacy." },
-                    { 2, 3, "A compact roadster with a hand-built AMG V8, blending luxury with raw performance in a retractable hardtop design." },
-                    { 3, 4, "A groundbreaking hybrid hypercar, the P1 combines F1-inspired aerodynamics with electric-assisted twin-turbo V8 power for extreme performance." },
-                    { 4, 5, "A stylish luxury SUV that redefined urban off-roading, known for its sleek design and advanced terrain response system." },
-                    { 5, 6, "A high-performance sports sedan, the M3 has dominated track and street alike since the 1980s with its precision engineering and aggressive styling." },
-                    { 6, 7, "An exclusive Italian roadster featuring a Ferrari-derived V8, hand-crafted design, and an unmistakable exhaust note." },
-                    { 7, 8, "A refined coupe that merges sporty dynamics with cutting-edge technology, positioned between luxury and performance." },
-                    { 8, 9, "An off-road icon, the Rubicon is designed for extreme terrain with its rugged build, locking differentials, and legendary 4x4 capabilities." },
-                    { 9, 10, "A front-mid-engine sports car developed by AMG, delivering thrilling performance with a powerful twin-turbo V8." },
-                    { 10, 11, "A premium compact hatchback that offers advanced tech, efficient performance, and the luxury appeal of the Mercedes-Benz brand." }
+                    { 2, 2, "A compact roadster with a hand-built AMG V8, blending luxury with raw performance in a retractable hardtop design." },
+                    { 3, 3, "A groundbreaking hybrid hypercar, the P1 combines F1-inspired aerodynamics with electric-assisted twin-turbo V8 power for extreme performance." },
+                    { 4, 4, "A stylish luxury SUV that redefined urban off-roading, known for its sleek design and advanced terrain response system." },
+                    { 5, 5, "A high-performance sports sedan, the M3 has dominated track and street alike since the 1980s with its precision engineering and aggressive styling." },
+                    { 6, 6, "An exclusive Italian roadster featuring a Ferrari-derived V8, hand-crafted design, and an unmistakable exhaust note." },
+                    { 7, 7, "A refined coupe that merges sporty dynamics with cutting-edge technology, positioned between luxury and performance." },
+                    { 8, 8, "An off-road icon, the Rubicon is designed for extreme terrain with its rugged build, locking differentials, and legendary 4x4 capabilities." },
+                    { 9, 9, "A front-mid-engine sports car developed by AMG, delivering thrilling performance with a powerful twin-turbo V8." },
+                    { 10, 10, "A premium compact hatchback that offers advanced tech, efficient performance, and the luxury appeal of the Mercedes-Benz brand." },
+                    { 11, 11, "A stylish and compact city car that delivers German engineering, premium features, and agile handling in a small package." }
                 });
 
             migrationBuilder.InsertData(

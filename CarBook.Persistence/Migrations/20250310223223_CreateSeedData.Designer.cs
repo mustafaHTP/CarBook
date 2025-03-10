@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarBook.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250310221356_CreateSeedData")]
+    [Migration("20250310223223_CreateSeedData")]
     partial class CreateSeedData
     {
         /// <inheritdoc />
@@ -793,61 +793,61 @@ namespace CarBook.Persistence.Migrations
                         new
                         {
                             Id = 2,
-                            CarId = 3,
+                            CarId = 2,
                             Description = "A compact roadster with a hand-built AMG V8, blending luxury with raw performance in a retractable hardtop design."
                         },
                         new
                         {
                             Id = 3,
-                            CarId = 4,
+                            CarId = 3,
                             Description = "A groundbreaking hybrid hypercar, the P1 combines F1-inspired aerodynamics with electric-assisted twin-turbo V8 power for extreme performance."
                         },
                         new
                         {
                             Id = 4,
-                            CarId = 5,
+                            CarId = 4,
                             Description = "A stylish luxury SUV that redefined urban off-roading, known for its sleek design and advanced terrain response system."
                         },
                         new
                         {
                             Id = 5,
-                            CarId = 6,
+                            CarId = 5,
                             Description = "A high-performance sports sedan, the M3 has dominated track and street alike since the 1980s with its precision engineering and aggressive styling."
                         },
                         new
                         {
                             Id = 6,
-                            CarId = 7,
+                            CarId = 6,
                             Description = "An exclusive Italian roadster featuring a Ferrari-derived V8, hand-crafted design, and an unmistakable exhaust note."
                         },
                         new
                         {
                             Id = 7,
-                            CarId = 8,
+                            CarId = 7,
                             Description = "A refined coupe that merges sporty dynamics with cutting-edge technology, positioned between luxury and performance."
                         },
                         new
                         {
                             Id = 8,
-                            CarId = 9,
+                            CarId = 8,
                             Description = "An off-road icon, the Rubicon is designed for extreme terrain with its rugged build, locking differentials, and legendary 4x4 capabilities."
                         },
                         new
                         {
                             Id = 9,
-                            CarId = 10,
+                            CarId = 9,
                             Description = "A front-mid-engine sports car developed by AMG, delivering thrilling performance with a powerful twin-turbo V8."
                         },
                         new
                         {
                             Id = 10,
-                            CarId = 11,
+                            CarId = 10,
                             Description = "A premium compact hatchback that offers advanced tech, efficient performance, and the luxury appeal of the Mercedes-Benz brand."
                         },
                         new
                         {
                             Id = 11,
-                            CarId = 12,
+                            CarId = 11,
                             Description = "A stylish and compact city car that delivers German engineering, premium features, and agile handling in a small package."
                         });
                 });
