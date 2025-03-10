@@ -21,7 +21,7 @@ namespace CarBook.Persistence.Configurations
                     Email = "john.doe@example.com",
                     Subject = "Booking Inquiry - Sedan",
                     Message = "I would like to inquire about booking a sedan for a weekend trip. Please let me know the availability and pricing details.",
-                    SendDate = DateTime.Now
+                    SendDate = new DateTime(2024, 10, 22, 5, 25, 0)
                 },
                 new Contact
                 {
@@ -30,7 +30,7 @@ namespace CarBook.Persistence.Configurations
                     Email = "jane.smith@example.com",
                     Subject = "Car Rental Request - SUV",
                     Message = "I'm interested in renting an SUV for a family vacation next month. Could you provide information on availability and the rental terms?",
-                    SendDate = DateTime.Now
+                    SendDate = new DateTime(2024, 11, 27, 13, 35, 0)
                 }
             );
         }

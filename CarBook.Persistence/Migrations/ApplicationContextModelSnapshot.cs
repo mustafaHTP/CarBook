@@ -196,7 +196,7 @@ namespace CarBook.Persistence.Migrations
                             BlogCategoryId = 2,
                             Content = "The history of cars is a long and interesting one. It all started with the invention of the wheel, and has evolved into the modern vehicles we see on the road today.",
                             CoverImageUrl = "https://images.nationalgeographic.org/image/upload/t_edhub_resource_key_image/v1638892232/EducationHub/photos/packard-model-b-automobile.jpg",
-                            CreatedDate = new DateTime(2025, 3, 9, 18, 3, 9, 318, DateTimeKind.Local).AddTicks(3339),
+                            CreatedDate = new DateTime(2024, 7, 30, 16, 20, 0, 0, DateTimeKind.Unspecified),
                             Description = "The history of cars is a long and interesting one.",
                             Title = "Car History"
                         },
@@ -207,7 +207,7 @@ namespace CarBook.Persistence.Migrations
                             BlogCategoryId = 1,
                             Content = "Formula 1 is a dangerous sport, and accidents are a common occurrence. However, some accidents are more serious than others, and can have a lasting impact on the drivers involved.",
                             CoverImageUrl = "https://i.dunya.com/storage/files/images/2023/03/02/formula-1-YPIe_cover.jpg",
-                            CreatedDate = new DateTime(2025, 3, 9, 18, 3, 9, 318, DateTimeKind.Local).AddTicks(7239),
+                            CreatedDate = new DateTime(2024, 8, 12, 11, 55, 0, 0, DateTimeKind.Unspecified),
                             Description = "Formula 1 is a dangerous sport, and accidents are a common occurrence.",
                             Title = "Formula 1 Accident"
                         },
@@ -218,7 +218,7 @@ namespace CarBook.Persistence.Migrations
                             BlogCategoryId = 2,
                             Content = "Electric vehicles (EVs) have come a long way from their early prototypes to the modern, high-performance machines we see today. Advances in battery technology, charging infrastructure, and sustainability efforts have made EVs a practical choice for consumers worldwide.",
                             CoverImageUrl = "https://www.currencytransfer.com/wp-content/uploads/2022/11/ev-2-edit.min_.jpg",
-                            CreatedDate = new DateTime(2025, 3, 9, 18, 3, 9, 318, DateTimeKind.Local).AddTicks(7588),
+                            CreatedDate = new DateTime(2024, 9, 17, 20, 40, 0, 0, DateTimeKind.Unspecified),
                             Description = "A look at how electric cars have evolved and their impact on the automotive industry.",
                             Title = "The Evolution of Electric Cars"
                         });
@@ -342,7 +342,7 @@ namespace CarBook.Persistence.Migrations
                             Id = 1,
                             BlogId = 1,
                             Content = "The history of cars is fascinating! It's amazing to see how far we've come in such a short time. I’m curious about the future developments in car technology.",
-                            CreatedDate = new DateTime(2025, 3, 9, 18, 3, 9, 311, DateTimeKind.Local).AddTicks(297),
+                            CreatedDate = new DateTime(2024, 1, 1, 12, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "johndoe@email.com",
                             Name = "John Doe"
                         },
@@ -351,7 +351,7 @@ namespace CarBook.Persistence.Migrations
                             Id = 2,
                             BlogId = 2,
                             Content = "Formula 1 accidents are terrifying. The risks drivers face are unimaginable, and it's always shocking to see how they walk away from such crashes.",
-                            CreatedDate = new DateTime(2025, 3, 9, 18, 3, 9, 316, DateTimeKind.Local).AddTicks(9467),
+                            CreatedDate = new DateTime(2024, 2, 5, 14, 30, 0, 0, DateTimeKind.Unspecified),
                             Email = "janesmith@email.com",
                             Name = "Jane Smith"
                         },
@@ -360,7 +360,7 @@ namespace CarBook.Persistence.Migrations
                             Id = 3,
                             BlogId = 3,
                             Content = "Electric cars are definitely the future. The advancements in battery technology make them more practical than ever. It's great to see the industry moving towards sustainability.",
-                            CreatedDate = new DateTime(2025, 3, 9, 18, 3, 9, 316, DateTimeKind.Local).AddTicks(9494),
+                            CreatedDate = new DateTime(2024, 3, 10, 9, 15, 0, 0, DateTimeKind.Unspecified),
                             Email = "carlosrivera@email.com",
                             Name = "Carlos Rivera"
                         },
@@ -369,7 +369,7 @@ namespace CarBook.Persistence.Migrations
                             Id = 4,
                             BlogId = 3,
                             Content = "The development of electric vehicles is impressive. It’s exciting to think about the impact these cars will have on the environment and the way we drive.",
-                            CreatedDate = new DateTime(2025, 3, 9, 18, 3, 9, 316, DateTimeKind.Local).AddTicks(9496),
+                            CreatedDate = new DateTime(2024, 4, 15, 18, 45, 0, 0, DateTimeKind.Unspecified),
                             Email = "sarahlee@email.com",
                             Name = "Sarah Lee"
                         },
@@ -378,7 +378,7 @@ namespace CarBook.Persistence.Migrations
                             Id = 5,
                             BlogId = 2,
                             Content = "Formula 1 accidents may be common, but they always leave a lasting impression. Every time something happens, it makes you appreciate the skill and bravery of the drivers even more.",
-                            CreatedDate = new DateTime(2025, 3, 9, 18, 3, 9, 316, DateTimeKind.Local).AddTicks(9498),
+                            CreatedDate = new DateTime(2024, 5, 20, 22, 10, 0, 0, DateTimeKind.Unspecified),
                             Email = "mikejohnson@email.com",
                             Name = "Mike Johnson"
                         },
@@ -387,7 +387,7 @@ namespace CarBook.Persistence.Migrations
                             Id = 6,
                             BlogId = 3,
                             Content = "I’ve always been fascinated by how electric vehicles have evolved. The shift from fossil fuels to electricity is one of the most important movements in the auto industry.",
-                            CreatedDate = new DateTime(2025, 3, 9, 18, 3, 9, 316, DateTimeKind.Local).AddTicks(9499),
+                            CreatedDate = new DateTime(2024, 6, 25, 7, 5, 0, 0, DateTimeKind.Unspecified),
                             Email = "emilygreen@email.com",
                             Name = "Emily Green"
                         });
@@ -2309,7 +2309,7 @@ namespace CarBook.Persistence.Migrations
                             Email = "john.doe@example.com",
                             Message = "I would like to inquire about booking a sedan for a weekend trip. Please let me know the availability and pricing details.",
                             Name = "John Doe",
-                            SendDate = new DateTime(2025, 3, 9, 18, 3, 9, 347, DateTimeKind.Local).AddTicks(1775),
+                            SendDate = new DateTime(2024, 10, 22, 5, 25, 0, 0, DateTimeKind.Unspecified),
                             Subject = "Booking Inquiry - Sedan"
                         },
                         new
@@ -2318,7 +2318,7 @@ namespace CarBook.Persistence.Migrations
                             Email = "jane.smith@example.com",
                             Message = "I'm interested in renting an SUV for a family vacation next month. Could you provide information on availability and the rental terms?",
                             Name = "Jane Smith",
-                            SendDate = new DateTime(2025, 3, 9, 18, 3, 9, 347, DateTimeKind.Local).AddTicks(2265),
+                            SendDate = new DateTime(2024, 11, 27, 13, 35, 0, 0, DateTimeKind.Unspecified),
                             Subject = "Car Rental Request - SUV"
                         });
                 });
