@@ -115,7 +115,10 @@
                 <button style="overflow: visible;" type="button" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="mdi mdi-bell"></i>
-                    <span class="badge badge-danger badge-pill" style="overflow: visible !important">99+</span>
+                    <!-- Notification Counter -->
+                    <span class="badge badge-danger badge-pill notification-counter" style="overflow: visible !important">
+                        0
+                    </span>
                 </button>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0"
                      aria-labelledby="page-header-notifications-dropdown">
@@ -129,18 +132,8 @@
                             </div>
                         </div>
                     </div>
-                    <div data-simplebar style="max-height: 230px;">
-                        <a href="" class="text-reset notification-item">
-                            <div class="media">
-                                <img src="~/admin-template/vertical/assets/images/users/avatar-2.jpg"
-                                     class="mr-3 rounded-circle avatar-xs" alt="user-pic">
-                                <div class="media-body">
-                                    <h6 class="mt-0 mb-1">Samuel Coverdale</h6>
-                                    <p class="font-size-12 mb-1">You have new follower on Instagram</p>
-                                    <p class="font-size-12 mb-0 text-muted"><i class="mdi mdi-clock-outline"></i> 2 min ago</p>
-                                </div>
-                            </div>
-                        </a>
+                    <div data-simplebar style="max-height: 230px;" id="notification-container">
+                        <!-- Notification Item -->
                         <a href="" class="text-reset notification-item">
                             <div class="media">
                                 <div class="avatar-xs mr-3">
@@ -152,17 +145,6 @@
                                     <h6 class="mt-0 mb-1">Download Available !</h6>
                                     <p class="font-size-12 mb-1">Latest version of admin is now available. Please download here.</p>
                                     <p class="font-size-12 mb-0 text-muted"><i class="mdi mdi-clock-outline"></i> 4 hours ago</p>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="" class="text-reset notification-item">
-                            <div class="media">
-                                <img src="~/admin-template/vertical/assets/images/users/avatar-3.jpg"
-                                     class="mr-3 rounded-circle avatar-xs" alt="user-pic">
-                                <div class="media-body">
-                                    <h6 class="mt-0 mb-1">Victoria Mendis</h6>
-                                    <p class="font-size-12 mb-1">Just upgraded to premium account.</p>
-                                    <p class="font-size-12 mb-0 text-muted"><i class="mdi mdi-clock-outline"></i> 1 day ago</p>
                                 </div>
                             </div>
                         </a>
@@ -213,3 +195,109 @@
         </div>
     </div>
 </header>
+
+<!-- jQuery  -->
+<script src="~/admin-template/vertical/assets/js/jquery.min.js"></script>
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+<script>
+
+    $(document).ready(function () {
+        function updateNotificationCount() {
+            let count = $(".notification-item").length;
+
+            let notificationBadge = $(".notification-counter");
+
+            if (count > 99) {
+                notificationBadge.text("99+"); // Show "99+" if count exceeds 99
+            } else {
+                notificationBadge.text(count); // Show actual count if it's 99 or below
+            }
+        }
+
+        function addNotification(message) {
+            const createdDate = new Date(message.createdDate);
+            const timeAgo = Math.floor((Date.now() - createdDate.getTime()) / 1000); // in seconds
+            let timeDisplay;
+
+            if (timeAgo < 60) {
+                timeDisplay = `${timeAgo} seconds ago`;
+            } else if (timeAgo < 3600) {
+                timeDisplay = `${Math.floor(timeAgo / 60)} minutes ago`;
+            } else if (timeAgo < 86400) {
+                timeDisplay = `${Math.floor(timeAgo / 3600)} hours ago`;
+            } else {
+                timeDisplay = `${Math.floor(timeAgo / 86400)} days ago`;
+            }
+
+            const notification =
+            `
+                <div class="media">
+                    <img src="/admin-template/vertical/assets/images/users/user-avatar-1.svg"
+                        class="mr-3 rounded-circle avatar-xs" alt="user-pic">
+                    <div class="media-body">
+                        <h6 class="mt-0 mb-1">New Blog Comment!</h6>
+                        <p class="font-size-12 mb-1">
+                            ${message.name} commented
+                            ${message.blog.title}
+                        </p>
+                        <p class="font-size-12 mb-0 text-muted">
+                            <i class="mdi mdi-clock-outline"></i>
+                            ${timeDisplay}
+                        </p>
+                    </div>
+                </div>
+                `
+
+            const notificationParent = document.createElement('a');
+            notificationParent.classList.add('text-reset', 'notification-item');
+            notificationParent.href = "";
+            notificationParent.innerHTML = notification;
+
+            // Add the notification item to the correct SimpleBar content wrapper
+            const notificationContainer = document.querySelector('#notification-container .simplebar-content');
+            if (!notificationContainer) {
+                console.error("Notification container not found!");
+                return;
+            }
+
+            console.log("Adding new notification to the container...");
+            console.log(notificationParent);
+            notificationContainer.appendChild(notificationParent);
+        }
+
+        updateNotificationCount();
+
+        // Example: If notifications are dynamically added, re-run the function
+        $(document).on("DOMNodeInserted DOMNodeRemoved", ".notification-item", function () {
+            updateNotificationCount();
+        });
+
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("https://localhost:7116/notificationHub")
+            .withAutomaticReconnect()
+            .build();
+
+        console.log("Attempting to start SignalR connection...");
+
+
+        connection.start()
+            .then(function () {
+                console.log("SignalR Connected successfully!");
+            })
+            .catch(function (err) {
+                console.error("SignalR Connection Error: ", err.toString());
+            });
+
+        connection.onclose(function (error) {
+            console.warn("SignalR Connection closed. Reason:", error ? error.toString() : "No error provided.");
+        });
+
+        connection.on("ReceiveNotification", (message) => {
+            console.log("New Notification: ", message);
+            addNotification(message);
+            updateNotificationCount();
+        });
+
+    });
+
+</script>

@@ -5,6 +5,7 @@ using CarBook.Application.Validators;
 using CarBook.Persistence.Context;
 using CarBook.Persistence.Repositories;
 using CarBook.Persistence.Services;
+using CarBook.SignalR;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -43,7 +44,12 @@ namespace CarBook.WebApi.Extensions
 
         public static void AddMediatRService(this IServiceCollection services)
         {
-            services.AddMediatR(config => config.RegisterServicesFromAssemblyContaining<ApplicationAssemblyMarker>());
+            services.AddMediatR(config =>
+            {
+                config.RegisterServicesFromAssemblyContaining<ApplicationAssemblyMarker>();
+                config.RegisterServicesFromAssemblyContaining<SignalRAssemblyMarker>();
+            }
+            );
         }
 
         public static void AddApplicationDbContext(this IServiceCollection services)

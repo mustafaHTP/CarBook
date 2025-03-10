@@ -1,3 +1,4 @@
+using CarBook.SignalR.Hubs;
 using CarBook.WebApp.Extensions;
 using CarBook.WebApp.Filters;
 

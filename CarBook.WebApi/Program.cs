@@ -2,6 +2,7 @@ using CarBook.Application.Interfaces.Services;
 using CarBook.Application.Validators;
 using CarBook.Persistence.Context;
 using CarBook.Persistence.Services;
+using CarBook.SignalR.Hubs;
 using CarBook.WebApi.Extensions;
 using CarBook.WebApi.Filters;
 using CarBook.WebApi.Middlewares;
@@ -48,12 +49,17 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowSpecificOrigin",
         builder => builder.WithOrigins("https://localhost:7060")
                           .AllowAnyHeader()
-                          .AllowAnyMethod());
+                          .AllowAnyMethod()
+                          .AllowCredentials()
+                          .SetIsOriginAllowed(origin => true));
 });
 
 
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddAuthorization();
+
+//Add signalR
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -72,6 +78,8 @@ app.UseCors("AllowSpecificOrigin");
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapHub<NotificationHub>("/notificationHub");
 
 app.MapControllers();
 
