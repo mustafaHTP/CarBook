@@ -54,15 +54,15 @@ In this project, dotnet user-secrets is used. So you need to set couple of thing
 
 ### 1. Setup connection string
 
-1.1 Go to project *root* folder
+1. Go to project *root* folder
 
-1.2 Change directory to *web api* project
+2. Change directory to *web api* project
 
 ```bash
     cd CarBook.WebApi
 ```
 
-1.3 Set connection string
+3. Set connection string
 
 ```bash
     dotnet user-secrets set "ConnectionString" "YOUR_CONNECTION_STRING"
@@ -70,9 +70,9 @@ In this project, dotnet user-secrets is used. So you need to set couple of thing
 
 ### 2. Applying migrations
 
-2.1 Go to project *root* folder
+ 1. Go to project *root* folder
 
-2.2 Apply migrations
+ 2. Apply migrations
 
 ```bash
     dotnet ef database update --project .\CarBook.Persistence\ --startup-project .\CarBook.WebApi\
@@ -80,15 +80,15 @@ In this project, dotnet user-secrets is used. So you need to set couple of thing
 
 ### 3. Setup Gemini Api Key
 
-3..1 Go to project *root* folder
+ 1. Go to project *root* folder
 
-3.2 Change directory to *web app* project
+ 2. Change directory to *web app* project
 
 ```bash
     cd CarBook.WebApp
 ```
 
-3..3 Set gemini api key
+ 3. Set gemini api key
 
 ```bash
     dotnet user-secrets set "SmartBookKey" "YOUR_API_KEY"
