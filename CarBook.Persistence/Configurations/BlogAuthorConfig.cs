@@ -24,8 +24,8 @@ namespace CarBook.Persistence.Configurations
                 new BlogAuthor
                 {
                     Id = 2,
-                    Name = "Jane Doe",
-                    Description = "Jane Doe is a seasoned automotive writer with a passion for classic cars and vintage vehicles. With a keen eye for detail and a deep knowledge of automotive history, she brings a unique perspective to the world of car journalism.",
+                    Name = "Robert Williams",
+                    Description = "Robert Williams is a seasoned automotive writer with a passion for classic cars and vintage vehicles. With a keen eye for detail and a deep knowledge of automotive history, she brings a unique perspective to the world of car journalism.",
                     ImageUrl = "/website-template/images/person_2.jpg"
                 }
             );

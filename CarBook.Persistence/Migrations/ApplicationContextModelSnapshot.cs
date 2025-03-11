@@ -259,9 +259,9 @@ namespace CarBook.Persistence.Migrations
                         new
                         {
                             Id = 2,
-                            Description = "Jane Doe is a seasoned automotive writer with a passion for classic cars and vintage vehicles. With a keen eye for detail and a deep knowledge of automotive history, she brings a unique perspective to the world of car journalism.",
+                            Description = "Robert Williams is a seasoned automotive writer with a passion for classic cars and vintage vehicles. With a keen eye for detail and a deep knowledge of automotive history, she brings a unique perspective to the world of car journalism.",
                             ImageUrl = "/website-template/images/person_2.jpg",
-                            Name = "Jane Doe"
+                            Name = "Robert Williams"
                         });
                 });
 
@@ -2808,17 +2808,17 @@ namespace CarBook.Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Hour"
+                            Name = "hour"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Day"
+                            Name = "day"
                         },
                         new
                         {
                             Id = 3,
-                            Name = "Week"
+                            Name = "week"
                         });
                 });
 

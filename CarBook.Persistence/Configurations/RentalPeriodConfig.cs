@@ -17,17 +17,17 @@ namespace CarBook.Persistence.Configurations
                 new RentalPeriod
                 {
                     Id = 1,
-                    Name = "Hour",
+                    Name = "hour",
                 },
                 new RentalPeriod
                 {
                     Id = 2,
-                    Name = "Day",
+                    Name = "day",
                 },
                 new RentalPeriod
                 {
                     Id = 3,
-                    Name = "Week",
+                    Name = "week",
                 }
              );
         }
