@@ -1,4 +1,4 @@
-# 🚗 CarBook
+# CarBook
 
 CarBook is a comprehensive car rental and blogging platform that allows users to rent cars, view detailed car information, leave reviews, and engage with blogs by browsing and commenting. The platform also includes an admin panel for managing car listings, moderating reviews, and overseeing blog interactions.
 
@@ -43,6 +43,56 @@ CarBook is a comprehensive car rental and blogging platform that allows users to
 * 🏷 Approve and moderate reviews
 
 * 📝 Manage blogs and comments
+
+## Running Project
+
+In this project, dotnet user-secrets is used. So you need to set couple of things:
+
+1. ***[Necessary]*** Connection string
+1. ***[Necessary]*** Applying migrations to database
+1. ***[Optional]*** Gemini Api key (For car recommendation)
+
+### 1. Setup connection string
+
+1.1 Go to project *root* folder
+
+1.2 Change directory to *web api* project
+
+```bash
+    cd CarBook.WebApi
+```
+
+1.3 Set connection string
+
+```bash
+    dotnet user-secrets set "ConnectionString" "YOUR_CONNECTION_STRING"
+```
+
+### 2. Applying migrations
+
+2.1 Go to project *root* folder
+
+2.2 Apply migrations
+
+```bash
+    dotnet ef database update --project .\CarBook.Persistence\ --startup-project .\CarBook.WebApi\
+```
+
+### 3. Setup Gemini Api Key
+
+3..1 Go to project *root* folder
+
+3.2 Change directory to *web app* project
+
+```bash
+    cd CarBook.WebApp
+```
+
+3..3 Set gemini api key
+
+```bash
+    dotnet user-secrets set "SmartBookKey" "YOUR_API_KEY"
+```
 
 ---
 
