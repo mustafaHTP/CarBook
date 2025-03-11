@@ -4,8 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CarBook.Persistence.Context
 {
-    public class ApplicationDbContext : DbContext, IApplicationDbContext
+    public class ApplicationDbContext : DbContext
     {
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        {
+
+        }
+
         public DbSet<About> Abouts { get; set; }
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Banner> Banners { get; set; }
@@ -35,24 +40,18 @@ namespace CarBook.Persistence.Context
         public DbSet<SocialMedia> SocialMedias { get; set; }
         public DbSet<Testimonial> Testimonials { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.
-                UseSqlServer("Data Source=DESKTOP-O5H7DFD;Initial Catalog=CarBook;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
-        }
-
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
         {
-            base.ConfigureConventions(configurationBuilder);
             configurationBuilder
                 .Properties<DateOnly>()
                 .HaveColumnType("date");
+            base.ConfigureConventions(configurationBuilder);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

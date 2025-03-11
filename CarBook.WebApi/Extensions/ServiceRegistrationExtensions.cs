@@ -8,6 +8,7 @@ using CarBook.Persistence.Services;
 using CarBook.SignalR;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 using System.ComponentModel.DataAnnotations;
@@ -52,9 +53,18 @@ namespace CarBook.WebApi.Extensions
             );
         }
 
-        public static void AddApplicationDbContext(this IServiceCollection services)
+        public static void AddApplicationDbContext(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped<ApplicationDbContext>();
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                var connectionString = configuration["ConnectionString"];
+                if (string.IsNullOrEmpty(connectionString))
+                {
+                    throw new Exception("Connection string is missing in user-secrets\n" +
+                        "dotnet user-secrets set \"ConnectionString\" \"your_connection_string\"");
+                }
+                options.UseSqlServer(connectionString);
+            });
         }
 
         public static void AddFluentValidation(this IServiceCollection services)
