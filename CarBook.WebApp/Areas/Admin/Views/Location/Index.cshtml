@@ -11,7 +11,7 @@
                 <div class="card-body">
                     <h4 class="card-title">Location List</h4>
                     <p class="card-subtitle mb-4">
-                        Manage car features efficiently. Add, edit, or remove features like sunroof, leather seats, or parking sensors using the provided actions.
+                        Manage locations here. You can create, update and delete locations.
                     </p>
                     <div class="mb-2">
                         <a asp-area="Admin" asp-controller="Location" asp-action="Create" class="btn btn-success waves-effect waves-light">
@@ -43,7 +43,7 @@
                                             <th scope="row">@(rowNumber++)</th>
                                             <td>@item.Name</td>
                                             <td>
-                                                <a href="#" class="btn btn-primary text-white">
+                                                <a href="https://www.google.com/maps?q=@item.Name" class="btn btn-primary text-white">
                                                     <i class="fas fa-map-marked-alt"></i>
                                                     Open Location
                                                 </a>

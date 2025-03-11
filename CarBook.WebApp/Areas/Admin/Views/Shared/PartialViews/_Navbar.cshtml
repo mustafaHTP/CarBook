@@ -39,12 +39,7 @@
                     </a>
 
                     <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                        Reservations
-                    </a>
-
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="dropdown-item notify-item">
                         Go to site
                     </a>
                 </div>
@@ -160,7 +155,7 @@
             <div class="dropdown d-inline-block ml-2">
                 <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img class="rounded-circle header-profile-user" src="~/admin-template/vertical/assets/images/users/avatar-3.jpg"
+                    <img class="rounded-circle header-profile-user" src="~/admin-template/vertical/assets/images/users/user-avatar-1.svg"
                          alt="Header Avatar">
                     <span class="d-none d-sm-inline-block ml-1">
                         @User.FindFirst(JwtRegisteredClaimNames.GivenName)?.Value
@@ -186,7 +181,7 @@
                     <a class="dropdown-item d-flex align-items-center justify-content-between" href="javascript:void(0)">
                         <span>Lock Account</span>
                     </a>
-                    <a class="dropdown-item d-flex align-items-center justify-content-between" href="javascript:void(0)">
+                    <a class="dropdown-item d-flex align-items-center justify-content-between" asp-area="" asp-controller="Auth" asp-action="Logout">
                         <span>Log Out</span>
                     </a>
                 </div>
