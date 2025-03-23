@@ -2,47 +2,37 @@
 
 CarBook is a comprehensive car rental and blogging platform that allows users to rent cars, view detailed car information, leave reviews, and engage with blogs by browsing and commenting. The platform also includes an admin panel for managing car listings, moderating reviews, and overseeing blog interactions.
 
-## 🏗 Architecture & Design Patterns
+## Architecture & Design Patterns
 
-* 🧅 Onion Architecture
+* Onion Architecture
 
-* ⚡ CQRS (Command Query Responsibility Segregation)
+* CQRS (Command Query Responsibility Segregation)
 
-* 🎯 Mediator Pattern
+* Mediator Pattern
 
-* 📦 Repository Pattern
+* Repository Pattern
 
-* ✅ Result Pattern
+* Result Pattern
 
 ## 🛠 Technologies Used
 
-* 📡 SignalR - Real-time updates and notifications
+* SignalR - Real-time updates and notifications
 
-* 🤖 Gemini API - Car recommendations
+* Gemini API - Car recommendations
 
-* 🗄 EF Core - Database management
+* EF Core - Database management
 
-* 🎯 Fluent Validation - Ensuring data integrity
+* Fluent Validation - Ensuring data integrity
 
 ## 🔧 Features
 
-### User Features
+### For Users
 
-* 🚗 Rent cars
+Users can rent cars, explore vehicle details, leave reviews, and interact with blog content through browsing and commenting.
 
-* 🛠 View car details
+### For Admins
 
-* ⭐ Leave reviews
-
-* 📝 Browse and comment on blogs
-
-### Admin Features
-
-* ⚙️ Manage car listings
-
-* 🏷 Approve and moderate reviews
-
-* 📝 Manage blogs and comments
+Admins have control over car listings, review moderation, and blog management, ensuring a seamless experience for all users.
 
 ## Running Project
 
