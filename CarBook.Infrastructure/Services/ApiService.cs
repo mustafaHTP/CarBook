@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace CarBook.Persistence.Services
+namespace CarBook.Infrastructure.Services
 {
     public class ApiService : IApiService
     {

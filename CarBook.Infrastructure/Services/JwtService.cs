@@ -6,7 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace CarBook.Persistence.Services
+namespace CarBook.Infrastructure.Services
 {
     public class JwtService : IJwtService
     {

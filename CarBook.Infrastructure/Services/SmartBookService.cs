@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarBook.Persistence.Services
+namespace CarBook.Infrastructure.Services
 {
     public class SmartBookService : ISmartBookService
     {

@@ -1,7 +1,3 @@
-using CarBook.Application.Interfaces.Services;
-using CarBook.Application.Validators;
-using CarBook.Persistence.Context;
-using CarBook.Persistence.Services;
 using CarBook.SignalR.Hubs;
 using CarBook.WebApi.Extensions;
 using CarBook.WebApi.Filters;
