@@ -1,15 +1,12 @@
 using CarBook.SignalR.Hubs;
+using CarBook.Application.Extensions;
+using CarBook.SignalR.Extensions;
+using CarBook.Infrastructure.Extensions;
 using CarBook.WebApi.Extensions;
-using CarBook.WebApi.Filters;
 using CarBook.WebApi.Middlewares;
-using FluentValidation;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
-using System.Globalization;
-using System.Text;
 using System.Text.Json.Serialization;
+using CarBook.Persistence.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,13 +29,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddApplicationDbContext(builder.Configuration);
-builder.Services.AddRepositories();
-builder.Services.AddServices();
-builder.Services.AddMediatRService();
-builder.Services.AddFluentValidation();
+builder.Services.AddApplicationLayer();
+builder.Services.AddPersistenceLayer(builder.Configuration);
+builder.Services.AddSignalRLayer();
+builder.Services.AddInfrastructureLayer();
 
-builder.Services.AddScoped(typeof(NotFoundFilterAttribute<>));
+builder.Services.AddFilters();
 
 builder.Services.AddCors(options =>
 {
@@ -50,12 +46,7 @@ builder.Services.AddCors(options =>
                           .SetIsOriginAllowed(origin => true));
 });
 
-
 builder.Services.AddJwtAuthentication(builder.Configuration);
-builder.Services.AddAuthorization();
-
-//Add signalR
-builder.Services.AddSignalR();
 
 var app = builder.Build();
 

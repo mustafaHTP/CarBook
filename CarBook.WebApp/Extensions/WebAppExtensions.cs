@@ -7,15 +7,8 @@ using System.Reflection;
 
 namespace CarBook.WebApp.Extensions
 {
-    public static class ServiceRegistrationExtensions
+    public static class WebAppExtensions
     {
-        public static void AddServices(this IServiceCollection services)
-        {
-            services.AddScoped<IJwtService, JwtService>();
-            services.AddScoped<IApiService, ApiService>();
-            services.AddScoped<ISmartBookService, SmartBookService>();
-        }
-
         public static void AddFluentValidation(this IServiceCollection services)
         {
             //Force English language for validation messages

@@ -1,3 +1,4 @@
+using CarBook.Infrastructure.Extensions;
 using CarBook.SignalR.Hubs;
 using CarBook.WebApp.Extensions;
 using CarBook.WebApp.Filters;
@@ -15,7 +16,7 @@ builder.Services.AddJwtAuthentication();
 
 builder.Services.AddFluentValidation();
 
-builder.Services.AddServices();
+builder.Services.AddInfrastructureLayer();
 
 //Add filters
 builder.Services.AddScoped(typeof(ValidationFilterAttribute<>));
