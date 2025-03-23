@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{02
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarBook.SignalR", "CarBook.SignalR\CarBook.SignalR.csproj", "{709D9568-9DF9-49FD-A53D-E90B095DE16A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarBook.Infrastructure", "CarBook.Infrastructure\CarBook.Infrastructure.csproj", "{488C28B2-F31A-4F3F-AB3C-4D4E50668D42}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{709D9568-9DF9-49FD-A53D-E90B095DE16A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{709D9568-9DF9-49FD-A53D-E90B095DE16A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{709D9568-9DF9-49FD-A53D-E90B095DE16A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{488C28B2-F31A-4F3F-AB3C-4D4E50668D42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{488C28B2-F31A-4F3F-AB3C-4D4E50668D42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{488C28B2-F31A-4F3F-AB3C-4D4E50668D42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{488C28B2-F31A-4F3F-AB3C-4D4E50668D42}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,6 +70,7 @@ Global
 		{C00B9D8C-A2A8-468B-A14B-F2BA45942C83} = {03DB1DA8-A92F-497F-B0E1-CD51AC612E0C}
 		{AD6E93AB-746B-417C-BF6F-3D584DD3D79C} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{709D9568-9DF9-49FD-A53D-E90B095DE16A} = {2831A82C-3312-4F97-B569-D2F9BFC1CC75}
+		{488C28B2-F31A-4F3F-AB3C-4D4E50668D42} = {2831A82C-3312-4F97-B569-D2F9BFC1CC75}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3892E515-5974-45EE-B2D3-C019B61B702F}
